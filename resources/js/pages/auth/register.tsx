@@ -370,7 +370,7 @@ export default function Register({ coursePrice, duitkuScriptUrl }: RegisterProps
                         <div className="relative">
                             <div className="border-primary/50 from-primary/5 to-primary/10 rounded-lg border bg-gradient-to-r p-4">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm font-medium text-gray-300">Harga:</span>
+                                    <span className="text-foreground text-sm font-medium">Harga:</span>
                                     <div className="text-right">
                                         {appliedVoucher && <div className="text-xs text-gray-500 line-through">Rp {formatRupiah(coursePrice)}</div>}
                                         <div className="text-primary text-lg font-bold">Rp {formatRupiah(finalPrice)}</div>

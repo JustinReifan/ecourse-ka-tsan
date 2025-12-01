@@ -129,7 +129,7 @@ export function VoucherInput({ onVoucherApplied, onVoucherRemoved, originalPrice
                         onKeyPress={handleKeyPress}
                         placeholder="Kode Voucher"
                         disabled={disabled || isValidating}
-                        className="border-zinc-700/50 bg-zinc-800/50 pl-10 font-mono text-sm tracking-wider uppercase focus:border-purple-400 focus:ring-purple-400/20"
+                        className="bg-primary/10 border-primary/20 pl-10 font-mono text-sm tracking-wider uppercase focus:border-purple-400 focus:ring-purple-400/20"
                     />
                 </div>
                 <Button

@@ -188,7 +188,7 @@ export function DataTable<T extends Record<string, any>>({
                 {paginatedData.map((item, index) => (
                     <Card
                         key={index}
-                        className="border border-zinc-700/50 bg-gradient-to-br from-zinc-900/90 via-zinc-800/50 to-zinc-900/90 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-400/50"
+                        className="from-primary/10 via-primary/20 to-primary/10 border-primary/30 border bg-gradient-to-r p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-400/50"
                     >
                         <div className="space-y-4">
                             {columns.map((column) => (
@@ -199,7 +199,7 @@ export function DataTable<T extends Record<string, any>>({
                                     </span>
                                 </div>
                             ))}
-                            <div className="flex gap-3 border-t border-zinc-700/50 pt-4">
+                            <div className="border-primary/30 flex gap-3 border-t pt-4">
                                 {onEdit && (
                                     <Button
                                         variant="outline"

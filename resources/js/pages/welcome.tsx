@@ -274,7 +274,7 @@ export default function Welcome() {
                                 </div>
                                 {/* <span className="text-foreground text-xl font-bold">Editor Amplifier</span> */}
                             </div>
-                            <p className="text-muted-foreground text-sm">© 2025 Affiliate Jago Jualan. All rights reserved.</p>
+                            <p className="text-muted-foreground text-sm">© 2026 Affiliate Jago Jualan. All rights reserved.</p>
                         </div>
                     </div>
                 </footer>
