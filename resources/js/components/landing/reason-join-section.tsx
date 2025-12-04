@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Award, Briefcase, Heart, Rocket, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { Award, BookCheck, Briefcase, Heart, Sparkles, TrendingUp, Users } from 'lucide-react';
 
 interface BenefitCardProps {
     icon: React.ReactNode;
@@ -62,14 +62,14 @@ function BenefitCard({ icon, title, description, delay = 0, gradient }: BenefitC
 export function ReasonJoinSection() {
     const benefits = [
         {
-            icon: <Rocket className="h-7 w-7" />,
+            icon: <Users className="h-7 w-7" />,
             title: 'Mentor Praktisi, Bukan Teoretisi',
             description:
                 'Dibimbing langsung oleh praktisi 13 tahun pengalaman yang sudah terbukti mencetak 100 Juta pertamanya dari Lynk.id. Ilmu yang diajarkan murni dari pengalaman lapangan.',
             gradient: 'from-blue-500/10 via-purple-500/10 to-pink-500/10',
         },
         {
-            icon: <Award className="h-7 w-7" />,
+            icon: <TrendingUp className="h-7 w-7" />,
             title: 'Track Record Penjualan Nyata',
             description:
                 'Bukan orang baru. Mentor memiliki portofolio bisnis yang konsisten menjual ribuan produk setiap tahunnya selama lebih dari satu dekade.',
@@ -79,7 +79,7 @@ export function ReasonJoinSection() {
             icon: <Heart className="h-7 w-7" />,
             title: 'Circle Positif & Mentor Tersertifikasi',
             description:
-                'Gabung bareng 400+ Emak-emak produktif di komunitas. Mentornya juga Certified BNSP & Resmi aktif sebagai Canvassador (Duta Canva Indonesia)',
+                'Gabung bareng 500+ Emak-emak produktif di komunitas. Mentornya juga Certified BNSP & Resmi aktif sebagai Canvassador (Duta Canva Indonesia)',
             gradient: 'from-pink-500/10 via-purple-500/10 to-red-500/10',
         },
         {
@@ -137,16 +137,16 @@ export function ReasonJoinSection() {
                                 {/* Stats overlay */}
                                 <div className="absolute right-4 bottom-4 left-4">
                                     <div className="flex items-center justify-between gap-4">
-                                        <div className="bg-background/90 border-border/20 rounded-xl border px-4 py-2 backdrop-blur-xl">
+                                        <div className="bg-primary/10 border-border/20 rounded-xl border px-4 py-2 backdrop-blur-xl">
                                             <div className="flex items-center gap-2">
-                                                <Users className="text-primary h-4 w-4" />
-                                                <span className="text-foreground text-sm font-semibold">100M+ Users</span>
+                                                <Award className="text-primary h-4 w-4" />
+                                                <span className="text-foreground text-sm font-semibold">E-certificate</span>
                                             </div>
                                         </div>
-                                        <div className="bg-background/90 border-border/20 rounded-xl border px-4 py-2 backdrop-blur-xl">
+                                        <div className="bg-primary/10 border-border/20 rounded-xl border px-4 py-2 backdrop-blur-xl">
                                             <div className="flex items-center gap-2">
-                                                <TrendingUp className="h-4 w-4 text-emerald-400" />
-                                                <span className="text-foreground text-sm font-semibold">100K+ Templates</span>
+                                                <BookCheck className="h-4 w-4 text-emerald-400" />
+                                                <span className="text-foreground text-sm font-semibold">Free E-book</span>
                                             </div>
                                         </div>
                                     </div>
