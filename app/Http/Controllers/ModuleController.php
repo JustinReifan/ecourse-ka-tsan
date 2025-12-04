@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use getID3;
+use DateInterval;
 use Inertia\Inertia;
 use App\Models\Course;
 use App\Models\Module;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-use getID3;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
@@ -38,6 +40,42 @@ class ModuleController extends Controller
         return redirect()->route('admin.modules.index');
     }
 
+    private function getYoutubeId($url)
+    {
+        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+        return $match[1] ?? null;
+    }
+
+    private function getYoutubeDuration($videoId)
+    {
+        $apiKey = env('YOUTUBE_API_KEY');
+        $apiUrl = "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={$videoId}&key={$apiKey}";
+
+        try {
+            $response = Http::get($apiUrl);
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                if (!empty($data['items'])) {
+                    // Format durasi dari YouTube adalah ISO 8601 (contoh: PT1H2M10S)
+                    $isoDuration = $data['items'][0]['contentDetails']['duration'];
+
+                    // Convert ke detik
+                    $interval = new DateInterval($isoDuration);
+                    $seconds = ($interval->d * 86400) + ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+
+                    return $seconds;
+                }
+            }
+        } catch (\Exception $e) {
+            // Log error jika diperlukan
+            return 0;
+        }
+
+        return 0;
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -45,31 +83,23 @@ class ModuleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'video_path' => 'required|file|mimetypes:video/mp4',
+            'video_path' => 'required|string|max:255',
             'order' => 'nullable|integer|min:0',
             'status' => 'required|in:draft,published',
             'course_id' => 'required|exists:courses,id'
         ]);
 
-        if ($request->hasFile('video_path')) {
-            $file = $request->file('video_path');
-            $path = $file->store('videos', 'public');
-            $validated['video_path'] = $path;
+        $videoId = $this->getYoutubeId($request->video_path);
 
-            // Gunakan getID3
-            $getID3 = new getID3;
-            $fileInfo = $getID3->analyze($file->getPathname());
-
-            // Ambil durasi dalam detik
-            $duration = isset($fileInfo['playtime_seconds'])
-                ? (int) ceil($fileInfo['playtime_seconds'])
-                : 0;
+        if ($videoId) {
+            $duration = $this->getYoutubeDuration($videoId);
 
             $validated['duration'] = $duration;
+        } else {
+            $validated['duration'] = 0;
         }
 
-        $slug = str()->slug($request->name);
-        $validated['slug'] = $slug;
+        $validated['slug'] = str()->slug($request->name);
 
         Module::create($validated);
 
@@ -98,7 +128,7 @@ class ModuleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'video_path' => 'nullable|file|mimetypes:video/avi,video/mp4,video/mpeg,video/quicktime|max:202400',
+            'video_path' => 'nullable|string|max:255',
             'order' => 'nullable|integer|min:0',
             'status' => 'required|in:draft,published',
             'course_id' => 'required|exists:courses,id'
@@ -109,30 +139,30 @@ class ModuleController extends Controller
         $validated['slug'] = $slug;
 
         // Jika user upload file baru
-        if ($request->hasFile('video_path')) {
-            // Hapus file lama jika ada
-            if ($module->video_path && Storage::disk('public')->exists($module->video_path)) {
-                Storage::disk('public')->delete($module->video_path);
-            }
+        // if ($request->hasFile('video_path')) {
+        //     // Hapus file lama jika ada
+        //     if ($module->video_path && Storage::disk('public')->exists($module->video_path)) {
+        //         Storage::disk('public')->delete($module->video_path);
+        //     }
 
-            // Upload file baru
-            $file = $request->file('video_path');
-            $path = $file->store('videos', 'public');
-            $validated['video_path'] = $path;
+        //     // Upload file baru
+        //     $file = $request->file('video_path');
+        //     $path = $file->store('videos', 'public');
+        //     $validated['video_path'] = $path;
 
-            // Hitung durasi baru (pakai getID3)
-            $getID3 = new getID3;
-            $fileInfo = $getID3->analyze($file->getPathname());
-            $duration = isset($fileInfo['playtime_seconds'])
-                ? (int) ceil($fileInfo['playtime_seconds'])
-                : 0;
+        //     // Hitung durasi baru (pakai getID3)
+        //     $getID3 = new getID3;
+        //     $fileInfo = $getID3->analyze($file->getPathname());
+        //     $duration = isset($fileInfo['playtime_seconds'])
+        //         ? (int) ceil($fileInfo['playtime_seconds'])
+        //         : 0;
 
-            $validated['duration'] = $duration;
-        } else {
-            // Jika tidak upload file baru → pertahankan video_path & duration lama
-            $validated['video_path'] = $module->video_path;
-            $validated['duration'] = $module->duration;
-        }
+        //     $validated['duration'] = $duration;
+        // } else {
+        //     // Jika tidak upload file baru → pertahankan video_path & duration lama
+        //     $validated['video_path'] = $module->video_path;
+        //     $validated['duration'] = $module->duration;
+        // }
 
         // Update data module
         $module->update($validated);

@@ -285,7 +285,7 @@ export default function Module({ module, prevModule, nextModule }: ModulePagePro
                         {/* Video Player */}
                         <div className="relative mb-8">
                             <VideoPlayer
-                                src={'/storage/' + module.video_path}
+                                src={module.video_path}
                                 title={module.name}
                                 onProgress={handleVideoProgress}
                                 onComplete={handleVideoComplete}

@@ -18,7 +18,7 @@ interface Course {
 interface Module {
     id: number;
     name: string;
-    video_path: null | string;
+    video_path: string;
     order: number;
     status: 'draft' | 'published';
     course_id: number;
@@ -49,7 +49,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
         reset,
     } = useForm({
         name: '',
-        video_path: null as File | null,
+        video_path: '',
         order: 0,
         status: 'draft' as 'draft' | 'published',
         course_id: '',
@@ -133,7 +133,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
 
     const handleEdit = (module: Module) => {
         setData('name', module.name);
-        setData('video_path', null);
+        setData('video_path', module.video_path);
         setData('order', module.order);
         setData('status', module.status);
         setData('course_id', String(module.course_id));
@@ -255,17 +255,12 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
                                 Video
                             </Label>
                             <Input
-                                type="file"
                                 id="video_path"
-                                onChange={(e) => setData('video_path', e.target.files?.[0] ?? null)}
+                                value={data.video_path}
+                                onChange={(e) => setData('video_path', e.target.value)}
                                 className="rounded-lg border-zinc-700/50 bg-zinc-800/50 text-white backdrop-blur-sm focus:border-cyan-400 focus:ring-cyan-400/20"
                                 placeholder="Enter video URL"
                             />
-                            {progress && (
-                                <progress value={progress.percentage} max="100">
-                                    {progress.percentage}%
-                                </progress>
-                            )}
                             {errors.video_path && <p className="mt-1 font-mono text-sm text-red-400">{errors.video_path}</p>}
                         </div>
 

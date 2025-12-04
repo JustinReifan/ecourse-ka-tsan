@@ -209,15 +209,29 @@ export function VideoPlayer({ src, title, thumbnailUrl, onProgress, onComplete, 
         >
             {/* YouTube Player */}
             {isYouTube && !isLoaded && (
-                <button
-                    className="absolute inset-0 z-10 cursor-pointer"
-                    onClick={() => {
-                        console.log('Clicked!');
-                        setIsLoaded(true);
-                    }}
+                <div
+                    className={cn(
+                        'absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300',
+                        showControls ? 'opacity-100' : 'opacity-0',
+                    )}
                 >
-                    {thumbnail && <img src={thumbnail} alt={title} className="h-full w-full object-cover" />}
-                </button>
+                    <button
+                        onClick={togglePlayPause}
+                        className="bg-primary/20 border-primary/50 text-primary hover:bg-primary flex h-20 w-20 items-center justify-center rounded-full border transition-all duration-300 hover:scale-110 hover:text-black"
+                    >
+                        {isPlaying ? <Pause className="ml-0.5 h-8 w-8" fill="currentColor" /> : <Play className="ml-1 h-8 w-8" fill="currentColor" />}
+                    </button>
+
+                    <button
+                        className="absolute inset-0 z-10 cursor-pointer"
+                        onClick={() => {
+                            console.log('Clicked!');
+                            setIsLoaded(true);
+                        }}
+                    >
+                        {thumbnail && <img src={thumbnail} alt={title} className="h-full w-full object-cover" />}
+                    </button>
+                </div>
             )}
 
             {isYouTube && isLoaded && (
@@ -251,7 +265,7 @@ export function VideoPlayer({ src, title, thumbnailUrl, onProgress, onComplete, 
                     {/* Play/Pause Overlay */}
                     {/* <div
                         className={cn(
-                            'absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300',
+                            'bg-primary/20 absolute inset-0 flex items-center justify-center transition-opacity duration-300',
                             showControls ? 'opacity-0' : 'opacity-100',
                         )}
                     >
