@@ -83,6 +83,7 @@ class ModuleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'video_path' => 'required|url',
             'order' => 'nullable|integer|min:0',
             'status' => 'required|in:draft,published',
@@ -130,6 +131,7 @@ class ModuleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'video_path' => 'nullable|url',
             'order' => 'nullable|integer|min:0',
             'status' => 'required|in:draft,published',

@@ -1,10 +1,12 @@
 import { DataTable } from '@/components/admin/data-table';
+import { ExpandableText } from '@/components/expandable-text';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/admin-layout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Calendar, Database, PlayCircle, Upload, Zap } from 'lucide-react';
@@ -18,6 +20,7 @@ interface Course {
 interface Module {
     id: number;
     name: string;
+    description: string;
     video_path: string;
     order: number;
     status: 'draft' | 'published';
@@ -49,6 +52,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
         reset,
     } = useForm({
         name: '',
+        description: '',
         video_path: '',
         order: 0,
         status: 'draft' as 'draft' | 'published',
@@ -81,6 +85,11 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
                     </div>
                 </div>
             ),
+        },
+        {
+            key: 'description' as keyof Module,
+            label: 'Description',
+            render: (value: string) => <ExpandableText text={value} />,
         },
 
         {
@@ -133,6 +142,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
 
     const handleEdit = (module: Module) => {
         setData('name', module.name);
+        setData('description', module.description);
         setData('video_path', module.video_path);
         setData('order', module.order);
         setData('status', module.status);
@@ -179,7 +189,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
 
             <div className="relative p-6">
                 {flash.success && (
-                    <Alert variant="destructive" className="mb-4 border border-green-500/30 bg-gradient-to-r from-green-500/20 to-zinc-900">
+                    <Alert variant="destructive" className="to-primary/50 mb-4 border border-green-500/30 bg-gradient-to-r from-green-500/20">
                         <AlertTitle>Success</AlertTitle>
                         <AlertDescription>{flash.success}</AlertDescription>
                     </Alert>
@@ -248,6 +258,21 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
                                 ))}
                             </select>
                             {errors.course_id && <p className="mt-1 font-mono text-sm text-red-400">{errors.course_id}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="description" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
+                                Description
+                            </Label>
+                            <Textarea
+                                id="description"
+                                rows={10}
+                                value={data.description}
+                                onChange={(e) => setData('description', e.target.value)}
+                                className="rounded-lg border-zinc-700/50 bg-zinc-800/50 text-white backdrop-blur-sm focus:border-cyan-400 focus:ring-cyan-400/20"
+                                placeholder="Enter description"
+                            />
+                            {errors.description && <p className="mt-1 font-mono text-sm text-red-400">{errors.description}</p>}
                         </div>
 
                         <div className="space-y-2">

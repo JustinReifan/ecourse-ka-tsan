@@ -1,4 +1,5 @@
 import { DataTable } from '@/components/admin/data-table';
+import { ExpandableText } from '@/components/expandable-text';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -60,8 +61,8 @@ export default function ModuleMaterialsPage({ materials, modules }: MaterialsPag
             sortable: true,
             render: (value: string, material: Material) => (
                 <div className="flex items-center gap-4">
-                    <div>
-                        <p className="text-foreground group-hover:text-primary font-semibold transition-colors">{value}</p>
+                    <div className="w-0 min-w-0 flex-1">
+                        <p className="text-foreground group-hover:text-primary font-semibold transition-colors">{<ExpandableText text={value} />}</p>
                         <div className="mt-1 flex items-center gap-2">
                             <Database className="h-3 w-3 text-gray-500" />
                             <p className="font-mono text-xs text-gray-400">{material.module?.name || 'No Module'}</p>
@@ -75,10 +76,12 @@ export default function ModuleMaterialsPage({ materials, modules }: MaterialsPag
             key: 'url' as keyof Material,
             label: 'Url Tujuan',
             sortable: false,
-            render: (value: number) => (
+            render: (value: string) => (
                 <div className="flex items-center gap-2">
-                    <div className="bg-primary/10 ring-primary/70 rounded-lg px-4 py-1 ring-1">
-                        <span className="text-foreground font-mono text-sm font-bold">{value}</span>
+                    <div className="min-w-0 flex-1">
+                        <div className="bg-primary/10 ring-primary/70 rounded-lg px-4 py-1 ring-1">
+                            <span className="text-foreground font-mono text-sm font-bold">{value}</span>
+                        </div>
                     </div>
                 </div>
             ),
@@ -87,7 +90,7 @@ export default function ModuleMaterialsPage({ materials, modules }: MaterialsPag
             key: 'text' as keyof Material,
             label: 'Text',
             sortable: false,
-            render: (value: string) => <div className="flex items-center gap-2 font-mono text-sm text-gray-500">{value}</div>,
+            render: (value: string) => <ExpandableText text={value} />,
         },
     ];
 

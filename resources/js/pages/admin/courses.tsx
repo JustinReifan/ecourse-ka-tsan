@@ -188,7 +188,7 @@ export default function CoursesPage({ courses }: CoursesPageProps) {
             <div className="relative p-6">
                 {/* flash success */}
                 {flash.success && (
-                    <Alert variant="destructive" className="mb-4 border border-blue-500/30 bg-gradient-to-r from-green-500/20 to-zinc-900">
+                    <Alert variant="destructive" className="to-primary/50 mb-4 border border-blue-500/30 bg-gradient-to-r from-green-500/20">
                         <AlertTitle>Success</AlertTitle>
                         <AlertDescription>{flash.success}</AlertDescription>
                     </Alert>

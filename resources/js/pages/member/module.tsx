@@ -11,6 +11,7 @@ import { useState } from 'react';
 interface ModulePageProps {
     module: Module & {
         is_completed: boolean;
+        description: string;
         duration: string;
         video_path: string;
         materials: {
@@ -137,10 +138,12 @@ function MaterialCard({ material }: { material: ModulePageProps['module']['mater
                 </div>
 
                 {/* Material Content */}
-                <div className="min-w-0 flex-1">
-                    <h3 className="group-hover:text-primary text-foreground mb-2 font-semibold transition-colors duration-300">{material.name}</h3>
+                <div className="w-0 min-w-0 flex-1">
+                    <h3 className="group-hover:text-primary text-foreground mb-2 truncate font-semibold transition-colors duration-300">
+                        {material.name}
+                    </h3>
 
-                    {material.text && <p className="text-muted-foreground text-sm leading-relaxed">{material.text}</p>}
+                    {material.text && <p className="text-muted-foreground text-sm leading-relaxed break-words">{material.text}</p>}
 
                     {isExternalLink && (
                         <div className="text-muted-foreground mt-2 flex items-center space-x-2 text-xs">
@@ -268,6 +271,11 @@ export default function Module({ module, prevModule, nextModule }: ModulePagePro
                                 <span className="text-primary text-sm font-medium">{module.course.name}</span>
                             </div>
                             <h1 className="text-foreground mb-4 text-4xl font-bold lg:text-5xl">{module.name}</h1>
+
+                            {module.description && (
+                                <p className="text-muted-foreground mb-4 max-w-3xl text-lg leading-relaxed">{module.description}</p>
+                            )}
+
                             <div className="text-foreground flex items-center space-x-6">
                                 <div className="flex items-center space-x-2">
                                     <Clock className="h-4 w-4" />
