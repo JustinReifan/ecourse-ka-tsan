@@ -116,7 +116,7 @@ class MemberController extends Controller
                 $query->where('status', 'published')
                     ->orderBy('order', 'asc')
                     ->orderBy('name', 'asc')
-                    ->select('id', 'name', 'slug', 'course_id', 'order', 'video_path', 'duration', 'status');
+                    ->select('id', 'name', 'description', 'slug', 'course_id', 'order', 'video_path', 'duration', 'status');
             },
             'materials' => function ($query) {
                 $query->select('id', 'name', 'module_id', 'url', 'text');

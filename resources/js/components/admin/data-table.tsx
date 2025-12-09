@@ -194,7 +194,7 @@ export function DataTable<T extends Record<string, any>>({
                             {columns.map((column) => (
                                 <div key={String(column.key)} className="flex items-start justify-between">
                                     <span className="font-mono text-sm tracking-wider text-gray-400 uppercase">{column.label}:</span>
-                                    <span className="ml-4 flex-1 text-right text-sm text-white">
+                                    <span className="ml-4 min-w-0 flex-1 text-right text-sm break-words text-white">
                                         {column.render ? column.render(item[column.key], item) : String(item[column.key])}
                                     </span>
                                 </div>
