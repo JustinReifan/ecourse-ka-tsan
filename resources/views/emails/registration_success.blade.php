@@ -46,7 +46,7 @@
         
         <p style="font-size: 16px; color: #111; font-weight: bold; margin-top: 10px;">
             Salam hangat,<br>
-            Admin {{ config('app.name') }}
+            Growupmuslimpreneur
         </p>
     </div>
 
