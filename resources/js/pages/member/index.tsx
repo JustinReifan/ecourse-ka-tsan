@@ -34,6 +34,7 @@ interface ProductsPageProps extends PageProps {
     ownedProducts: Product[];
     availableProducts: Product[];
     selectedProduct: Product | null;
+    duitkuScriptUrl: string;
 }
 
 declare global {
@@ -54,7 +55,7 @@ declare global {
     }
 }
 
-export default function MemberProducts({ ownedProducts, availableProducts, selectedProduct }: ProductsPageProps) {
+export default function MemberProducts({ ownedProducts, availableProducts, selectedProduct, duitkuScriptUrl }: ProductsPageProps) {
     const [selectedCatalogProduct, setSelectedCatalogProduct] = useState<Product | null>(selectedProduct);
     const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
     const [productToPurchase, setProductToPurchase] = useState<Product | null>(null);
@@ -78,17 +79,18 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
 
     useEffect(() => {
         // Load script Duitku saat komponen dimuat
-        const script = document.createElement('script');
-        script.src = import.meta.env.VITE_DUITKU_SCRIPT_URL;
-        script.async = true;
+        const existingScript = document.querySelector(`script[src="${duitkuScriptUrl}"]`);
 
-        document.body.appendChild(script);
+        if (!existingScript && duitkuScriptUrl) {
+            const script = document.createElement('script');
+            script.src = duitkuScriptUrl;
+            script.async = true; // atau false jika ingin blocking
+            document.body.appendChild(script);
 
-        // Cleanup script saat komponen unmount
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+            // Opsional: Log jika script loaded
+            script.onload = () => console.log('Duitku script loaded');
+        }
+    }, [duitkuScriptUrl]);
 
     const handleCatalogFilter = (product: Product) => {
         // if product is affiliate_link, redirect to external_url

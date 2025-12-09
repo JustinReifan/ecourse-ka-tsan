@@ -45,6 +45,7 @@ class WebConfigController extends Controller
             'vsl_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'course_price' => 'required|numeric|min:0',
             'owner_whatsapp' => 'nullable|string|max:20',
+            'owner_email' => 'nullable|string|lowercase|email',
             'duitku_api_key' => 'nullable|string|max:500',
             'duitku_merchant_code' => 'nullable|string|max:255',
             'duitku_script_url' => 'nullable|url|max:500',

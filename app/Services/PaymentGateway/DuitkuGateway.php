@@ -22,21 +22,21 @@ class DuitkuGateway implements PaymentGatewayInterface
     public function createPaymentRequest(Order $order, array $customerData): array
     {
 
-        // $defaultProduct = Product::where('is_default', true)->first();
+        $defaultProduct = Product::where('is_default', true)->first();
 
-        // if (!$defaultProduct) {
-        //     logger()->error('Produk default tidak ditemukan.');
-        //     throw new \Exception('Produk default tidak ditemukan.');
-        // }
+        if (!$defaultProduct) {
+            logger()->error('Produk default tidak ditemukan.');
+            throw new \Exception('Produk default tidak ditemukan.');
+        }
 
-        // $productName = ($order->type == 'registration') ? $defaultProduct->title : ($order->meta['product_title'] ?? 'Produk Digital');
-
+        $productName = ($order->type == 'registration') ? $defaultProduct->title : ($order->meta['product_title'] ?? 'Produk Digital');
+        logger()->info("Order Meta: " . $order->meta['product_title']);
 
         $response = $this->duitkuController->create(
             $order->order_id,
             $order->amount,
             $customerData['email'],
-            // $productName,
+            $productName,
             null
         );
 

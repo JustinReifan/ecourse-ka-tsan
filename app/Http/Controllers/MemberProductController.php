@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\UserPurchase;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class MemberProductController extends Controller
 {
@@ -58,10 +59,14 @@ class MemberProductController extends Controller
                 ->find($selectedProductId);
         }
 
+        $duitkuScriptUrl = Setting::get('duitku_script_url', env('VITE_DUITKU_SCRIPT_URL', ''));
+
+
         return Inertia::render('member/index', [
             'ownedProducts' => $ownedProducts,
             'availableProducts' => $availableProducts,
             'selectedProduct' => $selectedProduct,
+            'duitkuScriptUrl' => $duitkuScriptUrl,
         ]);
     }
 

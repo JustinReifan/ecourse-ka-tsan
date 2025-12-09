@@ -24,6 +24,7 @@ interface ConfigFormData {
     vsl_thumbnail?: File;
     course_price: string;
     owner_whatsapp: string;
+    owner_email: string;
     duitku_api_key: string;
     duitku_merchant_code: string;
     duitku_script_url: string;
@@ -54,6 +55,7 @@ export default function ConfigIndex({ settings }: ConfigPageProps) {
         landing_vsl_thumbnail: settings.landing_vsl_thumbnail || '',
         course_price: settings.course_price || '0',
         owner_whatsapp: settings.owner_whatsapp || '',
+        owner_email: settings.owner_email || '',
         duitku_api_key: settings.duitku_api_key || '',
         duitku_merchant_code: settings.duitku_merchant_code || '',
         duitku_script_url: settings.duitku_script_url || '',
@@ -369,6 +371,17 @@ export default function ConfigIndex({ settings }: ConfigPageProps) {
                                             placeholder="628123456789"
                                         />
                                         {errors.owner_whatsapp && <p className="text-destructive mt-1 text-sm">{errors.owner_whatsapp}</p>}
+                                    </div>
+
+                                    <div>
+                                        <Label htmlFor="owner_email">Owner Email Address</Label>
+                                        <Input
+                                            id="owner_email"
+                                            value={data.owner_email}
+                                            onChange={(e) => setData('owner_email', e.target.value)}
+                                            placeholder="admin@gmail.com"
+                                        />
+                                        {errors.owner_email && <p className="text-destructive mt-1 text-sm">{errors.owner_email}</p>}
                                     </div>
                                 </CardContent>
                             </Card>

@@ -11,20 +11,27 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
+use App\Mail\Purchase\AdminNewOrderMail;
 use App\Jobs\SendWhatsappNotificationJob;
-use App\Mail\RegistrationSuccessMail;
+use App\Mail\Purchase\AffiliateNewSaleMail;
+use App\Mail\Purchase\ProductPurchasedMail;
+use App\Mail\Registration\RegistrationSuccessMail;
+use App\Mail\Registration\AdminRegistrationNotificationMail;
+use App\Mail\Registration\AffiliateRegistrationCommissionMail;
 
 class OrderFinalizationService
 {
     protected AffiliateService $affiliateService;
     protected WhatsappService $waService;
     protected $adminNumber;
+    protected $adminEmail;
 
     public function __construct(AffiliateService $affiliateService, WhatsappService $waService)
     {
         $this->affiliateService = $affiliateService;
         $this->waService = $waService;
         $this->adminNumber  = Setting::get('owner_whatsapp', env('ADMIN_WA_NUMBER'));
+        $this->adminEmail = Setting::get('owner_email', env('ADMIN_EMAIL'));
     }
 
     /**
@@ -122,17 +129,28 @@ class OrderFinalizationService
 
 
             // 2a. Kirim Pesan ke Affiliator (jika ada & punya nomor HP)
-            if ($affiliatorUser && $affiliatorUser->phone) {
-                $affiliatorName = $affiliatorUser->name;
-                $affiliatorPhone = $affiliatorUser->phone;
+            if ($affiliatorUser) {
+                if ($affiliatorUser->phone) {
+                    $messageToAffiliator = "Asiiik, {$affiliatorUser->name} 😎! Kamu dapet komisi baru nih 🥳\n\n"
+                        . "Ada member baru ({$user->name}) yang daftar pake link kamu. Komisi sebesar *{$commissionAmount}* udah masuk ke saldo pending kamu yaa.\n\n"
+                        . "Mantap banget! Cek dashboard affiliate kamu gih. Semangat terus tebar link-nya! 😉";
 
-                $messageToAffiliator = "Asiiik, {$affiliatorName} 😎! Kamu dapet komisi baru nih 🥳\n\n"
-                    . "Ada member baru ({$user->name}) yang daftar pake link kamu. Komisi sebesar *{$commissionAmount}* udah masuk ke saldo pending kamu yaa.\n\n"
-                    . "Mantap banget! Cek dashboard affiliate kamu gih. Semangat terus tebar link-nya! 😉";
+                    SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
+                }
 
-                // $this->waService->sendMessage($affiliatorPhone, $messageToAffiliator);
-                SendWhatsappNotificationJob::dispatch($affiliatorPhone, $messageToAffiliator);
+                // Kirim email
+                try {
+                    if ($affiliatorUser->email) {
+                        Mail::to($affiliatorUser->email)->send(
+                            new AffiliateRegistrationCommissionMail($affiliatorUser, $user, $commissionAmount)
+                        );
+                        Log::info("Email komisi registrasi dikirim ke affiliator: " . $affiliatorUser->email);
+                    }
+                } catch (\Exception $e) {
+                    Log::error("Gagal kirim email ke affiliator: " . $e->getMessage());
+                }
             }
+
 
             // 2b. Kirim Pesan Notifikasi ke Owner/Admin Website
             if ($this->adminNumber) {
@@ -147,6 +165,19 @@ class OrderFinalizationService
 
                 // $this->waService->sendMessage($adminPhone, $messageToAdmin);
                 SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+            }
+
+            // Kirim email
+            try {
+
+                if ($this->adminEmail) {
+                    Mail::to($this->adminEmail)->send(
+                        new AdminRegistrationNotificationMail($user, $affiliator->name, $commissionAmount)
+                    );
+                    Log::info("Email notifikasi registrasi affiliate dikirim ke admin: " . $this->adminEmail);
+                }
+            } catch (\Exception $e) {
+                Log::error("Gagal kirim email ke admin: " . $e->getMessage());
             }
         }
     }
@@ -262,7 +293,7 @@ class OrderFinalizationService
     }
 
     /**
-     * Mengirim notifikasi WA untuk pembelian produk (upsell)
+     * Mengirim notifikasi WA & Email untuk pembelian produk (upsell)
      */
     public function sendProductSuccessNotifications(User $user, Product $product, $conversion): void
     {
@@ -272,6 +303,16 @@ class OrderFinalizationService
             . "Makasih udah belanja lagi. Selamat belajar!";
         // $this->waService->sendMessage($user->phone, $messageToMember);
         SendWhatsappNotificationJob::dispatch($user->phone, $messageToMember);
+
+        // kirim email
+        try {
+            if ($user->email) {
+                Mail::to($user->email)->send(new ProductPurchasedMail($user, $product));
+                Log::info("Email produk aktif dikirim ke: " . $user->email);
+            }
+        } catch (\Exception $e) {
+            Log::error("Gagal kirim email produk ke member: " . $e->getMessage());
+        }
 
         // 2. Ke Affiliator & Admin (jika ada komisi)
         if ($conversion) {
@@ -289,6 +330,18 @@ class OrderFinalizationService
                 SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
             }
 
+            // kirim email
+            try {
+                if ($affiliatorUser->email) {
+                    Mail::to($affiliatorUser->email)->send(
+                        new AffiliateNewSaleMail($affiliatorUser, $user, $product, $commissionAmount)
+                    );
+                    Log::info("Email komisi dikirim ke affiliator: " . $affiliatorUser->email);
+                }
+            } catch (\Exception $e) {
+                Log::error("Gagal kirim email ke affiliator: " . $e->getMessage());
+            }
+
             // 2b. Ke Admin
             if ($this->adminNumber) {
                 $messageToAdmin = "Info Bos! Ada penjualan upsell 📈\n\n"
@@ -299,6 +352,18 @@ class OrderFinalizationService
                     . "Link approval: {$adminUrl}";
                 // $this->waService->sendMessage($adminPhone, $messageToAdmin);
                 SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+            }
+
+            try {
+
+                if ($this->adminEmail) {
+                    Mail::to($this->adminEmail)->send(
+                        new AdminNewOrderMail($user, $affiliator->name, $product, $commissionAmount)
+                    );
+                    Log::info("Email laporan penjualan dikirim ke admin: " . $this->adminEmail);
+                }
+            } catch (\Exception $e) {
+                Log::error("Gagal kirim email ke admin: " . $e->getMessage());
             }
         }
     }

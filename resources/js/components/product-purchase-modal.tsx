@@ -22,24 +22,6 @@ interface ProductPurchaseModalProps {
     triggerToast: (message: string, type: 'success' | 'error') => void;
 }
 
-declare global {
-    interface Window {
-        checkout: {
-            process: (
-                reference: string,
-                options: {
-                    defaultLanguage?: string;
-                    currency?: string;
-                    successEvent?: (result: any) => void;
-                    pendingEvent?: (result: any) => void;
-                    errorEvent?: (result: any) => void;
-                    closeEvent?: (result: any) => void;
-                },
-            ) => void;
-        };
-    }
-}
-
 export function ProductPurchaseModal({ open, onOpenChange, product, triggerToast }: ProductPurchaseModalProps) {
     const [isProcessing, setIsProcessing] = useState(false);
     const { success, error } = useToast();
@@ -49,12 +31,19 @@ export function ProductPurchaseModal({ open, onOpenChange, product, triggerToast
     const handlePurchase = async () => {
         setIsProcessing(true);
 
-        const checkout = window.checkout;
-        if (!checkout) {
-            triggerToast('Gagal memuat gateway pembayaran. Silakan refresh halaman.', 'error');
-            setIsProcessing(false);
-            return;
+        if (typeof window.checkout === 'undefined') {
+            // Coba tunggu sebentar (retry mechanism sederhana)
+            console.warn('Duitku script not ready, waiting...');
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            if (typeof window.checkout === 'undefined') {
+                triggerToast('Gagal memuat sistem pembayaran. Mohon refresh halaman atau cek koneksi internet.', 'error');
+                setIsProcessing(false);
+                return;
+            }
         }
+
+        const checkout = window.checkout;
 
         let paymentData;
         try {
