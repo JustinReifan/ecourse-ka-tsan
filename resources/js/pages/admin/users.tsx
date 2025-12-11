@@ -61,7 +61,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         <UserIcon className="h-5 w-5 text-cyan-400" />
                     </div>
                     <div>
-                        <p className="text-foreground font-semibold transition-colors group-hover:text-cyan-200">@{value}</p>
+                        <p className="text-foreground group-hover:text-primary font-semibold transition-colors">{value}</p>
                         <p className="text-sm text-gray-400">{user.name}</p>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ export default function UsersPage({ users }: UsersPageProps) {
             key: 'email' as keyof User,
             label: 'Email',
             sortable: true,
-            render: (value: string) => <span className="font-mono text-sm text-gray-300">{value}</span>,
+            render: (value: string) => <span className="text-foreground font-mono text-sm">{value}</span>,
         },
         {
             key: 'phone' as keyof User,
@@ -79,7 +79,7 @@ export default function UsersPage({ users }: UsersPageProps) {
             render: (value: string | null) => (
                 <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-gray-500" />
-                    <span className="font-mono text-sm text-gray-300">{value || '-'}</span>
+                    <span className="text-foreground font-mono text-sm">{value || '-'}</span>
                 </div>
             ),
         },
@@ -92,7 +92,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         value === 'admin'
                             ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-black shadow-lg shadow-yellow-500/25'
                             : 'bg-gradient-to-r from-slate-600 to-slate-700 text-slate-200 shadow-lg shadow-slate-500/25'
-                    } rounded-full px-3 py-1 font-mono text-xs uppercase tracking-wider transition-transform duration-200 hover:scale-105`}
+                    } rounded-full px-3 py-1 font-mono text-xs tracking-wider uppercase transition-transform duration-200 hover:scale-105`}
                 >
                     <div className={`mr-2 h-2 w-2 rounded-full ${value === 'admin' ? 'animate-pulse bg-black' : 'bg-slate-300'}`}></div>
                     <Shield className="mr-1 h-3 w-3" />
@@ -230,7 +230,7 @@ export default function UsersPage({ users }: UsersPageProps) {
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="space-y-2">
-                            <Label htmlFor="username" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="username" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Username
                             </Label>
                             <Input
@@ -244,7 +244,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="name" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="name" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Full Name
                             </Label>
                             <Input
@@ -258,7 +258,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="email" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="email" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Email
                             </Label>
                             <Input
@@ -274,7 +274,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="phone" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="phone" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Phone
                             </Label>
                             <Input
@@ -288,7 +288,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="password" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Password {editingUser && <span className="text-gray-500">(leave blank to keep current)</span>}
                             </Label>
                             <Input
@@ -304,7 +304,7 @@ export default function UsersPage({ users }: UsersPageProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="role" className="font-mono text-sm uppercase tracking-wider text-gray-300">
+                            <Label htmlFor="role" className="font-mono text-sm tracking-wider text-gray-300 uppercase">
                                 Role
                             </Label>
                             <select
