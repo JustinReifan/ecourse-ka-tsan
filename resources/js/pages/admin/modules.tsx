@@ -216,7 +216,7 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
             </div>
 
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent className="bg-primary/10 text-foreground border-primary/20 max-w-md border to-zinc-900/95 backdrop-blur-sm">
+                <DialogContent className="bg-primary/10 text-foreground border-primary/20 max-h-[90vh] max-w-md overflow-y-auto border to-zinc-900/95 backdrop-blur-sm sm:max-w-[600px]">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-2xl font-bold text-transparent">
                             <Zap className="h-6 w-6 text-cyan-400" />
