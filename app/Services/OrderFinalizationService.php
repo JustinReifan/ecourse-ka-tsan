@@ -16,7 +16,7 @@ use App\Mail\Purchase\AdminNewOrderMail;
 use App\Jobs\SendWhatsappNotificationJob;
 use App\Mail\Purchase\AffiliateNewSaleMail;
 use App\Mail\Purchase\ProductPurchasedMail;
-use App\Mail\Registration\RegistrationSuccessMail;
+use App\Mail\Registration\UserRegistrationMail;
 use App\Mail\Registration\AdminRegistrationNotificationMail;
 use App\Mail\Registration\AffiliateRegistrationCommissionMail;
 
@@ -123,7 +123,7 @@ class OrderFinalizationService
         try {
             // Pastikan email user valid sebelum mengirim
             if ($user->email) {
-                Mail::to($user->email)->send(new RegistrationSuccessMail($user));
+                Mail::to($user->email)->send(new UserRegistrationMail($user));
                 Log::info("Email sukses dikirim ke: " . $user->email);
             }
         } catch (\Exception $e) {
