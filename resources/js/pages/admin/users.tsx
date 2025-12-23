@@ -13,6 +13,8 @@ import { useState } from 'react';
 interface User {
     id: number;
     username: string;
+    customer_age: number | null;
+    referral_source: string | null;
     name: string;
     email: string;
     phone: string | null;
@@ -62,7 +64,9 @@ export default function UsersPage({ users }: UsersPageProps) {
                     </div>
                     <div>
                         <p className="text-foreground group-hover:text-primary font-semibold transition-colors">{value}</p>
-                        <p className="text-sm text-gray-400">{user.name}</p>
+                        <p className="text-sm text-gray-400">
+                            {user.name} ({user.customer_age || '0'})
+                        </p>
                     </div>
                 </div>
             ),
@@ -79,6 +83,15 @@ export default function UsersPage({ users }: UsersPageProps) {
             render: (value: string | null) => (
                 <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-gray-500" />
+                    <span className="text-foreground font-mono text-sm">{value || '-'}</span>
+                </div>
+            ),
+        },
+        {
+            key: 'referral_source' as keyof User,
+            label: 'Source',
+            render: (value: string | null) => (
+                <div className="flex items-center gap-2">
                     <span className="text-foreground font-mono text-sm">{value || '-'}</span>
                 </div>
             ),

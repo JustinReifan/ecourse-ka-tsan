@@ -55,6 +55,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
+                'trigger_survey' => $request->session()->get('trigger_survey'),
             ],
         ];
     }

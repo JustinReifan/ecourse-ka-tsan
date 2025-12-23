@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AdminLayout from '@/layouts/admin-layout';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Calendar, Download, Receipt, User2, Zap } from 'lucide-react';
 import { useState } from 'react';
 
@@ -49,7 +49,16 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingOrder, setEditingOrder] = useState<Order | null>(null);
 
-    const { data, setData, post, transform, delete: destroy, processing, errors, reset } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        transform,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({
         user_id: '',
         amount: '',
         status: 'pending' as 'pending' | 'completed' | 'failed' | 'refunded',
@@ -93,8 +102,16 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
                 <div className="flex items-center gap-2">
                     <User2 className="h-4 w-4 text-gray-400" />
                     <div>
-                        <p className="text-foreground font-medium">{order.user?.name || 'N/A'}</p>
-                        <p className="text-xs text-gray-400">@{order.user?.username || '-'}</p>
+                        <Link
+                            href={route('admin.users.index', { search: order.user?.username })}
+                            className="text-foreground font-medium transition-colors hover:text-blue-400 hover:underline"
+                            onClick={(e) => e.stopPropagation()} // Mencegah klik tembus ke baris tabel (jika ada row click)
+                        >
+                            {order.user?.name || 'N/A'}
+                        </Link>
+                        <p className="text-xs text-gray-400">
+                            @{order.user?.username || '-'} ({order.user?.customer_age || '0'})
+                        </p>
                     </div>
                 </div>
             ),
@@ -103,19 +120,13 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
             key: 'amount' as keyof Order,
             label: 'Amount',
             sortable: true,
-            render: (value: string) => (
-                <span className="font-mono font-semibold text-green-400">Rp {Number(value).toLocaleString('id-ID')}</span>
-            ),
+            render: (value: string) => <span className="font-mono font-semibold text-green-400">Rp {Number(value).toLocaleString('id-ID')}</span>,
         },
         {
             key: 'status' as keyof Order,
             label: 'Status',
             sortable: true,
-            render: (value: string) => (
-                <Badge className={`${statusColors[value]} rounded-full px-3 py-1 font-mono text-xs uppercase`}>
-                    {value}
-                </Badge>
-            ),
+            render: (value: string) => <Badge className={`${statusColors[value]} rounded-full px-3 py-1 font-mono text-xs uppercase`}>{value}</Badge>,
         },
         {
             key: 'created_at' as keyof Order,
@@ -157,9 +168,19 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
         e.preventDefault();
         if (editingOrder) {
             transform((data) => ({ ...data, _method: 'put' }));
-            post(`/admin/orders/${editingOrder.id}`, { onSuccess: () => { setIsModalOpen(false); reset(); } });
+            post(`/admin/orders/${editingOrder.id}`, {
+                onSuccess: () => {
+                    setIsModalOpen(false);
+                    reset();
+                },
+            });
         } else {
-            post('/admin/orders', { onSuccess: () => { setIsModalOpen(false); reset(); } });
+            post('/admin/orders', {
+                onSuccess: () => {
+                    setIsModalOpen(false);
+                    reset();
+                },
+            });
         }
     };
 
@@ -172,7 +193,7 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
             <Head title="Order Management" />
             <div className="relative p-6">
                 {flash.success && (
-                    <Alert variant="destructive" className="mb-4 border border-green-500/30 bg-gradient-to-r from-green-500/20 to-primary/50">
+                    <Alert variant="destructive" className="to-primary/50 mb-4 border border-green-500/30 bg-gradient-to-r from-green-500/20">
                         <AlertTitle>Success</AlertTitle>
                         <AlertDescription>{flash.success}</AlertDescription>
                     </Alert>
@@ -209,10 +230,19 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
                     <form onSubmit={handleSubmit} className="space-y-5">
                         {!editingOrder && (
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Customer</Label>
-                                <select value={data.user_id} onChange={(e) => setData('user_id', e.target.value)} className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white" required>
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Customer</Label>
+                                <select
+                                    value={data.user_id}
+                                    onChange={(e) => setData('user_id', e.target.value)}
+                                    className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white"
+                                    required
+                                >
                                     <option value="">Select customer</option>
-                                    {users.map((u) => <option key={u.id} value={u.id}>{u.name} ({u.email})</option>)}
+                                    {users.map((u) => (
+                                        <option key={u.id} value={u.id}>
+                                            {u.name} ({u.email})
+                                        </option>
+                                    ))}
                                 </select>
                                 {errors.user_id && <p className="text-sm text-red-400">{errors.user_id}</p>}
                             </div>
@@ -220,12 +250,22 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Amount</Label>
-                                <Input type="number" value={data.amount} onChange={(e) => setData('amount', e.target.value)} className="border-zinc-700/50 bg-zinc-800/50 text-white" required />
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Amount</Label>
+                                <Input
+                                    type="number"
+                                    value={data.amount}
+                                    onChange={(e) => setData('amount', e.target.value)}
+                                    className="border-zinc-700/50 bg-zinc-800/50 text-white"
+                                    required
+                                />
                             </div>
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Status</Label>
-                                <select value={data.status} onChange={(e) => setData('status', e.target.value as any)} className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white">
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Status</Label>
+                                <select
+                                    value={data.status}
+                                    onChange={(e) => setData('status', e.target.value as any)}
+                                    className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white"
+                                >
                                     <option value="pending">Pending</option>
                                     <option value="completed">Completed</option>
                                     <option value="failed">Failed</option>
@@ -236,31 +276,59 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Type</Label>
-                                <select value={data.type} onChange={(e) => setData('type', e.target.value as any)} className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white">
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Type</Label>
+                                <select
+                                    value={data.type}
+                                    onChange={(e) => setData('type', e.target.value as any)}
+                                    className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white"
+                                >
                                     <option value="registration">Registration</option>
                                     <option value="product_purchase">Product Purchase</option>
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Payment Method</Label>
-                                <Input value={data.payment_method} onChange={(e) => setData('payment_method', e.target.value)} className="border-zinc-700/50 bg-zinc-800/50 text-white" placeholder="e.g., Duitku - VA" />
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Payment Method</Label>
+                                <Input
+                                    value={data.payment_method}
+                                    onChange={(e) => setData('payment_method', e.target.value)}
+                                    className="border-zinc-700/50 bg-zinc-800/50 text-white"
+                                    placeholder="e.g., Duitku - VA"
+                                />
                             </div>
                         </div>
 
                         {data.type === 'product_purchase' && (
                             <div className="space-y-2">
-                                <Label className="font-mono text-sm uppercase text-gray-300">Product</Label>
-                                <select value={data.product_id} onChange={(e) => setData('product_id', e.target.value)} className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white">
+                                <Label className="font-mono text-sm text-gray-300 uppercase">Product</Label>
+                                <select
+                                    value={data.product_id}
+                                    onChange={(e) => setData('product_id', e.target.value)}
+                                    className="w-full rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-3 py-2 text-white"
+                                >
                                     <option value="">Select product</option>
-                                    {products.map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}
+                                    {products.map((p) => (
+                                        <option key={p.id} value={p.id}>
+                                            {p.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         )}
 
                         <div className="flex gap-3 pt-6">
-                            <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="flex-1 border-zinc-600/50 text-foreground hover:bg-gray-200">Cancel</Button>
-                            <Button type="submit" disabled={processing} className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-foreground flex-1 border-zinc-600/50 hover:bg-gray-200"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={processing}
+                                className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25"
+                            >
                                 {processing ? 'Processing...' : editingOrder ? 'Update' : 'Create'}
                             </Button>
                         </div>

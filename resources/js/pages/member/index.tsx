@@ -3,7 +3,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import MemberLayout from '@/layouts/member-layout';
@@ -81,6 +81,8 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
+    const { flash } = usePage().props as any;
+
     const surveyForm = useForm({
         customer_age: '',
         referral_source: '',
@@ -113,10 +115,10 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
 
     // Trigger survey modal for fresh registrations
     useEffect(() => {
-        if (triggerSurvey) {
+        if (flash.trigger_survey) {
             setSurveyModalOpen(true);
         }
-    }, [triggerSurvey]);
+    }, [flash]);
 
     const handleSurveySubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -350,22 +352,23 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
 
                 {/* Survey Modal */}
                 <Dialog open={surveyModalOpen} onOpenChange={() => {}}>
-                    <DialogContent className="bg-card/95 border-primary/20 max-w-md border backdrop-blur-xl sm:max-w-lg" onInteractOutside={(e) => e.preventDefault()}>
+                    <DialogContent
+                        className="bg-card border-primary/20 max-w-md border backdrop-blur-xl sm:max-w-lg"
+                        onInteractOutside={(e) => e.preventDefault()}
+                    >
                         <DialogHeader className="text-center">
                             <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
                                 <Sparkles className="text-primary h-8 w-8" />
                             </div>
-                            <DialogTitle className="text-foreground text-2xl font-bold">
-                                Selamat Datang! 🎉
-                            </DialogTitle>
-                            <DialogDescription className="text-muted-foreground mt-2">
+                            <DialogTitle className="text-primary text-2xl font-bold">Selamat Datang! 🎉</DialogTitle>
+                            <DialogDescription className="text-primary-foreground/70 mt-2">
                                 Sebelum mulai belajar, bantu kami mengenal kamu lebih baik dengan mengisi survey singkat ini.
                             </DialogDescription>
                         </DialogHeader>
 
                         <form onSubmit={handleSurveySubmit} className="mt-6 space-y-5">
                             <div className="space-y-2">
-                                <Label htmlFor="customer_age" className="text-foreground font-medium">
+                                <Label htmlFor="customer_age" className="text-primary-foreground/70 font-medium">
                                     Berapa umur kamu?
                                 </Label>
                                 <Input
@@ -374,23 +377,21 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
                                     placeholder="Contoh: 25"
                                     value={surveyForm.data.customer_age}
                                     onChange={(e) => surveyForm.setData('customer_age', e.target.value)}
-                                    className="border-border/50 bg-background/50 focus:border-primary h-12 text-lg"
+                                    className="border-border/50 bg-background/80 focus:border-primary h-12 text-lg"
                                     required
                                 />
-                                {surveyForm.errors.customer_age && (
-                                    <p className="text-sm text-red-400">{surveyForm.errors.customer_age}</p>
-                                )}
+                                {surveyForm.errors.customer_age && <p className="text-sm text-red-400">{surveyForm.errors.customer_age}</p>}
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="referral_source" className="text-foreground font-medium">
+                                <Label htmlFor="referral_source" className="text-primary-foreground/70 font-medium">
                                     Dari mana kamu tau tentang kami?
                                 </Label>
                                 <select
                                     id="referral_source"
                                     value={surveyForm.data.referral_source}
                                     onChange={(e) => surveyForm.setData('referral_source', e.target.value)}
-                                    className="border-border/50 bg-background/50 focus:border-primary text-foreground h-12 w-full rounded-lg border px-4 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+                                    className="border-border/50 bg-background/80 focus:border-primary text-foreground h-12 w-full rounded-lg border px-4 text-lg focus:ring-2 focus:ring-cyan-400/20 focus:outline-none"
                                     required
                                 >
                                     <option value="">Pilih sumber...</option>
@@ -400,9 +401,7 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
                                         </option>
                                     ))}
                                 </select>
-                                {surveyForm.errors.referral_source && (
-                                    <p className="text-sm text-red-400">{surveyForm.errors.referral_source}</p>
-                                )}
+                                {surveyForm.errors.referral_source && <p className="text-sm text-red-400">{surveyForm.errors.referral_source}</p>}
                             </div>
 
                             <Button
