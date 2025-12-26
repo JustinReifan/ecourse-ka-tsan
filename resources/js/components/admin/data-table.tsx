@@ -239,15 +239,15 @@ export function DataTable<T extends Record<string, any>>({
                         size="sm"
                         onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                         disabled={currentPage === 1}
-                        className="border-zinc-600/50 text-white backdrop-blur-sm hover:bg-zinc-700/50 disabled:opacity-30"
+                        className="border-primary/50 hover:bg-primary/30 text-foreground backdrop-blur-sm disabled:opacity-30"
                     >
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
 
-                    <div className="flex items-center gap-2 rounded-lg border border-zinc-700/50 bg-zinc-800/50 px-4 py-2 backdrop-blur-sm">
-                        <span className="font-mono text-sm text-cyan-400">Page</span>
+                    <div className="bg-primary/30 border-primary/30 flex items-center gap-2 rounded-lg border px-4 py-2 backdrop-blur-sm">
+                        <span className="text-primary font-mono text-sm">Page</span>
                         <span className="font-bold text-white">{currentPage}</span>
-                        <span className="font-mono text-sm text-gray-400">of {totalPages}</span>
+                        <span className="text-primary font-mono text-sm">of {totalPages}</span>
                     </div>
 
                     <Button
@@ -255,7 +255,7 @@ export function DataTable<T extends Record<string, any>>({
                         size="sm"
                         onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                         disabled={currentPage === totalPages}
-                        className="border-zinc-600/50 text-white backdrop-blur-sm hover:bg-zinc-700/50 disabled:opacity-30"
+                        className="border-primary/50 text-foreground hover:bg-primary/30 backdrop-blur-sm disabled:opacity-30"
                     >
                         <ChevronRight className="h-4 w-4" />
                     </Button>

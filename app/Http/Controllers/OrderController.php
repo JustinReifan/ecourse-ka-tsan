@@ -16,22 +16,8 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Order::with(['user', 'user:id,name,username,phone,customer_age,referral_source'])
-            ->orderBy('created_at', 'desc');
-
-        // Search functionality
-        if ($search = $request->input('search')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('order_id', 'like', "%{$search}%")
-                  ->orWhereHas('user', function ($userQ) use ($search) {
-                      $userQ->where('name', 'like', "%{$search}%")
-                            ->orWhere('email', 'like', "%{$search}%")
-                            ->orWhere('username', 'like', "%{$search}%");
-                  });
-            });
-        }
-
-        $orders = $query->paginate(15);
+        $orders = Order::with(['user', 'user:id,name,username,phone,customer_age,referral_source'])
+            ->orderBy('created_at', 'desc')->get();
 
         // Get products for the create/edit form
         $products = Product::where('status', 'active')->orderBy('title')->get();

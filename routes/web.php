@@ -17,7 +17,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 Route::get('/', function () {
     $settings = \App\Models\Setting::getAllCached();
 
-    return Inertia::render('welcome', [
+    return Inertia::render('welcome2', [
         'landingHeadline' => $settings['landing_headline'] ?? 'Strategi Jadi Canva Creator Sukses: Dari Nol Sampai Cuan Pertama di Dunia Digital',
         'landingSubheadline' => $settings['landing_subheadline'] ?? 'Dibimbing Langsung Dari Nol Sampai Bisa Ngasilin Cuan dari Canva',
         'landingBadge' => $settings['landing_badge'] ?? 'Premium Canva Masterclass',

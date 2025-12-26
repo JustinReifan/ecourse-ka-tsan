@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import AdminLayout from '@/layouts/admin-layout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Calendar, Download, Receipt, User2, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 interface User {
     id: number;
@@ -36,6 +36,10 @@ interface Order {
     meta: { product?: { id: number; title: string } } | null;
     user?: User;
     created_at: string;
+}
+
+interface OrderTableItem extends Order {
+    username: string; // Properti ini yang akan kita search & sort
 }
 
 interface OrdersPageProps {
@@ -67,6 +71,17 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
         product_id: '',
     });
 
+    const tableData: OrderTableItem[] = useMemo(() => {
+        // Safety check: Pastikan orders adalah array
+        const safeOrders = Array.isArray(orders) ? orders : [];
+
+        return safeOrders.map((order) => ({
+            ...order,
+            // Jika user ada, ambil username. Jika tidak, string kosong.
+            username: order.user?.username || '',
+        }));
+    }, [orders]);
+
     const breadcrumbs = [{ title: 'Admin', href: '/admin' }, { title: 'Orders' }];
 
     const statusColors: Record<string, string> = {
@@ -96,21 +111,24 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
             ),
         },
         {
-            key: 'user' as keyof Order,
+            // SEKARANG KEY INI VALID & BISA DI-SEARCH
+            key: 'username' as keyof OrderTableItem,
             label: 'Customer',
-            render: (_: any, order: Order) => (
+            sortable: true,
+            render: (value: string, order: OrderTableItem) => (
                 <div className="flex items-center gap-2">
                     <User2 className="h-4 w-4 text-gray-400" />
                     <div>
+                        {/* Link Search User (Fitur sebelumnya) */}
                         <Link
-                            href={route('admin.users.index', { search: order.user?.username })}
+                            href={route('admin.users.index', { search: value })} // value disini sudah username
                             className="text-foreground font-medium transition-colors hover:text-blue-400 hover:underline"
-                            onClick={(e) => e.stopPropagation()} // Mencegah klik tembus ke baris tabel (jika ada row click)
+                            onClick={(e) => e.stopPropagation()}
                         >
                             {order.user?.name || 'N/A'}
                         </Link>
                         <p className="text-xs text-gray-400">
-                            @{order.user?.username || '-'} ({order.user?.customer_age || '0'})
+                            @{value || '-'} ({order.user?.customer_age || '0'})
                         </p>
                     </div>
                 </div>
@@ -201,7 +219,7 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
 
                 <div className="relative z-10">
                     <DataTable
-                        data={orders.data}
+                        data={tableData}
                         columns={columns}
                         onAdd={handleAdd}
                         onEdit={handleEdit}
