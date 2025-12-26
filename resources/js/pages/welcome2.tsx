@@ -93,7 +93,7 @@ export default function Welcome() {
                                             Log in
                                         </Link>
                                         <Link
-                                            href={route('register')}
+                                            href={route('register', { type: 'lead-magnet' })}
                                             className="text-foreground hover:bg-card hover:border-primary/50 border-primary/30 bg-card/50 inline-block rounded-lg border px-4 py-2 text-sm leading-normal transition-all duration-300"
                                         >
                                             Register

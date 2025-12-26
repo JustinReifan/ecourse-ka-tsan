@@ -7,15 +7,15 @@ import { useState } from 'react';
 
 const benefits = [
     {
-        title: '50+ Modul Pembelajaran',
+        title: 'Pembelajaran 6 Bab',
         description: 'Tutorial step-by-step dari O sampai siap cuan',
     },
     {
-        title: 'Sertifikat Digital',
+        title: 'Dari Ragu Ke Yakin',
         description: 'Dapatkan sertifikat digital setelah menyelesaikan kelas',
     },
     {
-        title: 'Grup Telegram Eksklusif',
+        title: 'Peta Mulai Bisnis Digital',
         description: 'Bergabung dengan 12,000+ video creator di komunitas eksklusif',
     },
     {
@@ -27,7 +27,7 @@ const benefits = [
         description: 'Akses material course lengkap dari basic hingga advanced techniques',
     },
     {
-        title: 'Bimbingan 1 on 1',
+        title: 'Affiliate Komisi 50%',
         description: 'Dapatkan bimbingan langsung dari mentor terbaik',
     },
 ];
@@ -82,7 +82,7 @@ export function PricingSection() {
     const [isCardHovered, setIsCardHovered] = useState(false);
 
     const handleButton = () => {
-        router.visit(route('register'), {
+        router.visit(route('register', { type: 'lead-magnet' }), {
             method: 'get',
             preserveState: true,
             preserveScroll: true,

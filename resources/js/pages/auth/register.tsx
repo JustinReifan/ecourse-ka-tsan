@@ -47,7 +47,7 @@ interface RegisterProps {
     minLeadMagnetPrice?: number;
 }
 
-export default function Register({ coursePrice, duitkuScriptUrl, registrationType = 'standard', minLeadMagnetPrice = 10000 }: RegisterProps) {
+export default function Register({ coursePrice, duitkuScriptUrl, registrationType = 'standard', minLeadMagnetPrice = 1 }: RegisterProps) {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [appliedVoucher, setAppliedVoucher] = useState<any>(null);
@@ -444,7 +444,7 @@ export default function Register({ coursePrice, duitkuScriptUrl, registrationTyp
                     {/* PWYW Input - Only show for lead magnet */}
                     {isLeadMagnet && (
                         <div className="grid gap-4">
-                            <Label htmlFor="custom_amount">Nominal Pembayaran (Pay What You Want)</Label>
+                            <Label htmlFor="custom_amount">Nominal Pembayaran (Bayar Suka Suka)</Label>
                             <div className="relative">
                                 <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2 text-sm">Rp</span>
                                 <Input
@@ -458,9 +458,7 @@ export default function Register({ coursePrice, duitkuScriptUrl, registrationTyp
                                     placeholder={`Minimal ${formatRupiah(minLeadMagnetPrice)}`}
                                 />
                             </div>
-                            <p className="text-muted-foreground text-xs">
-                                Minimal pembayaran: Rp {formatRupiah(minLeadMagnetPrice)}
-                            </p>
+                            <p className="text-muted-foreground text-xs">Minimal pembayaran: Rp {formatRupiah(minLeadMagnetPrice)}</p>
                         </div>
                     )}
 
@@ -469,9 +467,7 @@ export default function Register({ coursePrice, duitkuScriptUrl, registrationTyp
                         <div className="relative">
                             <div className="border-primary/50 from-primary/5 to-primary/10 rounded-lg border bg-gradient-to-r p-4">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-foreground text-sm font-medium">
-                                        {isLeadMagnet ? 'Total Pembayaran:' : 'Harga:'}
-                                    </span>
+                                    <span className="text-foreground text-sm font-medium">{isLeadMagnet ? 'Total Pembayaran:' : 'Harga:'}</span>
                                     <div className="text-right">
                                         {!isLeadMagnet && appliedVoucher && (
                                             <div className="text-xs text-gray-500 line-through">Rp {formatRupiah(coursePrice)}</div>

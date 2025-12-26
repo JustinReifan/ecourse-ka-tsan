@@ -26,7 +26,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '2.5 jam',
         description:
             'Sering ngerasa "Ah, aku cuma ibu rumah tangga, bisa apa?" atau "Aku gaptek banget, mana mungkin bisa bisnis?" Stop. Tarik napas dulu, Di bab pertama ini, kita gak akan langsung bahas teknis yang bikin pusing. Kita akan benerin dulu fondasinya. Kita akan ubah mindset kamu lewat materi-materi ini:',
-        thumbnail: '/storage/landing/curriculum/14.png',
+        thumbnail: '/storage/landing/curriculum2/1.png',
         topics: [
             '🎬 “Aku Cuma Ibu Rumah Tangga? Salah Besar!”',
             'Apa Itu Produk Digital & Kenapa Ini Jalan Termurah Buat Muslimah Mulai Bisnis',
@@ -47,7 +47,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '4.2 jam',
         description:
             'Sering bingung kalau ditanya, "Keahlianmu apa?" Terus jadi insecure karena ngerasa nggak punya bakat spesial kayak orang-orang di sosmed? Padahal, percaya deh, Allah itu adil. Setiap dari kita pasti dikasih kelebihan. Cuma kadang, kitanya aja yang nggak sadar atau menganggap itu hal sepele. Lewat materi ini, kita bakal panen ide dari keseharian kamu!',
-        thumbnail: '/storage/landing/curriculum/15.png',
+        thumbnail: '/storage/landing/curriculum2/2.png',
         topics: [
             'Kamu Bisa Apa Sih? Nih Cara Tahu Bakatmu Buat Bisnis Digital',
             'Jangan Remehkan Diri Sendiri: Hal Receh yang Bisa Jadi Produk Digital!',
@@ -64,7 +64,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '6.8 jam',
         description:
             'Ide udah ada di tangan, sekarang saatnya kita masak idenya jadi produk beneran! Buat yang dari kemarin bilang "Aduh aku gaptek, takut salah pencet"... Tenang aja di sini kita nggak akan pakai software canggih yang bikin otak ngebul. Kita bakal pakai tools yang ramah banget buat pemula.',
-        thumbnail: '/storage/landing/curriculum/16.png',
+        thumbnail: '/storage/landing/curriculum2/3.png',
         topics: [
             'Tutorial Bikin E-Book di Canva, Step by Step Buat Pemula',
             'Cara Riset Produk Digital yang Laku: Gak Usah Nebak-nebak!',
@@ -82,7 +82,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '3.7 jam',
         description:
             'Suka minder kalau harus ngomong di depan kamera? Tos dulu! ✋ Kamu nggak sendirian. Di dunia produk digital, kamu gak perlu tampil muka juga gapapa kok. Yang penting itu value (manfaat) yang kamu kasih. Di bab ini, aku ajarin caranya bangun personal branding yang kuat tanpa perlu nunjukin wajah di sosmed!',
-        thumbnail: '/storage/landing/curriculum/17.png',
+        thumbnail: '/storage/landing/curriculum2/4.png',
         topics: [
             'Bikin Nama Brand & Bio Instagram yang Langsung Dikenal Orang',
             'Ngonten Tanpa Tampil Wajah: Caraku Tetap Dapet Cuannya!',
@@ -100,7 +100,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '3.1 jam',
         description:
             'Kita buang jauh-jauh cara jualan yang agresif dan bikin orang kabur. Di bab ini, kita belajar cara jualan yang elegan. Prinsipnya kita nggak nodong orang buat beli, tapi kita bikin mereka yang butuh dan nyariin produk kamu.',
-        thumbnail: '/storage/landing/curriculum/18.png',
+        thumbnail: '/storage/landing/curriculum2/5.png',
         topics: ['Soft Selling: Cara Jualan Halus Tapi Bikin Orang Pengen Beli', 'Platform Jual Produk Digital: Dari LYNK ID sampe WhatsApp Catalog'],
         difficulty: 'Intermediate',
         students: 7890,
@@ -113,7 +113,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '1.8 jam',
         description:
             'Bisnis jalan terus, tapi cucian numpuk dan anak rewel? Duh, jangan sampai kejadian ya Bun. Tujuan kita belajar bisnis digital itu biar punya waktu lebih banyak sama keluarga, bukan malah jadi stres sendiri. Kita nggak perlu jadi Superwoman yang sempurna 24 jam. Kita cuma perlu strategi yang pas buat ibu-ibu kayak kita. ',
-        thumbnail: '/storage/landing/curriculum/19.png',
+        thumbnail: '/storage/landing/curriculum2/6.png',
         topics: [
             'Gimana Aku Ngatur Waktu Antara Dapur, Anak, & Bisnis Digital',
             'Checklist Mingguan Biar Hidup Gak Berantakan',

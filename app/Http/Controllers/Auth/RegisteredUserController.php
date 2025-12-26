@@ -57,7 +57,7 @@ class RegisteredUserController extends Controller
         }
 
         $duitkuScriptUrl = \App\Models\Setting::get('duitku_script_url', env('VITE_DUITKU_SCRIPT_URL', ''));
-        $minLeadMagnetPrice = \App\Models\Setting::get('min_lead_magnet_price', 10000);
+        $minLeadMagnetPrice = \App\Models\Setting::get('min_lead_magnet_price', 1);
 
         return Inertia::render('auth/register', [
             'coursePrice' => $coursePrice,
@@ -86,9 +86,10 @@ class RegisteredUserController extends Controller
         $isLeadMagnet = $registrationType === 'lead_magnet';
 
         // 2. Determine product and price based on registration type
+
         if ($isLeadMagnet) {
             $product = Product::getLeadMagnetProduct();
-            $minPrice = \App\Models\Setting::get('min_lead_magnet_price', 10000);
+            $minPrice = \App\Models\Setting::get('min_lead_magnet_price', 1);
             $paymentAmount = $request->input('payment_amount', $minPrice);
 
             // Validate minimum price for lead magnet
@@ -192,8 +193,8 @@ class RegisteredUserController extends Controller
             $isLeadMagnet = $registrationType === 'lead_magnet';
 
             // Determine product based on registration type
-            $product = $isLeadMagnet 
-                ? Product::getLeadMagnetProduct() 
+            $product = $isLeadMagnet
+                ? Product::getLeadMagnetProduct()
                 : Product::getDefaultProduct();
 
             $order = Order::create([

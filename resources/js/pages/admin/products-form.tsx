@@ -276,7 +276,7 @@ export default function ProductForm({ product, courses }: ProductFormProps) {
                                         onCheckedChange={(checked) => setData('is_lead_magnet', checked as boolean)}
                                     />
                                     <label htmlFor="is_lead_magnet" className="text-sm text-gray-500">
-                                        Set as Lead Magnet product (Pay What You Want)
+                                        Set as Lead Magnet product (Bayar Suka Suka)
                                     </label>
                                 </div>
                                 <p className="text-xs text-gray-400">

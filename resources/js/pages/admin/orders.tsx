@@ -96,19 +96,35 @@ export default function OrdersPage({ orders, products, users }: OrdersPageProps)
             key: 'order_id' as keyof Order,
             label: 'Order',
             sortable: true,
-            render: (value: string, order: Order) => (
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 ring-1 ring-cyan-400/30">
-                        <Receipt className="h-5 w-5 text-cyan-400" />
+            render: (value: string, order: Order) => {
+                // 1. Cek apakah registration_type adalah 'lead_magnet'
+                // Kita casting 'as any' untuk menghindari error TS jika tipe meta belum didefinisikan secara spesifik
+                const isLeadMagnet = (order.meta as any)?.registration_type === 'lead_magnet';
+
+                return (
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 ring-1 ring-cyan-400/30">
+                            <Receipt className="h-5 w-5 text-cyan-400" />
+                        </div>
+                        <div>
+                            <p className="text-foreground font-mono text-sm font-semibold">{value}</p>
+
+                            {/* Container untuk Badge agar rapi */}
+                            <div className="mt-1 flex flex-wrap gap-1">
+                                {/* Badge Tipe Utama (Registration/Product) */}
+                                <Badge
+                                    className={order.type === 'registration' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'}
+                                >
+                                    {order.type === 'registration' ? 'Registration' : 'Product'}
+                                </Badge>
+
+                                {/* Badge Khusus Lead Magnet (Hanya muncul jika kondisi true) */}
+                                {isLeadMagnet && <Badge className="border-emerald-500/30 bg-emerald-500/20 text-emerald-400">Lead Magnet</Badge>}
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-foreground font-mono text-sm font-semibold">{value}</p>
-                        <Badge className={order.type === 'registration' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'}>
-                            {order.type === 'registration' ? 'Registration' : 'Product'}
-                        </Badge>
-                    </div>
-                </div>
-            ),
+                );
+            },
         },
         {
             // SEKARANG KEY INI VALID & BISA DI-SEARCH
