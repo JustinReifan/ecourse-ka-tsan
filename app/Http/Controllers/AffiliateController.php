@@ -76,6 +76,7 @@ class AffiliateController extends Controller
 
         // Share link
         $shareLink = $affiliate->getShareLink();
+        $shareLink2 = $affiliate->getShareLink2();
 
         // Get active campaigns
         $activeCampaigns = \App\Models\AffiliateCampaign::where('active', true)
@@ -99,6 +100,7 @@ class AffiliateController extends Controller
             'ledger' => $ledger,
             'payouts' => $payouts,
             'shareLink' => $shareLink,
+            'shareLink2' => $shareLink2,
             'activeCampaigns' => $activeCampaigns,
             'minimumPayouts' => $minimumPayouts,
         ]);

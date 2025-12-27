@@ -72,11 +72,22 @@ interface Props {
     ledger: LedgerEntry[];
     payouts: Payout[];
     shareLink: string;
+    shareLink2: string;
     activeCampaigns: Campaign[];
     minimumPayouts: number;
 }
 
-export default function AffiliateDashboard({ affiliate, stats, conversions, ledger, payouts, shareLink, activeCampaigns, minimumPayouts }: Props) {
+export default function AffiliateDashboard({
+    affiliate,
+    stats,
+    conversions,
+    ledger,
+    payouts,
+    shareLink,
+    shareLink2,
+    activeCampaigns,
+    minimumPayouts,
+}: Props) {
     const [payoutAmount, setPayoutAmount] = useState('');
     const [payoutMethodId, setPayoutMethodId] = useState('');
     const [accountName, setAccountName] = useState('');
@@ -94,6 +105,11 @@ export default function AffiliateDashboard({ affiliate, stats, conversions, ledg
 
     const copyShareLink = () => {
         navigator.clipboard.writeText(shareLink);
+        success('Affiliate link copied to clipboard');
+    };
+
+    const copyShareLink2 = () => {
+        navigator.clipboard.writeText(shareLink2);
         success('Affiliate link copied to clipboard');
     };
 
@@ -204,12 +220,24 @@ export default function AffiliateDashboard({ affiliate, stats, conversions, ledg
                         <CardDescription>Share this link to earn commissions</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="flex gap-2">
-                            <Input value={shareLink} readOnly className="flex-1" />
-                            <Button onClick={copyShareLink} variant="outline">
-                                <Copy className="mr-2 h-4 w-4" />
-                                Copy
-                            </Button>
+                        <div>
+                            <div className="flex gap-2">
+                                <Input value={shareLink} readOnly className="flex-1" />
+                                <Button onClick={copyShareLink} variant="outline">
+                                    <Copy className="mr-2 h-4 w-4" />
+                                    Copy
+                                </Button>
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground mb-1 font-mono text-xs font-medium">'Bayar Suka Suka' product</p>
+                            <div className="flex gap-2">
+                                <Input value={shareLink2} readOnly className="flex-1" />
+                                <Button onClick={copyShareLink2} variant="outline">
+                                    <Copy className="mr-2 h-4 w-4" />
+                                    Copy
+                                </Button>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

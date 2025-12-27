@@ -137,4 +137,9 @@ class Affiliate extends Model
     {
         return url('/?aff=' . $this->aff_key);
     }
+
+    public function getShareLink2(): string
+    {
+        return url('/v2/?aff=' . $this->aff_key);
+    }
 }
