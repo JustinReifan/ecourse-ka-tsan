@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Inertia\Inertia;
@@ -31,7 +31,7 @@ class LabsController extends Controller
 
         // Determine date range
         $range = $request->get('range', '7');
-        
+
         if ($range === 'custom') {
             $startDate = Carbon::parse($request->get('start_date', now()->subDays(7)));
             $endDate = Carbon::parse($request->get('end_date', now()))->endOfDay();
@@ -89,12 +89,12 @@ class LabsController extends Controller
     {
         $range = $request->get('range', '7');
         $days = (int) $range;
-        
+
         $startDate = Carbon::now()->subDays($days)->startOfDay();
         $endDate = Carbon::now()->endOfDay();
-        
+
         $cacheKey = "ab_testing_{$startDate->format('Y-m-d')}_{$endDate->format('Y-m-d')}";
-        
+
         Cache::forget($cacheKey);
 
         return response()->json(['message' => 'Cache cleared successfully']);

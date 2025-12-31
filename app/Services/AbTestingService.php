@@ -26,7 +26,7 @@ class AbTestingService
 
         foreach ($landingSources as $source) {
             $landingSource = $source->landing_source;
-            
+
             // Get unique sessions for this landing source
             $visitSessions = $this->getSessionsByEventAndSource('visit', $landingSource, $startDate, $endDate);
             $engagementSessions = $this->getSessionsByEventAndSource('engagement', $landingSource, $startDate, $endDate);
@@ -141,16 +141,16 @@ class AbTestingService
 
             // Get all sessions for this landing source
             $allSessions = $this->getSessionsBySource($landingSource, $startDate, $endDate);
-            
+
             // Segment A: Buyers (sessions with payment)
             $buyerSessions = $this->getSessionsByEventAndSource('payment', $landingSource, $startDate, $endDate);
-            
+
             // Segment B: Non-Buyers (sessions without payment)
             $nonBuyerSessions = $allSessions->diff($buyerSessions);
 
             // Calculate metrics for Buyers
             $buyerMetrics = $this->calculateQualityMetrics($buyerSessions, $startDate, $endDate);
-            
+
             // Calculate metrics for Non-Buyers
             $nonBuyerMetrics = $this->calculateQualityMetrics($nonBuyerSessions, $startDate, $endDate);
 
@@ -262,8 +262,8 @@ class AbTestingService
                 });
             });
 
-        $avgScrollDepth = $scrollEvents->isNotEmpty() 
-            ? round($scrollEvents->average(), 1) 
+        $avgScrollDepth = $scrollEvents->isNotEmpty()
+            ? round($scrollEvents->average(), 1)
             : 0;
 
         // Get total dwell time per session
@@ -278,8 +278,8 @@ class AbTestingService
                 });
             });
 
-        $avgDwellTime = $dwellEvents->isNotEmpty() 
-            ? round($dwellEvents->average(), 1) 
+        $avgDwellTime = $dwellEvents->isNotEmpty()
+            ? round($dwellEvents->average(), 1)
             : 0;
 
         return [
