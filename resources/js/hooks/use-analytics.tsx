@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 const LANDING_SOURCE_KEY = 'landing_source';
 
 interface AnalyticsEvent {
-    event_type: 'visit' | 'scroll' | 'engagement' | 'conversion' | 'payment';
+    event_type: 'visit' | 'scroll' | 'engagement' | 'conversion' | 'payment' | 'cta_click';
     event_data?: Record<string, any>;
     referral_source?: string;
     utm_source?: string;
@@ -146,6 +146,22 @@ export function useAnalytics() {
         [track],
     );
 
+    const trackCTA = useCallback(
+        (location: string, text: string, destination?: string) => {
+            track({
+                event_type: 'cta_click',
+                event_data: {
+                    location,
+                    text,
+                    destination: destination || 'unknown',
+                    page: window.location.pathname,
+                    timestamp: new Date().toISOString(),
+                },
+            });
+        },
+        [track],
+    );
+
     return {
         track,
         trackVisit,
@@ -153,5 +169,6 @@ export function useAnalytics() {
         trackEngagement,
         trackConversion,
         trackPayment,
+        trackCTA,
     };
 }
