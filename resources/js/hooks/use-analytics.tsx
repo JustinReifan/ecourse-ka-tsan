@@ -27,7 +27,7 @@ export function useAnalytics() {
     // Initialize landing source on mount
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        
+
         // Only set if not already present (preserve original entry point)
         if (!sessionStorage.getItem(LANDING_SOURCE_KEY)) {
             const cleanPath = window.location.pathname;
@@ -42,7 +42,7 @@ export function useAnalytics() {
 
             // Get URL parameters for UTM tracking
             const urlParams = new URLSearchParams(window.location.search);
-            
+
             // Inject landing_source into event_data
             const enrichedEventData = {
                 ...event.event_data,

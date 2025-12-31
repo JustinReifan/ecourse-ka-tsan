@@ -221,6 +221,28 @@ class RegisteredUserController extends Controller
                 ],
             ]);
 
+            try {
+                UserAnalytic::create([
+                    'session_id' => $request->session()->getId(),
+                    'event_type' => 'conversion',
+                    'event_data' => [
+                        'type' => 'registration',
+                        'registration_type' => $registrationType,
+                        'order_id' => $order->order_id,
+                        'name' => $validated['name'],
+                        'email' => $validated['email'],
+                        'step' => 'force_register'
+                    ],
+                    'ip_hash' => hash('sha256', $request->ip() . config('app.key')),
+                    'user_agent' => $request->userAgent(),
+                    'user_id' => null,
+                    'created_at' => now(),
+                ]);
+            } catch (\Exception $e) {
+                // Silent fail agar tidak mengganggu proses pembayaran utama
+                Log::error('Analytics Conversion Tracking Failed on force register: ' . $e->getMessage());
+            }
+
             $user = $this->orderFinalizationService->finalizeRegistration($order);
 
             event(new Registered($user));
