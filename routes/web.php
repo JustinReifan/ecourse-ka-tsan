@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\Admin\LabsController;
 use App\Http\Controllers\MemberProductController;
 use App\Http\Controllers\WhatsappNotifController;
 use App\Http\Controllers\ModuleMaterialController;
@@ -91,6 +92,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Analytics routes
         Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
         Route::get('/analytics/export', [AnalyticsController::class, 'export'])->name('analytics.export');
+
+        // A/B Testing Labs routes
+        Route::get('/labs', [LabsController::class, 'index'])->name('labs');
+        Route::post('/labs/clear-cache', [LabsController::class, 'clearCache'])->name('labs.clear-cache');
 
         // Resource routes
         Route::resource('products', ProductController::class);
