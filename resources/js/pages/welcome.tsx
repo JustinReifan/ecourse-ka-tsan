@@ -53,8 +53,8 @@ export default function Welcome() {
     }, [trackVisit]);
 
     // Track CTA button click
-    const handleCtaClick = (location: string, text: string) => {
-        trackCTA(location, text, '#pricing-section');
+    const handleCtaClick = () => {
+        trackCTA('hero_section', 'Gabung Sekarang', '#pricing-section');
         // scroll to pricing section
         const pricingSection = document.getElementById('pricing-section');
         if (pricingSection) {
@@ -183,7 +183,7 @@ export default function Welcome() {
 
                             {/* CTA Button */}
                             <div className="pt-6 text-center">
-                                <button onClick={() => handleCtaClick('hero_section', 'Gabung Sekarang')}>
+                                <button onClick={() => handleCtaClick()}>
                                     <CtaButton
                                         variant="primary"
                                         size="lg"
