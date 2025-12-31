@@ -29,7 +29,7 @@ interface WelcomeProps {
 export default function Welcome() {
     const { auth, landingHeadline, landingSubheadline, landingBadge, landingVslThumbnail, landingVslUrl } = usePage<SharedData & WelcomeProps>()
         .props;
-    const { trackVisit } = useAnalytics();
+    const { trackVisit, trackCTA } = useAnalytics();
     const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
@@ -53,7 +53,8 @@ export default function Welcome() {
     }, [trackVisit]);
 
     // Track CTA button click
-    const handleCtaClick = () => {
+    const handleCtaClick = (location: string, text: string) => {
+        trackCTA(location, text, '#pricing-section');
         // scroll to pricing section
         const pricingSection = document.getElementById('pricing-section');
         if (pricingSection) {
@@ -182,7 +183,7 @@ export default function Welcome() {
 
                             {/* CTA Button */}
                             <div className="pt-6 text-center">
-                                <button onClick={handleCtaClick}>
+                                <button onClick={() => handleCtaClick('hero_section', 'Gabung Sekarang')}>
                                     <CtaButton
                                         variant="primary"
                                         size="lg"
