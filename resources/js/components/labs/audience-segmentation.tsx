@@ -3,21 +3,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { AudienceSegmentationProps } from '@/types/analytics';
 import { Eye, Users } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Bar, BarChart, CartesianGrid, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const PERSONA_COLORS: Record<string, string> = {
-    'Bouncers': 'hsl(var(--destructive))',
-    'Skimmers': 'hsl(var(--chart-3))',
-    'Deep Readers': 'hsl(var(--chart-4))',
-    'Casuals': 'hsl(var(--chart-2))',
+    Bouncers: 'var(--destructive)',
+    Skimmers: 'var(--chart-3)',
+    'Deep Readers': 'var(--chart-4)',
+    Casuals: 'var(--chart-2)',
 };
 
-const DEPTH_COLORS = [
-    'hsl(var(--chart-1))',
-    'hsl(var(--chart-2))',
-    'hsl(var(--chart-3))',
-    'hsl(var(--chart-4))',
-];
+const DEPTH_COLORS = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)', 'var(--chart-4)'];
 
 type TabType = 'personas' | 'heatmap';
 
@@ -86,9 +81,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                         <button
                             onClick={() => setActiveTab('personas')}
                             className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition ${
-                                activeTab === 'personas'
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                                activeTab === 'personas' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
                             }`}
                         >
                             <Users className="h-4 w-4" />
@@ -97,9 +90,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                         <button
                             onClick={() => setActiveTab('heatmap')}
                             className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition ${
-                                activeTab === 'heatmap'
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                                activeTab === 'heatmap' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
                             }`}
                         >
                             <Eye className="h-4 w-4" />
@@ -115,46 +106,64 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                 <CardDescription>Traffic composition by reader type</CardDescription>
                             </div>
 
-                            {/* Persona Legend */}
-                            <div className="flex flex-wrap gap-4">
-                                {personaNames.map((name) => (
-                                    <div key={name} className="flex items-center gap-2">
-                                        <div
-                                            className="h-3 w-3 rounded-full"
-                                            style={{ backgroundColor: PERSONA_COLORS[name] }}
-                                        />
-                                        <span className="text-muted-foreground text-sm">{name}</span>
+                            <div className="border-border/50 bg-muted/20 space-y-3 rounded-lg border p-4">
+                                {/* Persona Legend */}
+                                <div className="flex flex-wrap gap-4">
+                                    {personaNames.map((name) => (
+                                        <div key={name} className="flex items-center gap-2">
+                                            <div className="h-3 w-3 rounded-full" style={{ backgroundColor: PERSONA_COLORS[name] }} />
+                                            <span className="text-muted-foreground text-sm">{name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Baris Penjelasan (Grid) */}
+                                <div className="border-border/50 text-muted-foreground grid grid-cols-1 gap-x-4 gap-y-2 border-t pt-3 text-xs sm:grid-cols-2 lg:grid-cols-4">
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-foreground flex items-center gap-1 font-semibold">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--destructive)]"></span> Bouncers
+                                        </span>
+                                        <span>Scroll &lt; 25% & Dwell &lt; 15s (Immediate exit)</span>
                                     </div>
-                                ))}
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-foreground flex items-center gap-1 font-semibold">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--chart-3)]"></span> Skimmers
+                                        </span>
+                                        <span>Scroll &gt; 75% & Dwell &lt; 60s (Scanning only)</span>
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-foreground flex items-center gap-1 font-semibold">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--chart-4)]"></span> Deep Readers
+                                        </span>
+                                        <span>Total Dwell Time &gt; 2 mins (Highly engaged)</span>
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-foreground flex items-center gap-1 font-semibold">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--chart-2)]"></span> Casuals
+                                        </span>
+                                        <span>Moderate scroll & dwell time</span>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Stacked Bar Chart */}
                             <div className="h-[300px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart
-                                        data={personaChartData}
-                                        layout="vertical"
-                                        margin={{ top: 20, right: 30, left: 80, bottom: 5 }}
-                                    >
+                                    <BarChart data={personaChartData} layout="vertical" margin={{ top: 20, right: 30, left: 80, bottom: 5 }}>
                                         <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                                         <XAxis type="number" domain={[0, 100]} unit="%" className="fill-muted-foreground text-xs" />
                                         <YAxis dataKey="name" type="category" className="fill-muted-foreground text-xs" width={70} />
                                         <Tooltip
                                             contentStyle={{
-                                                backgroundColor: 'hsl(var(--popover))',
-                                                border: '1px solid hsl(var(--border))',
+                                                backgroundColor: 'var(--popover)',
+                                                border: '1px solid var(--border)',
                                                 borderRadius: '8px',
-                                                color: 'hsl(var(--popover-foreground))',
+                                                color: 'var(--popover-foreground)',
                                             }}
                                             formatter={(value: number, name: string) => [`${value.toFixed(1)}%`, name]}
                                         />
                                         {personaNames.map((name) => (
-                                            <Bar
-                                                key={name}
-                                                dataKey={name}
-                                                stackId="a"
-                                                fill={PERSONA_COLORS[name]}
-                                            />
+                                            <Bar key={name} dataKey={name} stackId="a" fill={PERSONA_COLORS[name]} />
                                         ))}
                                     </BarChart>
                                 </ResponsiveContainer>
@@ -182,11 +191,11 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                             <div className="mb-2 flex items-center justify-between">
                                                 <span className="text-foreground font-mono text-sm font-medium">{r.landing_source}</span>
                                                 {hasIssue && (
-                                                    <Badge variant="destructive" className="text-xs">High Bounce</Badge>
+                                                    <Badge variant="destructive" className="text-xs">
+                                                        High Bounce
+                                                    </Badge>
                                                 )}
-                                                {hasWin && !hasIssue && (
-                                                    <Badge className="bg-chart-4 text-foreground text-xs">Engaged</Badge>
-                                                )}
+                                                {hasWin && !hasIssue && <Badge className="bg-chart-4 text-foreground text-xs">Engaged</Badge>}
                                             </div>
                                             <div className="grid grid-cols-2 gap-2 text-xs">
                                                 {r.personas.map((p) => (
@@ -219,10 +228,10 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                         <YAxis domain={[0, 100]} unit="%" className="fill-muted-foreground text-xs" />
                                         <Tooltip
                                             contentStyle={{
-                                                backgroundColor: 'hsl(var(--popover))',
-                                                border: '1px solid hsl(var(--border))',
+                                                backgroundColor: 'var(--popover)',
+                                                border: '1px solid var(--border)',
                                                 borderRadius: '8px',
-                                                color: 'hsl(var(--popover-foreground))',
+                                                color: 'var(--popover-foreground)',
                                             }}
                                             formatter={(value: number, name: string) => [`${value.toFixed(1)}%`, name]}
                                         />
@@ -244,8 +253,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                 <h4 className="text-foreground text-sm font-medium">Drop-off Analysis</h4>
                                 {heatmap.map((h) => {
                                     const depths = h.depth_analysis.sort((a, b) => a.depth - b.depth);
-                                    const hasCliff = depths.length >= 2 && 
-                                        depths[0].percentage - depths[1].percentage > 40;
+                                    const hasCliff = depths.length >= 2 && depths[0].percentage - depths[1].percentage > 40;
 
                                     return (
                                         <div
@@ -255,7 +263,9 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                             <div className="mb-2 flex items-center justify-between">
                                                 <span className="text-foreground font-mono text-sm font-medium">{h.landing_source}</span>
                                                 {hasCliff && (
-                                                    <Badge variant="destructive" className="text-xs">Drop-off Cliff</Badge>
+                                                    <Badge variant="destructive" className="text-xs">
+                                                        Drop-off Cliff
+                                                    </Badge>
                                                 )}
                                             </div>
                                             <div className="flex items-center gap-1">
@@ -273,9 +283,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                                                                 }}
                                                             />
                                                         </div>
-                                                        <div className="mt-1 text-center text-xs font-medium">
-                                                            {d.percentage.toFixed(0)}%
-                                                        </div>
+                                                        <div className="mt-1 text-center text-xs font-medium">{d.percentage.toFixed(0)}%</div>
                                                     </div>
                                                 ))}
                                             </div>
