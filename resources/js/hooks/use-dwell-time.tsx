@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useAnalytics } from './use-analytics';
 
 const INITIAL_THRESHOLD = 15000; // 15 seconds for "engaged" status
@@ -7,7 +7,7 @@ const TICK_INTERVAL = 1000; // 1 second ticker
 
 export function useDwellTime() {
     const { trackEngagement } = useAnalytics();
-    
+
     // Tracking state refs
     const timeActive = useRef(0);
     const lastPingTime = useRef(0);
@@ -16,13 +16,16 @@ export function useDwellTime() {
     const tickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     // Memoized tracking function to prevent stale closures
-    const sendPing = useCallback((duration: number, isInitial: boolean) => {
-        trackEngagement('dwell_ping', {
-            duration,
-            type: 'dwell_ping',
-            is_initial: isInitial,
-        });
-    }, [trackEngagement]);
+    const sendPing = useCallback(
+        (duration: number, isInitial: boolean) => {
+            trackEngagement('dwell_ping', {
+                duration,
+                type: 'dwell_ping',
+                is_initial: isInitial,
+            });
+        },
+        [trackEngagement],
+    );
 
     useEffect(() => {
         const handleVisibilityChange = () => {
@@ -55,7 +58,7 @@ export function useDwellTime() {
 
         // Set up visibility listener
         document.addEventListener('visibilitychange', handleVisibilityChange);
-        
+
         // Start the ticker
         tickerRef.current = setInterval(tick, TICK_INTERVAL);
 

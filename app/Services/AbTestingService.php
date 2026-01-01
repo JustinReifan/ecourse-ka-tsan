@@ -217,7 +217,7 @@ class AbTestingService
         return UserAnalytic::where('event_type', 'engagement')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.landing_source')) = ?", [$landingSource])
-            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) > 15")
+            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) > 10000")
             ->distinct()
             ->pluck('session_id');
     }
@@ -273,14 +273,19 @@ class AbTestingService
             ->get()
             ->groupBy('session_id')
             ->map(function ($events) {
-                return $events->sum(function ($event) {
+                // 1. Akumulasi semua heartbeat (ms)
+                $totalDurationMs = $events->sum(function ($event) {
                     return (float) ($event->event_data['duration'] ?? 0);
                 });
+
+                // 2. Konversi ke Detik (ms / 1000)
+                return $totalDurationMs / 1000;
             });
 
         $avgDwellTime = $dwellEvents->isNotEmpty()
-            ? round($dwellEvents->average(), 1)
+            ? round($dwellEvents->average(), 1) // Hasilnya sudah dalam detik (misal: 45.5 detik)
             : 0;
+
 
         return [
             'avg_scroll_depth' => $avgScrollDepth,
