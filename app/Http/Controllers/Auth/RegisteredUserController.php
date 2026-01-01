@@ -155,7 +155,8 @@ class RegisteredUserController extends Controller
                         'order_id' => $order->order_id,
                         'name' => $validated['name'],
                         'email' => $validated['email'],
-                        'step' => 'payment_request_created'
+                        'step' => 'payment_request_created',
+                        'landing_source' => $request->landing_source
                     ],
                     'ip_hash' => hash('sha256', $request->ip() . config('app.key')),
                     'user_agent' => $request->userAgent(),
@@ -231,7 +232,8 @@ class RegisteredUserController extends Controller
                         'order_id' => $order->order_id,
                         'name' => $validated['name'],
                         'email' => $validated['email'],
-                        'step' => 'force_register'
+                        'step' => 'force_register',
+                        'landing_source' => $request->landing_source
                     ],
                     'ip_hash' => hash('sha256', $request->ip() . config('app.key')),
                     'user_agent' => $request->userAgent(),

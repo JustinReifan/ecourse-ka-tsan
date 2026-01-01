@@ -397,7 +397,7 @@ class AbTestingService
             $scrollDepths = $this->getMaxScrollDepthPerSession($visitSessions, $startDate, $endDate);
 
             // Calculate percentage reaching each depth threshold
-            $depths = [25, 50, 75, 100];
+            $depths = [25, 50, 75, 90];
             $depthData = [];
 
             foreach ($depths as $threshold) {

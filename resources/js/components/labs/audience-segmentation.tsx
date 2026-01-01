@@ -34,7 +34,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
 
     // Transform heatmap data for bar chart
     const heatmapChartData = useMemo(() => {
-        const depths = [25, 50, 75, 100];
+        const depths = [25, 50, 75, 90];
         return depths.map((depth) => {
             const dataPoint: Record<string, string | number> = {
                 name: `${depth}%`,

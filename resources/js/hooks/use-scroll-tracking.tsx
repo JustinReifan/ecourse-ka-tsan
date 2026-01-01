@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { useAnalytics } from './use-analytics';
 
@@ -19,8 +18,8 @@ export function useScrollTracking() {
             const scrollPercent = Math.round((scrollTop / scrollHeight) * 100);
 
             // Track depth milestones
-            const milestones = [25, 50, 75, 100];
-            milestones.forEach(milestone => {
+            const milestones = [25, 50, 75, 90];
+            milestones.forEach((milestone) => {
                 if (scrollPercent >= milestone && !scrollDepths.current.has(milestone)) {
                     scrollDepths.current.add(milestone);
                     trackScroll(milestone);

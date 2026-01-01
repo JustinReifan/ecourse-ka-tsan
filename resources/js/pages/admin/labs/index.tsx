@@ -50,6 +50,7 @@ interface MatrixItem {
     rpv: number;
     revenue: number;
     conversions: number;
+    intent_rate: number;
     payments: number;
 }
 
@@ -417,9 +418,7 @@ export default function LabsIndex({ matrix, funnel, quality, devices, cta, reade
                         </Select>
 
                         {/* Custom Date Range Picker - Conditional */}
-                        {filters.range === 'custom' && (
-                            <DateRangePicker date={dateRange} onUpdate={handleDateUpdate} />
-                        )}
+                        {filters.range === 'custom' && <DateRangePicker date={dateRange} onUpdate={handleDateUpdate} />}
 
                         <Button variant="outline" type="button" onClick={handleRefreshCache} disabled={isRefreshing} className="gap-2">
                             <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
@@ -554,7 +553,7 @@ export default function LabsIndex({ matrix, funnel, quality, devices, cta, reade
                                                                 {item.bounce_rate.toFixed(1)}%
                                                             </span>
                                                         </td>
-                                                        <td className="text-foreground p-4">{formatNumber(item.conversions)}</td>
+                                                        <td className="text-foreground p-4">{item.intent_rate.toFixed(2)}%</td>
                                                         <td className="p-4">
                                                             <Badge variant="secondary">{item.lead_cr.toFixed(2)}%</Badge>
                                                         </td>
