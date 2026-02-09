@@ -42,7 +42,10 @@ Route::get('/test2', function () {
 })->name('test2');
 
 Route::get('/test3', function () {
-    return Inertia::render('test3');
+    $settings = \App\Models\Setting::getAllCached();
+    return Inertia::render('test3', [
+        'landingBadge' => $settings['landing_badge'] ?? 'OPEN BATCH',
+    ]);
 })->name('test3');
 
 

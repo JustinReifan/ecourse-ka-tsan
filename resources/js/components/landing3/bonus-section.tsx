@@ -231,7 +231,7 @@ export function BonusSection() {
                     <div className="from-primary/10 via-card/50 to-accent/10 border-primary/30 inline-block rounded-3xl border bg-gradient-to-br p-8 backdrop-blur-sm">
                         <div className="space-y-4">
                             <h3 className="text-foreground mb-2 text-2xl font-bold md:text-3xl">Total Bonus Yang Kamu Dapatkan Senilai</h3>
-                            <div className="from-primary via-primary/80 to-accent bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
+                            <div className="from-primary via-primary/80 to-accent bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent line-through md:text-5xl">
                                 Rp {totalValue.toLocaleString('id-ID')}
                             </div>
                             <p className="text-foreground mx-auto max-w-2xl text-xl font-bold">

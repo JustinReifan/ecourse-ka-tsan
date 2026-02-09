@@ -54,9 +54,10 @@ const testimonials: Testimonial[] = [
     { id: '2', imageUrl: '/storage/landing/testimonials/testimoni4.png', alt: 'Testimonial 2' },
     { id: '3', imageUrl: '/storage/landing/testimonials/testimoni5.png', alt: 'Testimonial 3' },
     { id: '4', imageUrl: '/storage/landing/testimonials/testimoni6.png', alt: 'Testimonial 4' },
-    { id: '5', imageUrl: '/storage/landing/testimonials/testimoni7.png', alt: 'Testimonial 5' },
-    { id: '6', imageUrl: '/storage/landing/testimonials/testimoni8.png', alt: 'Testimonial 6' },
-    { id: '7', imageUrl: '/storage/landing/testimonials/testimoni9.png', alt: 'Testimonial 7' },
+    { id: '5', imageUrl: '/storage/landing/testimonials/testimoni7.jpg', alt: 'Testimonial 5' },
+    { id: '6', imageUrl: '/storage/landing/testimonials/testimoni8.jpg', alt: 'Testimonial 6' },
+    { id: '7', imageUrl: '/storage/landing/testimonials/testimoni9.jpg', alt: 'Testimonial 7' },
+    { id: '8', imageUrl: '/storage/landing/testimonials/testimoni10.jpg', alt: 'Testimonial 8' },
 ];
 
 interface TestimonialCardProps {

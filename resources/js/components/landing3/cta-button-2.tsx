@@ -10,7 +10,7 @@ const ctaButtonVariants = cva(
         variants: {
             variant: {
                 primary:
-                    'bg-primary text-primary-foreground shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 hover:-translate-y-1 border border-primary/50 hover:border-primary',
+                    'bg-[#00BF63] text-primary-foreground shadow-2xl shadow-primary/40 hover:shadow-primary/60 hover:scale-105 hover:-translate-y-1 border border-primary/50 hover:border-primary',
                 secondary:
                     'bg-transparent text-secondary-foreground border border-primary/50 hover:bg-secondary hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 backdrop-blur-sm',
             },

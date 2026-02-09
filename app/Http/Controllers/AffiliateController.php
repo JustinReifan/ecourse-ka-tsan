@@ -15,7 +15,9 @@ use App\Models\AffiliateConversion;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\Affiliate\PayoutRequestNotificationMail;
 
 class AffiliateController extends Controller
 {
@@ -333,6 +335,12 @@ class AffiliateController extends Controller
                     'account_number' => $request->account_number,
                 ]
             );
+
+            // Send notification email to admin
+            $adminEmail = Setting::get('owner_email', env('ADMIN_EMAIL'));
+            if ($adminEmail && $payout) {
+                Mail::to($adminEmail)->send(new PayoutRequestNotificationMail($affiliate, $payout));
+            }
 
             return back()->with('success', 'Payout request submitted successfully!');
         } catch (\Exception $e) {

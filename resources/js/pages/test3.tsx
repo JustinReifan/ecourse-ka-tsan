@@ -19,16 +19,11 @@ import { Rocket } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface WelcomeProps {
-    landingHeadline: string;
-    landingSubheadline: string;
     landingBadge: string;
-    landingVslThumbnail?: string;
-    landingVslUrl?: string;
-    coursePrice: number;
 }
 
 export default function Test1Hero() {
-    const { auth } = usePage<SharedData & WelcomeProps>().props;
+    const { auth, landingBadge } = usePage<SharedData & WelcomeProps>().props;
     const { trackVisit, trackCTA } = useAnalytics();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -130,7 +125,7 @@ export default function Test1Hero() {
                                 )}
                             >
                                 <Rocket className="h-4 w-4" />
-                                <span>OPEN BATCH 41</span>
+                                <span>{landingBadge}</span>
                             </div>
 
                             <div className="space-y-3">
