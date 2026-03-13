@@ -92,6 +92,6 @@ jobs:
             php artisan optimize:clear
             php artisan migrate --force
 
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_LARAVEL }}/storage
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_LARAVEL }}
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_PUBLIC }}
+            chown -R root:root ${{ env.TARGET_DIR_LARAVEL }}/storage
+            chown -R root:root ${{ env.TARGET_DIR_LARAVEL }}
+            chown -R root:root ${{ env.TARGET_DIR_PUBLIC }}
