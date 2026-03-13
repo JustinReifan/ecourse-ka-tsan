@@ -33,6 +33,10 @@ Route::get('/mbd', function () {
     return Inertia::render('mbd');
 })->name('mbd');
 
+Route::get('/canva', function () {
+    return Inertia::render('canva');
+})->name('canva');
+
 Route::get('/test1', function () {
     return Inertia::render('test1-hero');
 })->name('test1');
