@@ -38,7 +38,7 @@ export default function Canva() {
         trackVisit();
     }, [trackVisit]);
 
-    // Track CTA button click
+    // Track CTA button clicks
     const handleCtaClick = () => {
         trackCTA('hero_section', 'Gabung Sekarang', '#pricing-section');
         // scroll to pricing section
