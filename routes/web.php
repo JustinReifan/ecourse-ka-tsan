@@ -33,7 +33,7 @@ Route::get('/mbd', function () {
     return Inertia::render('mbd');
 })->name('mbd');
 
-Route::get('/canva', function () {
+Route::get('/jago-canva', function () {
     return Inertia::render('canva');
 })->name('canva');
 

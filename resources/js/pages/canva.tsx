@@ -1,7 +1,9 @@
 import AppLogo from '@/components/app-logo';
+import { BonusSection } from '@/components/canva/bonus-section';
 import { FaqSection } from '@/components/canva/faq-section';
 import { HeroBadge } from '@/components/canva/hero-badge';
 import { LearningBenefits } from '@/components/canva/learning-benefits';
+import { MentorProfile } from '@/components/canva/mentor-profile';
 import { PainPointSection } from '@/components/canva/pain-point-section';
 import { PricingSection } from '@/components/canva/pricing-section';
 import { CtaButton2 } from '@/components/landing3/cta-button-2';
@@ -48,7 +50,7 @@ export default function Canva() {
 
     return (
         <>
-            <Head title="Canva Masterclass">
+            <Head title="Jago Canva">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800" rel="stylesheet" />
             </Head>
@@ -146,15 +148,13 @@ export default function Canva() {
 
                 <LearningBenefits />
 
-                {/* Pricing Section */}
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <PricingSection />
-                </div>
+                <BonusSection />
 
-                {/* FAQ Section */}
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <FaqSection />
-                </div>
+                <MentorProfile />
+
+                <PricingSection />
+
+                <FaqSection />
 
                 {/* Footer */}
                 <footer className="relative backdrop-blur-sm">

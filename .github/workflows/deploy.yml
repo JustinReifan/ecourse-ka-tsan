@@ -92,6 +92,7 @@ jobs:
             php artisan optimize:clear
             php artisan migrate --force
 
-            chown -R root:root ${{ env.TARGET_DIR_LARAVEL }}/storage
-            chown -R root:root ${{ env.TARGET_DIR_LARAVEL }}
-            chown -R root:root ${{ env.TARGET_DIR_PUBLIC }}
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_LARAVEL }}
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_PUBLIC }}
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_LARAVEL }}/storage
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache

@@ -15,33 +15,35 @@ export function LearningBenefits() {
     };
 
     const benefits = [
+        'Cara download aplikasi Canva',
         'Mengenal Canva dasar',
-        'Cara bikin konten Reels video buat ngonten sekaligus yang bisa dijual juga',
-        'Cara pakai template eBook biar desain makin gampang',
-        'Cara ubah teks jadi Audio cocok buat ngonten pake suara AI',
-        'Cara bikin kartu anak Muslim',
-        'Bikin tuding ngaji dengan desain keren',
-        'Desain amplop Lebaran unik & eksklusif',
-        'Bikin konten carousel estetik tanpa ribet',
-        'Flip cover eBook yang bikin produk digitalmu makin menarik',
-        'Cara bikin Kuis interaktif seperti siroh Nabi di canva',
-        'Cara bikin Worksheet Anak yang laris manis di jual',
-        'Cara bikin mainan ular tangga anak muslim',
-        'Cara bikin 30 konten Motivasi dalam 1 Klik',
-        'Cara bikin landing page untuk LYNK ID di Canva sampe cara uploadnya',
-        'Cara memunculkan garis bantu pada project di canva',
-        'Cara layout ebook profesional dari 0 di canva',
-        'Cara membuat meal planner Ramadhan (bisa di aplikasikan di niche apapun)',
-        'Cara membuat video animasi di Canva',
-        'Cara membuat game interaktif di Canva AI',
-        'Cara membuat video Animasi undangan pernikahan',
-        'Cara bikin link ON BIO versi Canva',
-        'Cara mengetahui Creator dari element Canva',
-        'Cara menghapus background Foto versi FREE & PRO',
-        'Cara pake MEDIA AJAIB di Canva',
-        'Cara create VIDEO VEO 3 di CANVA AI beserta cara PROMPTING nya',
-        'Cara bikin game interaktif di presentasi CANVA',
-        'Cara bikin WEBSITE di canva',
+        'Cara membuat template reels',
+        'Cara membuat kartu anak muslim',
+        'Cara membuat amplop lebaran',
+        'Cara membuat tuding ngaji',
+        'Cara membuat buku tulis beserta cover',
+        'Cara membuat permainan ular tangga',
+        'Cara membuat flashcard perkalian',
+        'Cara membuat meal planner Ramadhan',
+        'Cara membuat template carousel jualan',
+        'Cara membuat desain promosi story WA',
+        'Cara membuat sticker produk',
+        'Cara membuat desain ebook profesional',
+        'Cara menghias landing page Lynk ID',
+        'Cara membuat video animasi',
+        'Cara membuat game interaktif Canva AI',
+        'Cara membuat video undangan pernikahan',
+        'Cara membuat worksheet anak',
+        'Cara membuat website sederhana',
+        'Cara membuat gantungan kunci',
+        'Cara membuat kuis kategori',
+        'Cara create video VEO 3',
+        'Cara membuat game interaktif presentasi',
+        'Cara membuat template kalender digital',
+        "Cara membuat video murottal Al-Qur'an",
+        'Cara menjadikan kode dengan Canva AI',
+        'Cara membuat carousel panorama aesthetic',
+        'Pengenalan fitur tambahan Canva khusus Apps guna mendukung kebutuhan Desain',
     ];
 
     return (
@@ -55,14 +57,14 @@ export function LearningBenefits() {
                     {/* Badge */}
                     <div className="border-primary/20 bg-primary/10 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm">
                         <Sparkles className="text-primary h-4 w-4" />
-                        <span className="text-primary text-sm font-medium">Benefit Eksklusif</span>
+                        <span className="text-primary text-sm font-medium">Module Pembelajaran</span>
                     </div>
 
                     {/* Headline */}
                     <h3 className="text-foreground text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
                         <span className="block">Apa Yang Kamu Pelajari</span>
                         <span className="from-primary via-primary/80 to-primary mt-1 block bg-gradient-to-r bg-clip-text text-transparent">
-                            Di Kelas Canva Ini
+                            Di Kelas Jago Canva
                         </span>
                     </h3>
 
@@ -86,11 +88,6 @@ export function LearningBenefits() {
                                 </li>
                             ))}
                         </ul>
-
-                        <div className="pt-5 text-center md:text-start">
-                            <h3 className="text-foreground text-xl font-medium md:text-2xl">Tenang, Kamu gak sendiri!</h3>
-                            <p className="text-muted-foreground mt-1 text-lg">Aku dulu ngalamin hal yang sama.</p>
-                        </div>
                     </div>
                 </div>
 

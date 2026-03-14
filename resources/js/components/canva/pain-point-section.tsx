@@ -93,7 +93,7 @@ export function PainPointSection() {
                             </div>
                         </div>
                         <div className="pt-3 text-start text-2xl leading-tight font-semibold md:py-6">
-                            <h3 className="text-primary">Kabar baiknya, Di Kelas Canva ini</h3>
+                            <h3 className="text-primary">Kabar baiknya, Di Kelas Jago Canva ini</h3>
                             <p className="text-foreground mt-1">Kamu akan belajar skill digital yang bisa bantu kamu punya penghasilan tambahan.</p>
                         </div>
 
