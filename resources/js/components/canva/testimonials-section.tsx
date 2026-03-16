@@ -5,8 +5,8 @@ import { Star } from 'lucide-react';
 import * as React from 'react';
 // --- Ganti path import ini ---
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'; // <-- Sesuaikan path ke file yg Anda buat
-import { CtaButton } from '@/components/ui/cta-button';
 import Autoplay from 'embla-carousel-autoplay'; // Plugin untuk autoplay
+import { CtaButton2 } from '../landing3/cta-button-2';
 
 // --- 1. Data Dummy untuk Testimoni ---
 interface Testimonial {
@@ -17,12 +17,25 @@ interface Testimonial {
 
 // Ganti path ini dengan path ke gambar testimoni 9:16 Anda
 const testimonials: Testimonial[] = [
-    { id: '1', imageUrl: '/storage/landing/testimonials2/1.jpeg', alt: 'Testimonial 1' },
-    { id: '2', imageUrl: '/storage/landing/testimonials2/2.jpeg', alt: 'Testimonial 2' },
-    { id: '3', imageUrl: '/storage/landing/testimonials2/3.jpeg', alt: 'Testimonial 3' },
-    { id: '4', imageUrl: '/storage/landing/testimonials2/4.jpeg', alt: 'Testimonial 4' },
-    { id: '5', imageUrl: '/storage/landing/testimonials2/5.jpeg', alt: 'Testimonial 5' },
-    { id: '6', imageUrl: '/storage/landing/testimonials2/6.jpeg', alt: 'Testimonial 6' },
+    { id: '1', imageUrl: '/storage/canva/testimoni/1.webp', alt: 'Testimonial 1' },
+    { id: '2', imageUrl: '/storage/canva/testimoni/2.webp', alt: 'Testimonial 2' },
+    { id: '3', imageUrl: '/storage/canva/testimoni/3.webp', alt: 'Testimonial 3' },
+    { id: '4', imageUrl: '/storage/canva/testimoni/4.webp', alt: 'Testimonial 4' },
+    { id: '5', imageUrl: '/storage/canva/testimoni/5.webp', alt: 'Testimonial 5' },
+    { id: '6', imageUrl: '/storage/canva/testimoni/6.webp', alt: 'Testimonial 6' },
+    { id: '7', imageUrl: '/storage/canva/testimoni/7.webp', alt: 'Testimonial 7' },
+    { id: '8', imageUrl: '/storage/canva/testimoni/8.webp', alt: 'Testimonial 8' },
+    { id: '9', imageUrl: '/storage/canva/testimoni/9.webp', alt: 'Testimonial 9' },
+    { id: '10', imageUrl: '/storage/canva/testimoni/10.webp', alt: 'Testimonial 10' },
+    { id: '11', imageUrl: '/storage/canva/testimoni/11.webp', alt: 'Testimonial 11' },
+    { id: '12', imageUrl: '/storage/canva/testimoni/12.webp', alt: 'Testimonial 12' },
+    { id: '13', imageUrl: '/storage/canva/testimoni/13.webp', alt: 'Testimonial 13' },
+    { id: '14', imageUrl: '/storage/canva/testimoni/14.webp', alt: 'Testimonial 14' },
+    { id: '15', imageUrl: '/storage/canva/testimoni/15.webp', alt: 'Testimonial 15' },
+    { id: '16', imageUrl: '/storage/canva/testimoni/16.webp', alt: 'Testimonial 16' },
+    { id: '17', imageUrl: '/storage/canva/testimoni/17.webp', alt: 'Testimonial 17' },
+    { id: '18', imageUrl: '/storage/canva/testimoni/18.webp', alt: 'Testimonial 18' },
+    { id: '19', imageUrl: '/storage/canva/testimoni/19.webp', alt: 'Testimonial 19' },
 ];
 
 // --- 2. Komponen Card untuk Carousel Item ---
@@ -37,7 +50,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         <div
             className={cn(
                 'group relative overflow-hidden rounded-2xl',
-                'aspect-[3/4]', // Aspek rasio 9:16 (potret)
+                'aspect-[9/16]', // Aspek rasio 9:16 (potret)
                 'from-card/80 to-card/40 bg-gradient-to-br backdrop-blur-sm',
                 'border-border/30 border',
                 'transition-all duration-700',
@@ -150,15 +163,12 @@ export function TestimonialsSection() {
                         </Carousel>
                     </div>
 
-                    <div className="pt-6 text-center">
+                    <div className="text-center">
                         <button onClick={handleCtaClick}>
-                            <CtaButton
-                                variant="primary"
-                                size="lg"
-                                className="group transform text-center transition-all duration-300 hover:scale-105"
-                            >
-                                <span className="relative z-10">Gabung Sekarang</span>
-                            </CtaButton>
+                            {/* CTA Button */}
+                            <CtaButton2 onClick={handleCtaClick} size="lg" withInstruction>
+                                Gabung Sekarang
+                            </CtaButton2>
                         </button>
                     </div>
                 </div>

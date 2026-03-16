@@ -7,6 +7,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use Midtrans\Config;
 use App\Models\Order;
+use App\Models\Voucher;
 use Inertia\Response;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -43,16 +44,17 @@ class RegisteredUserController extends Controller
 
     public function create(): Response
     {
-        // Check if coming from lead magnet flow (via query parameter)
-        $registrationType = request()->query('type', 'standard');
-        $isLeadMagnet = $registrationType === 'lead-magnet';
+        $registrationType = $this->normalizeRegistrationType(request()->query('type', 'standard'));
+        $product = $this->resolveRegistrationProduct($registrationType);
 
-        if ($isLeadMagnet) {
-            // Get lead magnet product
-            $product = Product::getLeadMagnetProduct();
+        if ($registrationType === 'lead_magnet') {
             $coursePrice = $product ? $product->price : 0;
+        } elseif ($registrationType === 'jago_canva') {
+            $coursePrice = \App\Models\Setting::get(
+                'jago_canva_price',
+                \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000))
+            );
         } else {
-            // Standard flow - use default product price from settings
             $coursePrice = \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000));
         }
 
@@ -62,7 +64,7 @@ class RegisteredUserController extends Controller
         return Inertia::render('auth/register', [
             'coursePrice' => $coursePrice,
             'duitkuScriptUrl' => $duitkuScriptUrl,
-            'registrationType' => $isLeadMagnet ? 'lead_magnet' : 'standard',
+            'registrationType' => $registrationType,
             'minLeadMagnetPrice' => (int) $minLeadMagnetPrice,
         ]);
     }
@@ -77,19 +79,28 @@ class RegisteredUserController extends Controller
             'phone' => 'required|string|max:255|min_digits:8|unique:users',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'registration_type' => 'nullable|string|in:standard,lead_magnet',
+            'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva',
             'payment_amount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'voucher_code' => 'nullable|string|max:50',
+            'discount_amount' => 'nullable|numeric|min:0',
             'landing_source' => 'nullable|string|max:255',
         ]);
 
         $gatewayDriver = $request->input('gateway');
-        $registrationType = $request->input('registration_type', 'standard');
+        $registrationType = $this->normalizeRegistrationType($request->input('registration_type', 'standard'));
         $isLeadMagnet = $registrationType === 'lead_magnet';
 
         // 2. Determine product and price based on registration type
 
         if ($isLeadMagnet) {
-            $product = Product::getLeadMagnetProduct();
+            $product = $this->resolveRegistrationProduct($registrationType);
+            if (!$product) {
+                return response()->json([
+                    'message' => 'Produk lead magnet belum dikonfigurasi. Silakan hubungi admin.'
+                ], 422);
+            }
+
             $minPrice = \App\Models\Setting::get('min_lead_magnet_price', 1);
             $paymentAmount = $request->input('payment_amount', $minPrice);
 
@@ -101,9 +112,24 @@ class RegisteredUserController extends Controller
             }
 
             $orderAmount = $paymentAmount;
+            $appliedVoucherCode = null;
+            $calculatedDiscountAmount = 0;
         } else {
-            $product = Product::getDefaultProduct();
-            $orderAmount = $request->final_price;
+            $product = $this->resolveRegistrationProduct($registrationType);
+            if (!$product) {
+                return response()->json([
+                    'message' => $registrationType === 'jago_canva'
+                        ? 'Produk Jago Canva belum dikonfigurasi. Silakan hubungi admin.'
+                        : 'Produk default belum dikonfigurasi. Silakan hubungi admin.'
+                ], 422);
+            }
+
+            $basePrice = $this->getBaseRegistrationPrice($registrationType);
+            [$appliedVoucherCode, $calculatedDiscountAmount] = $this->resolveVoucherForRegistration(
+                $request->input('voucher_code'),
+                $basePrice
+            );
+            $orderAmount = max($basePrice - $calculatedDiscountAmount, 0);
         }
 
         $click = $affiliateService->getLastValidClickForSession($request);
@@ -118,8 +144,8 @@ class RegisteredUserController extends Controller
             'payment_method' => $gatewayDriver,
             'meta' => [
                 'form_data' => $validated,
-                'voucher_code' => $request->voucher_code,
-                'discount_amount' => $request->discount_amount ?? 0,
+                'voucher_code' => $appliedVoucherCode,
+                'discount_amount' => $calculatedDiscountAmount,
                 'follow_up_sent' => false,
                 'payment_url' => null,
                 'affiliate_click_id' => $click ? $click->id : null,
@@ -190,17 +216,43 @@ class RegisteredUserController extends Controller
                 'phone' => 'required|string|max:255|min_digits:8|unique:users',
                 'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'registration_type' => 'nullable|string|in:standard,lead_magnet',
+                'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva',
+                'voucher_code' => 'nullable|string|max:50',
                 'landing_source' => 'nullable|string|max:255',
             ]);
 
-            $registrationType = $request->input('registration_type', 'standard');
-            $isLeadMagnet = $registrationType === 'lead_magnet';
+            $registrationType = $this->normalizeRegistrationType($request->input('registration_type', 'standard'));
 
-            // Determine product based on registration type
-            $product = $isLeadMagnet
-                ? Product::getLeadMagnetProduct()
-                : Product::getDefaultProduct();
+            if ($registrationType === 'lead_magnet') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Lead magnet tidak mendukung registrasi gratis tanpa pembayaran.'
+                ], 422);
+            }
+
+            $basePrice = $this->getBaseRegistrationPrice($registrationType);
+            [$appliedVoucherCode, $calculatedDiscountAmount] = $this->resolveVoucherForRegistration(
+                $request->input('voucher_code'),
+                $basePrice
+            );
+            $finalPrice = max($basePrice - $calculatedDiscountAmount, 0);
+
+            if ($finalPrice > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Order belum gratis. Lanjutkan pembayaran melalui gateway.'
+                ], 422);
+            }
+
+            $product = $this->resolveRegistrationProduct($registrationType);
+            if (!$product) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $registrationType === 'jago_canva'
+                        ? 'Produk Jago Canva belum dikonfigurasi. Silakan hubungi admin.'
+                        : 'Produk default belum dikonfigurasi. Silakan hubungi admin.'
+                ], 422);
+            }
 
             $order = Order::create([
                 'order_id' => 'REGFREE-' . Str::uuid(),
@@ -211,8 +263,8 @@ class RegisteredUserController extends Controller
                 'payment_method' => $request->gateway ?? null,
                 'meta' => [
                     'form_data' => $validated,
-                    'voucher_code' => $request->voucher_code ?? null,
-                    'discount_amount' => $request->discount_amount ?? 0,
+                    'voucher_code' => $appliedVoucherCode,
+                    'discount_amount' => $calculatedDiscountAmount,
                     'follow_up_sent' => false,
                     'payment_url' => null,
                     'registration_type' => $registrationType,
@@ -259,5 +311,53 @@ class RegisteredUserController extends Controller
                 'message' => 'Gagal memproses order: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    protected function normalizeRegistrationType(string $registrationType): string
+    {
+        return match ($registrationType) {
+            'lead-magnet', 'lead_magnet' => 'lead_magnet',
+            'jago-canva', 'jago_canva' => 'jago_canva',
+            default => 'standard',
+        };
+    }
+
+    protected function resolveRegistrationProduct(string $registrationType): ?Product
+    {
+        return match ($registrationType) {
+            'lead_magnet' => Product::getLeadMagnetProduct(),
+            'jago_canva' => Product::getJagoCanvaProduct(),
+            default => Product::getDefaultProduct(),
+        };
+    }
+
+    protected function getBaseRegistrationPrice(string $registrationType): float
+    {
+        if ($registrationType === 'jago_canva') {
+            return (float) \App\Models\Setting::get(
+                'jago_canva_price',
+                \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000))
+            );
+        }
+
+        return (float) \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000));
+    }
+
+    protected function resolveVoucherForRegistration(?string $voucherCode, float $basePrice): array
+    {
+        if (!$voucherCode) {
+            return [null, 0];
+        }
+
+        $voucher = Voucher::where('code', strtoupper($voucherCode))->first();
+        if (!$voucher || !$voucher->isValid()) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'voucher_code' => 'Voucher tidak valid atau sudah kadaluarsa.',
+            ]);
+        }
+
+        $discountAmount = (float) $voucher->calculateDiscount($basePrice);
+
+        return [$voucher->code, $discountAmount];
     }
 }

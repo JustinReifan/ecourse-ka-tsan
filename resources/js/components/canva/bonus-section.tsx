@@ -19,19 +19,19 @@ const bonusData: BonusData[] = [
         id: 1,
         badge: 'Bonus #01',
         title: 'Grup Diskusi Berisi 200+ Peserta Aktif',
-        value: 'Rp 1.999.000',
+        value: 'Rp 599.000',
         description:
             'Kita tatap muka virtual rutin tiap 2 minggu! Sesi bedah akun, evaluasi progress, dan tanya jawab langsung biar kamu dipastikan nggak salah arah',
-        image: '/storage/landing3/bonus/2.png',
+        image: '/storage/canva/bonus/grup-diskusi.webp',
     },
     {
         id: 2,
         badge: 'Bonus #02',
         title: 'Ide Produk Digital Siap Jualan',
-        value: 'Rp 794.000',
+        value: 'Rp 299.000',
         description:
             'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi konten dan tumbuh bareng biar semangatmu gak kendor.',
-        image: '/storage/landing3/bonus/2.png',
+        image: '/storage/canva/bonus/ide-produk.webp',
     },
 ];
 
@@ -157,7 +157,7 @@ function OtherBonusCard() {
 export function BonusSection() {
     const [hoveredCard, setHoveredCard] = useState<number | null>(null);
     const { trackCTA } = useAnalytics();
-    const totalValue = 10792000; // Rp 1,190,000
+    const totalValue = 899000; // Rp 1,190,000
 
     const handleCtaClick = () => {
         trackCTA('bonus_section', 'Ambil Bonus Sekarang', '#pricing-section');
@@ -194,22 +194,22 @@ export function BonusSection() {
 
                     <div className="mx-auto grid max-w-3xl grid-cols-1 gap-8 py-3 tracking-tight md:grid-cols-2 md:py-12">
                         <div className="max-w-2xl">
-                            <p className="text-foreground block text-6xl font-bold md:text-8xl">30</p>
+                            <p className="text-foreground block text-6xl font-bold md:text-8xl">29</p>
                             <p className="from-primary via-primary/80 to-primary mt-2 block bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
                                 Materi Pembelajaran
                             </p>
                             <span className="text-muted-foreground text-sm font-medium md:text-base">
-                                Panduan step-by-step belajar canva dari dasar
+                                Panduan step-by-step bikin produk digital dari canva
                             </span>
                         </div>
 
                         <div className="max-w-2xl">
-                            <p className="text-foreground block text-6xl font-bold md:text-8xl">7+</p>
+                            <p className="text-foreground block text-6xl font-bold md:text-8xl">2+</p>
                             <p className="from-primary via-primary/80 to-primary mt-2 block bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
                                 Bonus GRATIS
                             </p>
                             <span className="text-muted-foreground text-sm font-medium md:text-base">
-                                Dapatkan bimbingan dan tools yang dapat mempercepat proses kamu hasilin uang
+                                Komunitas ekslusif dan tools yang dapat mempercepat proses kamu hasilin uang
                             </span>
                         </div>
                     </div>

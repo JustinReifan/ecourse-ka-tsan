@@ -23,6 +23,7 @@ interface ConfigFormData {
     landing_vsl_thumbnail: string;
     vsl_thumbnail?: File;
     course_price: string;
+    jago_canva_price: string;
     min_lead_magnet_price: string;
     owner_whatsapp: string;
     owner_email: string;
@@ -56,6 +57,7 @@ export default function ConfigIndex({ settings }: ConfigPageProps) {
         landing_vsl_url: settings.landing_vsl_url || '',
         landing_vsl_thumbnail: settings.landing_vsl_thumbnail || '',
         course_price: settings.course_price || '0',
+        jago_canva_price: settings.jago_canva_price || '0',
         min_lead_magnet_price: settings.min_lead_magnet_price || '0',
         owner_whatsapp: settings.owner_whatsapp || '',
         owner_email: settings.owner_email || '',
@@ -394,6 +396,19 @@ export default function ConfigIndex({ settings }: ConfigPageProps) {
                                         {errors.min_lead_magnet_price && (
                                             <p className="text-destructive mt-1 text-sm">{errors.min_lead_magnet_price}</p>
                                         )}
+                                    </div>
+
+                                    <div>
+                                        <Label htmlFor="jago_canva_price">Jago Canva Masterclass Price (IDR)</Label>
+                                        <Input
+                                            id="jago_canva_price"
+                                            type="number"
+                                            value={data.jago_canva_price}
+                                            onChange={(e) => setData('jago_canva_price', e.target.value)}
+                                            placeholder="499000"
+                                            required
+                                        />
+                                        {errors.jago_canva_price && <p className="text-destructive mt-1 text-sm">{errors.jago_canva_price}</p>}
                                     </div>
 
                                     <div>

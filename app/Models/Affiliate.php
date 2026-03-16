@@ -142,4 +142,9 @@ class Affiliate extends Model
     {
         return url('/mbd/?aff=' . $this->aff_key);
     }
+
+    public function getShareLink3(): string
+    {
+        return url('/jago-canva/?aff=' . $this->aff_key);
+    }
 }

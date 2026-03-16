@@ -6,9 +6,13 @@ import { router } from '@inertiajs/react';
 import { Check, Rocket, Star, TicketPercent, Zap } from 'lucide-react';
 import { useState } from 'react';
 
+interface PricingSectionProps {
+    coursePrice: number;
+}
+
 const benefits = [
     {
-        title: 'Grup WA Diskusi',
+        title: 'Komunitas Ekslusif',
         description: 'Tutorial step-by-step dari O sampai siap cuan',
     },
     {
@@ -79,13 +83,15 @@ function BenefitItem({ benefit, index }: BenefitItemProps) {
     );
 }
 
-export function PricingSection() {
+export function PricingSection({ coursePrice }: PricingSectionProps) {
     const [isCardHovered, setIsCardHovered] = useState(false);
     const { trackCTA } = useAnalytics();
 
+    const formattedPrice = new Intl.NumberFormat('id-ID').format(coursePrice);
+
     const handleButton = () => {
         trackCTA('pricing_card', 'Gabung Sekarang', route('register'));
-        router.visit(route('register', { type: 'lead-magnet' }), {
+        router.visit(route('register', { type: 'jago-canva' }), {
             method: 'get',
             preserveState: true,
             preserveScroll: true,
@@ -94,7 +100,7 @@ export function PricingSection() {
 
     const handlePromoClick = () => {
         trackCTA('pricing_promo_link', 'Punya Kode Promo?', route('register'));
-        router.visit(route('register', { type: 'lead-magnet' }), {
+        router.visit(route('register', { type: 'jago-canva' }), {
             method: 'get',
             preserveState: true,
             preserveScroll: true,
@@ -168,20 +174,10 @@ export function PricingSection() {
                                 {/* Price Display */}
                                 <div className="space-y-4 text-center">
                                     <div className="space-y-2">
-                                        <div className="flex items-center justify-center gap-2">
-                                            <span className="text-muted-foreground text-2xl line-through">Rp 299.000</span>
-                                            <span className="bg-destructive/20 text-destructive rounded-md px-2 py-1 text-sm font-medium">-66%</span>
-                                        </div>
-                                        {/* <div className="flex items-center justify-center gap-2">
-                                            <span className="text-primary/80 text-2xl line-through">Rp 29.000</span>
-                                            <span className="bg-primary/80 text-foreground rounded-md px-2 py-1 text-xs font-semibold">
-                                                100 Orang Pertama
-                                            </span>
-                                        </div> */}
+                                        <div className="text-muted-foreground text-sm font-medium tracking-[0.24em] uppercase">Harga saat ini</div>
                                         <div className="flex items-baseline justify-center gap-1">
                                             <span className="text-primary text-2xl font-medium">Rp</span>
-                                            {/* harusnya text-foreground */}
-                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">99.000</span>
+                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">{formattedPrice}</span>
                                         </div>
                                         <p className="text-muted-foreground text-lg">Akses selamanya • Tanpa biaya bulanan</p>
                                     </div>

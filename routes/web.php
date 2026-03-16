@@ -34,7 +34,11 @@ Route::get('/mbd', function () {
 })->name('mbd');
 
 Route::get('/jago-canva', function () {
-    return Inertia::render('canva');
+    $settings = \App\Models\Setting::getAllCached();
+
+    return Inertia::render('canva', [
+        'coursePrice' => $settings['jago_canva_price'] ?? $settings['course_price'] ?? 0,
+    ]);
 })->name('canva');
 
 Route::get('/test1', function () {

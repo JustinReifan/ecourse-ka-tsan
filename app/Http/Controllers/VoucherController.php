@@ -62,7 +62,10 @@ class VoucherController extends Controller
 
     public function validate(Request $request)
     {
-        $request->validate(['code' => 'required|string']);
+        $request->validate([
+            'code' => 'required|string',
+            'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva,lead-magnet,jago-canva',
+        ]);
 
         $voucher = Voucher::where('code', $request->code)->first();
 
@@ -74,8 +77,21 @@ class VoucherController extends Controller
             return response()->json(['error' => 'Voucher is not valid or has expired'], 400);
         }
 
+        $registrationType = $request->input('registration_type', 'standard');
+        $registrationType = match ($registrationType) {
+            'lead-magnet', 'lead_magnet' => 'lead_magnet',
+            'jago-canva', 'jago_canva' => 'jago_canva',
+            default => 'standard',
+        };
 
-        $originalPrice =  Setting::get('course_price', 100000); // Your course price
+        if ($registrationType === 'lead_magnet') {
+            $originalPrice = (float) Setting::get('min_lead_magnet_price', 1);
+        } elseif ($registrationType === 'jago_canva') {
+            $originalPrice = (float) Setting::get('jago_canva_price', Setting::get('course_price', 100000));
+        } else {
+            $originalPrice = (float) Setting::get('course_price', 100000);
+        }
+
         $discount = $voucher->calculateDiscount($originalPrice);
         $finalPrice = $originalPrice - $discount;
 

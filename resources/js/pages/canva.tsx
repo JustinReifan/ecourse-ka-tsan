@@ -6,6 +6,7 @@ import { LearningBenefits } from '@/components/canva/learning-benefits';
 import { MentorProfile } from '@/components/canva/mentor-profile';
 import { PainPointSection } from '@/components/canva/pain-point-section';
 import { PricingSection } from '@/components/canva/pricing-section';
+import { TestimonialsSection } from '@/components/canva/testimonials-section';
 import { CtaButton2 } from '@/components/landing3/cta-button-2';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { useDwellTime } from '@/hooks/use-dwell-time';
@@ -17,7 +18,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState } from 'react';
 
-export default function Canva() {
+interface CanvaProps {
+    coursePrice: number;
+}
+
+export default function Canva({ coursePrice }: CanvaProps) {
     const { auth } = usePage<SharedData>().props;
     const { trackVisit, trackCTA } = useAnalytics();
     const [isHovered, setIsHovered] = useState(false);
@@ -130,7 +135,7 @@ export default function Canva() {
 
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="overflow-hidden rounded-2xl">
-                                    <img src="/storage/canva/hero-img.png" alt="" className="mx-auto h-full w-4xl rounded-2xl object-cover" />
+                                    <img src="/storage/canva/hero-img.webp" alt="" className="mx-auto h-full w-4xl rounded-2xl object-cover" />
                                 </div>
                             </div>
 
@@ -146,13 +151,15 @@ export default function Canva() {
 
                 <PainPointSection />
 
+                <TestimonialsSection />
+
                 <LearningBenefits />
 
                 <BonusSection />
 
                 <MentorProfile />
 
-                <PricingSection />
+                <PricingSection coursePrice={coursePrice} />
 
                 <FaqSection />
 

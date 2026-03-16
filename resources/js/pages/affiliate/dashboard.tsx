@@ -1,3 +1,4 @@
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +10,7 @@ import AppLayout from '@/layouts/app-layout';
 import { Head, router } from '@inertiajs/react';
 import {
     Banknote,
+    CheckCircle,
     CheckCircle2,
     ChevronLeft,
     ChevronRight,
@@ -86,6 +88,7 @@ interface Props {
     payouts: Payout[];
     shareLink: string;
     shareLink2: string;
+    shareLink3: string;
     activeCampaigns: Campaign[];
     minimumPayouts: number;
 }
@@ -98,9 +101,12 @@ export default function AffiliateDashboard({
     payouts,
     shareLink,
     shareLink2,
+    shareLink3,
     activeCampaigns,
     minimumPayouts,
 }: Props) {
+    const [showCopyToast, setShowCopyToast] = useState(false);
+    const [copyToastMessage, setCopyToastMessage] = useState('');
     const [payoutAmount, setPayoutAmount] = useState('');
     const [payoutMethodId, setPayoutMethodId] = useState('');
     const [accountName, setAccountName] = useState('');
@@ -137,14 +143,19 @@ export default function AffiliateDashboard({
             .catch(() => error('Failed to load payout methods'));
     }, []);
 
-    const copyShareLink = () => {
-        navigator.clipboard.writeText(shareLink);
-        success('Affiliate link copied to clipboard');
+    const showCopySuccessToast = (message: string) => {
+        setCopyToastMessage(message);
+        setShowCopyToast(true);
+        setTimeout(() => setShowCopyToast(false), 4000);
     };
 
-    const copyShareLink2 = () => {
-        navigator.clipboard.writeText(shareLink2);
-        success('Affiliate link copied to clipboard');
+    const copyShareLink = async (link: string) => {
+        try {
+            await navigator.clipboard.writeText(link);
+            showCopySuccessToast('Affiliate link copied to clipboard');
+        } catch {
+            error('Failed to copy affiliate link');
+        }
     };
 
     const formatCurrency = (amount: number) => {
@@ -186,6 +197,15 @@ export default function AffiliateDashboard({
     return (
         <AppLayout>
             <Head title="Affiliate Dashboard" />
+
+            {showCopyToast && (
+                <div className="animate-fade-in fixed top-4 right-4 z-50">
+                    <Alert className="border-primary/50 bg-primary/10 backdrop-blur-sm">
+                        <CheckCircle className="text-primary h-4 w-4" />
+                        <AlertDescription className="text-primary font-medium">{copyToastMessage}</AlertDescription>
+                    </Alert>
+                </div>
+            )}
 
             <div className="container mx-auto space-y-8 p-6">
                 {/* Header */}
@@ -272,19 +292,30 @@ export default function AffiliateDashboard({
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div>
+                            <p className="text-muted-foreground mb-1 font-mono text-xs font-medium">Affiliate Jago Jualan Masterclass</p>
                             <div className="flex gap-2">
                                 <Input value={shareLink} readOnly className="flex-1" />
-                                <Button onClick={copyShareLink} variant="outline">
+                                <Button onClick={() => void copyShareLink(shareLink)} variant="outline">
                                     <Copy className="mr-2 h-4 w-4" />
                                     Copy
                                 </Button>
                             </div>
                         </div>
                         <div>
-                            <p className="text-muted-foreground mb-1 font-mono text-xs font-medium">'Bayar Suka Suka' product</p>
+                            <p className="text-muted-foreground mb-1 font-mono text-xs font-medium">Produk Bayar Suka Suka</p>
                             <div className="flex gap-2">
                                 <Input value={shareLink2} readOnly className="flex-1" />
-                                <Button onClick={copyShareLink2} variant="outline">
+                                <Button onClick={() => void copyShareLink(shareLink2)} variant="outline">
+                                    <Copy className="mr-2 h-4 w-4" />
+                                    Copy
+                                </Button>
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground mb-1 font-mono text-xs font-medium">Jago Canva Masterclass</p>
+                            <div className="flex gap-2">
+                                <Input value={shareLink3} readOnly className="flex-1" />
+                                <Button onClick={() => void copyShareLink(shareLink3)} variant="outline">
                                     <Copy className="mr-2 h-4 w-4" />
                                     Copy
                                 </Button>

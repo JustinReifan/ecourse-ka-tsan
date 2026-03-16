@@ -49,13 +49,14 @@ class ProductController extends Controller
             'status' => 'required|in:active,inactive',
             'is_default' => 'nullable|boolean',
             'is_lead_magnet' => 'nullable|boolean',
+            'is_jago_canva' => 'nullable|boolean',
             'course_ids' => 'nullable|array',
             'course_ids.*' => 'exists:courses,id',
         ]);
 
         // Generate slug
         $validated['slug'] = Str::slug($validated['title']);
-        
+
         // Ensure unique slug
         $originalSlug = $validated['slug'];
         $counter = 1;
@@ -84,6 +85,11 @@ class ProductController extends Controller
             Product::where('is_lead_magnet', true)->update(['is_lead_magnet' => false]);
         }
 
+        // Handle is_jago_canva constraint - only one product can be jago canva
+        if (!empty($validated['is_jago_canva']) && $validated['is_jago_canva']) {
+            Product::where('is_jago_canva', true)->update(['is_jago_canva' => false]);
+        }
+
         $product = Product::create($validated);
 
         // Attach courses if ecourse type
@@ -98,7 +104,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $product->load('courses');
-        
+
         $availableCourses = Course::whereNull('product_id')
             ->orWhere('product_id', $product->id)
             ->orderBy('name')
@@ -125,6 +131,7 @@ class ProductController extends Controller
             'status' => 'required|in:active,inactive',
             'is_default' => 'nullable|boolean',
             'is_lead_magnet' => 'nullable|boolean',
+            'is_jago_canva' => 'nullable|boolean',
             'course_ids' => 'nullable|array',
             'course_ids.*' => 'exists:courses,id',
         ]);
@@ -132,7 +139,7 @@ class ProductController extends Controller
         // Generate new slug if title changed
         if ($validated['title'] !== $product->title) {
             $validated['slug'] = Str::slug($validated['title']);
-            
+
             $originalSlug = $validated['slug'];
             $counter = 1;
             while (Product::where('slug', $validated['slug'])->where('id', '!=', $product->id)->exists()) {
@@ -167,13 +174,18 @@ class ProductController extends Controller
             Product::where('is_lead_magnet', true)->where('id', '!=', $product->id)->update(['is_lead_magnet' => false]);
         }
 
+        // Handle is_jago_canva constraint - only one product can be jago canva
+        if (!empty($validated['is_jago_canva']) && $validated['is_jago_canva']) {
+            Product::where('is_jago_canva', true)->where('id', '!=', $product->id)->update(['is_jago_canva' => false]);
+        }
+
         $product->update($validated);
 
         // Update course associations
         if ($product->type === 'ecourse') {
             // Remove old associations
             Course::where('product_id', $product->id)->update(['product_id' => null]);
-            
+
             // Add new associations
             if (!empty($validated['course_ids'])) {
                 Course::whereIn('id', $validated['course_ids'])->update(['product_id' => $product->id]);

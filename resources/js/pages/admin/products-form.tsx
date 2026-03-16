@@ -28,6 +28,7 @@ interface Product {
     status: 'active' | 'inactive';
     is_default: boolean;
     is_lead_magnet: boolean;
+    is_jago_canva: boolean;
     courses?: Course[];
 }
 
@@ -55,6 +56,7 @@ export default function ProductForm({ product, courses }: ProductFormProps) {
         status: product?.status || ('active' as const),
         is_default: product?.is_default || false,
         is_lead_magnet: product?.is_lead_magnet || false,
+        is_jago_canva: product?.is_jago_canva || false,
         course_ids: selectedCourseIds,
     });
 
@@ -281,6 +283,25 @@ export default function ProductForm({ product, courses }: ProductFormProps) {
                                     If checked, this product will be used for the Lead Magnet landing page where users can pay any amount they want.
                                 </p>
                                 {errors.is_lead_magnet && <p className="font-mono text-sm text-red-400">{errors.is_lead_magnet}</p>}
+                            </div>
+
+                            {/* Jago Canva Product */}
+                            <div className="space-y-2">
+                                <Label className="font-mono text-sm tracking-wider text-gray-500 uppercase">Jago Canva Product</Label>
+                                <div className="border-primary/20 bg-primary-foreground/70 flex items-center space-x-2 rounded-lg border p-4">
+                                    <Checkbox
+                                        id="is_jago_canva"
+                                        checked={data.is_jago_canva}
+                                        onCheckedChange={(checked) => setData('is_jago_canva', checked as boolean)}
+                                    />
+                                    <label htmlFor="is_jago_canva" className="text-sm text-gray-500">
+                                        Set as Jago Canva product
+                                    </label>
+                                </div>
+                                <p className="text-xs text-gray-400">
+                                    If checked, users from jago-canva registration flow will receive this product after successful payment.
+                                </p>
+                                {errors.is_jago_canva && <p className="font-mono text-sm text-red-400">{errors.is_jago_canva}</p>}
                             </div>
 
                             {/* Type-specific fields */}

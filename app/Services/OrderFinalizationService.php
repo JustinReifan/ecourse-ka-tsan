@@ -60,7 +60,16 @@ class OrderFinalizationService
 
         // 4. Berikan produk berdasarkan order meta (PWYW support)
         $productId = $order->meta['product_id'] ?? null;
-        $product = $productId ? Product::find($productId) : Product::where('is_default', true)->first();
+        $registrationType = $order->meta['registration_type'] ?? 'standard';
+        $product = $productId ? Product::find($productId) : null;
+
+        if (!$product) {
+            $product = match ($registrationType) {
+                'lead_magnet' => Product::getLeadMagnetProduct(),
+                'jago_canva' => Product::getJagoCanvaProduct(),
+                default => Product::getDefaultProduct(),
+            };
+        }
 
         if ($product) {
             UserPurchase::create([

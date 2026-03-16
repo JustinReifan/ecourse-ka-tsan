@@ -43,7 +43,7 @@ type RegisterForm = {
 interface RegisterProps {
     coursePrice: number;
     duitkuScriptUrl: string;
-    registrationType?: 'standard' | 'lead_magnet';
+    registrationType?: 'standard' | 'lead_magnet' | 'jago_canva';
     minLeadMagnetPrice?: number;
 }
 
@@ -437,6 +437,7 @@ export default function Register({ coursePrice, duitkuScriptUrl, registrationTyp
                                 onVoucherApplied={handleVoucherApplied}
                                 onVoucherRemoved={handleVoucherRemoved}
                                 originalPrice={coursePrice}
+                                registrationType={registrationType}
                                 disabled={processing}
                             />
                         </div>

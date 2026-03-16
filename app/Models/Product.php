@@ -37,6 +37,7 @@ class Product extends Model
         'status',
         'is_default',
         'is_lead_magnet',
+        'is_jago_canva',
     ];
 
     /**
@@ -53,6 +54,14 @@ class Product extends Model
     public static function getDefaultProduct(): ?self
     {
         return static::where('is_default', true)->first();
+    }
+
+    /**
+     * Get jago canva product
+     */
+    public static function getJagoCanvaProduct(): ?self
+    {
+        return static::where('is_jago_canva', true)->first();
     }
 
     protected $casts = [

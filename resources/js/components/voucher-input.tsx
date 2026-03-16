@@ -9,10 +9,17 @@ interface VoucherInputProps {
     onVoucherApplied: (voucherData: any) => void;
     onVoucherRemoved: () => void;
     originalPrice: number;
+    registrationType?: 'standard' | 'lead_magnet' | 'jago_canva';
     disabled?: boolean;
 }
 
-export function VoucherInput({ onVoucherApplied, onVoucherRemoved, originalPrice, disabled = false }: VoucherInputProps) {
+export function VoucherInput({
+    onVoucherApplied,
+    onVoucherRemoved,
+    originalPrice,
+    registrationType = 'standard',
+    disabled = false,
+}: VoucherInputProps) {
     const [voucherCode, setVoucherCode] = useState('');
     const [isValidating, setIsValidating] = useState(false);
     const [appliedVoucher, setAppliedVoucher] = useState<any>(null);
@@ -27,6 +34,7 @@ export function VoucherInput({ onVoucherApplied, onVoucherRemoved, originalPrice
         try {
             const response = await axios.post('/api/vouchers/validate', {
                 code: voucherCode.trim().toUpperCase(),
+                registration_type: registrationType,
             });
 
             const voucherData = response.data;
