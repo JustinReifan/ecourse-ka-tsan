@@ -86,11 +86,7 @@ export default function Mbd() {
                     </div>
                 </header>
 
-                <section
-                    className="relative overflow-hidden pt-20 lg:pt-12"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                >
+                <section className="relative overflow-hidden pt-12" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
                     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="space-y-8 text-center">
                             <div data-aos="fade-up">
@@ -152,36 +148,6 @@ export default function Mbd() {
                 <div data-aos="fade-up" data-aos-delay="200">
                     <ReasonJoinSection />
                 </div>
-
-                {/* Learning Benefits Section */}
-                {/* <section className="border-border/50 relative border-t py-16 lg:py-32" data-aos="fade-up">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-5 lg:gap-16">
-                            <div className="animate-fade-in lg:col-span-2" style={{ animationDelay: '1000ms', animationFillMode: 'both' }}>
-                                <div className="relative">
-                                    <div className="border-border/50 shadow-primary/10 aspect-[4/3] overflow-hidden rounded-2xl border shadow-2xl">
-                                        <img
-                                            src="/storage/canvathumb2.webp"
-                                            alt="DaVinci Resolve workspace"
-                                            className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                                            loading="lazy"
-                                        />
-                                    </div>
-
-                                    <div className="bg-primary/10 border-primary/20 absolute -top-4 -right-4 h-24 w-24 animate-pulse rounded-full border backdrop-blur-sm" />
-                                    <div
-                                        className="bg-primary/5 border-primary/10 absolute -bottom-6 -left-6 h-16 w-16 animate-pulse rounded-full border backdrop-blur-sm"
-                                        style={{ animationDelay: '1s' }}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="lg:col-span-3" data-aos="fade-up">
-                                <LearningBenefits />
-                            </div>
-                        </div>
-                    </div>
-                </section> */}
 
                 {/* Video Results Section */}
                 <div data-aos="fade-up" data-aos-delay="200">

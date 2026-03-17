@@ -102,7 +102,7 @@ export function PricingSection() {
     };
 
     return (
-        <section className="relative overflow-hidden py-20 lg:py-32" id="pricing-section">
+        <section className="relative overflow-hidden py-12 lg:py-32" id="pricing-section">
             {/* Background Effects */}
             {/* <div className="absolute inset-0">
                 <div className="via-primary/5 absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />

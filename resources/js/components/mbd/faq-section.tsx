@@ -102,7 +102,7 @@ export function FaqSection() {
     };
 
     return (
-        <section className="border-border/50 relative border-none py-20 lg:py-32">
+        <section className="border-border/50 relative border-none py-12 lg:py-32">
             {/* Background Effects */}
             <div className="absolute inset-0">
                 <div className="via-primary/5 absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />

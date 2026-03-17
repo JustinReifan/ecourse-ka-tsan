@@ -91,7 +91,7 @@ export function ReasonJoinSection() {
     ];
 
     return (
-        <section className="border-border/20 relative overflow-hidden border-t py-24 lg:py-32">
+        <section className="border-border/20 relative overflow-hidden border-t py-12 lg:py-32">
             {/* Background effects */}
             {/* <div className="from-background via-background/50 to-background absolute inset-0 bg-gradient-to-b" />
             <div className="via-primary/20 absolute top-0 left-1/2 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent to-transparent" /> */}
@@ -105,7 +105,7 @@ export function ReasonJoinSection() {
 
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
-                <div className="animate-fade-in mb-16 text-center" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+                <div className="animate-fade-in mb-6 text-center" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
                     <div className="bg-primary/10 border-primary/20 text-primary mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium backdrop-blur-sm">
                         <Sparkles className="h-4 w-4" />
                         Tempat Belajar Terbaik
@@ -182,7 +182,7 @@ export function ReasonJoinSection() {
                 </div>
 
                 {/* Bottom CTA */}
-                <div className="animate-fade-in mt-16 text-center" style={{ animationDelay: '1400ms', animationFillMode: 'both' }}>
+                <div className="animate-fade-in mt-6 text-center" style={{ animationDelay: '1400ms', animationFillMode: 'both' }}>
                     <div className="from-primary/10 via-primary/5 to-accent/10 border-primary/20 rounded-2xl border bg-gradient-to-r p-8 backdrop-blur-xl">
                         <h3 className="text-foreground mb-4 text-xl font-bold">💸 Bayar suka-suka aja.</h3>
                         <p className="text-muted-foreground leading-relaxed">

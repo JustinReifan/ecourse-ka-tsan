@@ -309,7 +309,7 @@ export function CurriculumSection() {
     }, 0);
 
     return (
-        <section className="relative py-20 lg:py-32">
+        <section className="relative py-12 lg:py-32">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.03)_0%,transparent_50%)]" />
 
@@ -381,7 +381,7 @@ export function CurriculumSection() {
                         </div>
                     </div> */}
 
-                    <div className="pt-6 text-center">
+                    <div className="text-center">
                         <button onClick={handleCtaClick}>
                             <CtaButton
                                 variant="primary"
