@@ -174,7 +174,10 @@ export function PricingSection({ coursePrice }: PricingSectionProps) {
                                 {/* Price Display */}
                                 <div className="space-y-4 text-center">
                                     <div className="space-y-2">
-                                        <div className="text-muted-foreground text-sm font-medium tracking-[0.24em] uppercase">Harga saat ini</div>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <span className="text-muted-foreground text-2xl line-through">Rp 499.000</span>
+                                            <span className="bg-destructive/20 text-destructive rounded-md px-2 py-1 text-sm font-medium">-60%</span>
+                                        </div>
                                         <div className="flex items-baseline justify-center gap-1">
                                             <span className="text-primary text-2xl font-medium">Rp</span>
                                             <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">{formattedPrice}</span>

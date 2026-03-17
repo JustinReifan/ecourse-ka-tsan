@@ -18,20 +18,20 @@ const bonusData: BonusData[] = [
     {
         id: 1,
         badge: 'Bonus #01',
-        title: 'Grup Diskusi Berisi 200+ Peserta Aktif',
-        value: 'Rp 599.000',
+        title: 'Ide Produk Digital Siap Jualan',
+        value: 'Rp 299.000',
         description:
-            'Kita tatap muka virtual rutin tiap 2 minggu! Sesi bedah akun, evaluasi progress, dan tanya jawab langsung biar kamu dipastikan nggak salah arah',
-        image: '/storage/canva/bonus/grup-diskusi.webp',
+            'Gak perlu pusing mikirin mau jualan apa. Dapetin ide produk digital yang udah ada, jadi kamu bisa langsung siap jualan tanpa perlu mikir dari nol.',
+        image: '/storage/canva/bonus/ide-produk.webp',
     },
     {
         id: 2,
         badge: 'Bonus #02',
-        title: 'Ide Produk Digital Siap Jualan',
-        value: 'Rp 299.000',
+        title: 'Grup Diskusi Berisi 200+ Peserta Aktif',
+        value: 'Rp 599.000',
         description:
-            'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi konten dan tumbuh bareng biar semangatmu gak kendor.',
-        image: '/storage/canva/bonus/ide-produk.webp',
+            'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi hasil produk digital dan tumbuh bareng biar semangatmu gak kendor.',
+        image: '/storage/canva/bonus/grup-diskusi.webp',
     },
 ];
 
@@ -209,7 +209,7 @@ export function BonusSection() {
                                 Bonus GRATIS
                             </p>
                             <span className="text-muted-foreground text-sm font-medium md:text-base">
-                                Komunitas ekslusif dan tools yang dapat mempercepat proses kamu hasilin uang
+                                Bonus spesial yang dirancang untuk mempercepat proses belajarmu
                             </span>
                         </div>
                     </div>
