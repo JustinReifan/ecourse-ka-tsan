@@ -111,8 +111,8 @@ export default function Canva({ coursePrice }: CanvaProps) {
                                     </span>
                                 </h1>
                                 <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-xl">
-                                    Bukan sekedar tutorial, ini step-by-step skill canva yang bisa menjadi bekal kamu menuju creator sukses dan bisa
-                                    hasilkan cuan 2 digit pertama kamu!
+                                    Bukan Sekedar Kumpulan Tutorial Jago Canva, ini step-by-step skill canva yang bisa menjadi bekal kamu menuju
+                                    creator sukses dan bisa hasilkan cuan 2 digit pertama kamu!
                                 </p>
                             </div>
                         </div>
