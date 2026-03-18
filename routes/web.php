@@ -34,6 +34,8 @@ Route::get('/', function () {
     $settings = \App\Models\Setting::getAllCached();
     return Inertia::render('test3', [
         'landingBadge' => $settings['landing_badge'] ?? 'OPEN BATCH',
+        'coursePrice' =>  $settings['course_price'] ?? 0,
+
     ]);
 })->name('home');
 

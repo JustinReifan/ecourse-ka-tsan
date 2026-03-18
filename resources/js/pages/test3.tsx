@@ -22,7 +22,11 @@ interface WelcomeProps {
     landingBadge: string;
 }
 
-export default function Test1Hero() {
+interface Props {
+    coursePrice: number;
+}
+
+export default function Test3Hero({ coursePrice }: Props) {
     const { auth, landingBadge } = usePage<SharedData & WelcomeProps>().props;
     const { trackVisit, trackCTA } = useAnalytics();
     const [isHovered, setIsHovered] = useState(false);
@@ -182,7 +186,7 @@ export default function Test1Hero() {
 
                 <MentorProfile />
 
-                <PricingSection />
+                <PricingSection coursePrice={coursePrice} />
 
                 <FaqSection />
 

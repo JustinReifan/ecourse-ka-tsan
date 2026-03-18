@@ -33,6 +33,10 @@ const benefits = [
     },
 ];
 
+interface PricingSectionProps {
+    coursePrice: number;
+}
+
 interface BenefitItemProps {
     benefit: (typeof benefits)[0];
     index: number;
@@ -79,9 +83,11 @@ function BenefitItem({ benefit, index }: BenefitItemProps) {
     );
 }
 
-export function PricingSection() {
+export function PricingSection({ coursePrice }: PricingSectionProps) {
     const [isCardHovered, setIsCardHovered] = useState(false);
     const { trackCTA } = useAnalytics();
+
+    const formattedPrice = new Intl.NumberFormat('id-ID').format(coursePrice);
 
     const handleButton = () => {
         trackCTA('pricing_card', 'Gabung Sekarang', route('register'));
@@ -182,7 +188,7 @@ export function PricingSection() {
                                         <div className="flex items-baseline justify-center gap-1">
                                             <span className="text-primary text-2xl font-medium">Rp</span>
                                             {/* harusnya text-foreground */}
-                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">299.000</span>
+                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">{formattedPrice}</span>
                                         </div>
                                         <p className="text-muted-foreground text-lg">Akses selamanya • Tanpa biaya bulanan</p>
                                     </div>
