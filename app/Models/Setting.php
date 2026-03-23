@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class Setting extends Model
 {
@@ -35,9 +37,18 @@ class Setting extends Model
      */
     public static function getAllCached(): array
     {
-        return Cache::rememberForever('settings', function () {
-            return self::all()->pluck('value', 'key')->toArray();
-        });
+        if (!Schema::hasTable('settings')) {
+            return [];
+        }
+
+        try {
+            return Cache::rememberForever('settings', function () {
+                return self::query()->pluck('value', 'key')->toArray();
+            });
+        } catch (Throwable $e) {
+            // Fallback when cache store is database but `cache` table is not ready yet.
+            return self::query()->pluck('value', 'key')->toArray();
+        }
     }
 
     /**
@@ -45,6 +56,10 @@ class Setting extends Model
      */
     public static function clearCache(): void
     {
-        Cache::forget('settings');
+        try {
+            Cache::forget('settings');
+        } catch (Throwable $e) {
+            // Ignore cache store errors during bootstrap/migration phases.
+        }
     }
 }

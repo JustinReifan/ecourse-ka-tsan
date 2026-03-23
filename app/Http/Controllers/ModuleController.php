@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use getID3;
 use DateInterval;
 use Inertia\Inertia;
 use App\Models\Course;
 use App\Models\Module;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -17,20 +17,34 @@ class ModuleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $selectedProductId = $request->integer('product_id');
+
         $modules = Module::with('course')
+            ->when($selectedProductId, function ($query) use ($selectedProductId) {
+                $query->whereHas('course', function ($courseQuery) use ($selectedProductId) {
+                    $courseQuery->where('product_id', $selectedProductId);
+                });
+            })
             ->orderBy('order')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $courses = Course::orderBy('name')->get();
+        $courses = Course::when($selectedProductId, function ($query) use ($selectedProductId) {
+            $query->where('product_id', $selectedProductId);
+        })->orderBy('name')->get();
 
-        
+        $products = Product::select('id', 'title')
+            ->where('status', 'active')
+            ->orderBy('title')
+            ->get();
 
         return Inertia::render('admin/modules', [
             'modules' => $modules,
-            'courses' => $courses
+            'courses' => $courses,
+            'products' => $products,
+            'selectedProductId' => $selectedProductId,
         ]);
     }
 

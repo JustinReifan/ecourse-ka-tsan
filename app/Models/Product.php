@@ -85,6 +85,11 @@ class Product extends Model
             ->withPivot('amount_paid', 'order_id');
     }
 
+    public function vouchers(): BelongsToMany
+    {
+        return $this->belongsToMany(Voucher::class, 'product_voucher')->withTimestamps();
+    }
+
     /**
      * Check if product is an ecourse type
      */

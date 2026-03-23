@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import AdminLayout from '@/layouts/admin-layout';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Calendar, Database, PlayCircle, Upload, Zap } from 'lucide-react';
 import { useState } from 'react';
 
@@ -32,13 +32,16 @@ interface Module {
 interface ModulesPageProps {
     modules: Module[];
     courses: Course[];
+    products: Array<{ id: number; title: string }>;
+    selectedProductId?: number | null;
 }
 
-export default function ModulesPage({ modules, courses }: ModulesPageProps) {
+export default function ModulesPage({ modules, courses, products, selectedProductId = null }: ModulesPageProps) {
     const { flash } = usePage().props as any;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingModule, setEditingModule] = useState<Module | null>(null);
+    const [productFilter, setProductFilter] = useState<string>(selectedProductId ? String(selectedProductId) : '');
 
     const {
         data,
@@ -183,6 +186,18 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
         }
     };
 
+    const applyProductFilter = (value: string) => {
+        setProductFilter(value);
+
+        const productId = value ? Number(value) : undefined;
+
+        router.get(route('admin.modules.index'), productId ? { product_id: productId } : {}, {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
+    };
+
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Module Management" />
@@ -211,6 +226,32 @@ export default function ModulesPage({ modules, courses }: ModulesPageProps) {
                         title="Module Management"
                         addButtonText="Add Module"
                         searchPlaceholder="Search modules..."
+                        headerActions={
+                            <div className="flex items-center gap-2">
+                                <select
+                                    value={productFilter}
+                                    onChange={(e) => applyProductFilter(e.target.value)}
+                                    className="border-primary/30 text-foreground bg-primary/10 h-10 min-w-48 rounded-lg border px-3 text-sm backdrop-blur-sm transition-all duration-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none"
+                                >
+                                    <option value="">All Products</option>
+                                    {products.map((product) => (
+                                        <option key={product.id} value={product.id}>
+                                            {product.title}
+                                        </option>
+                                    ))}
+                                </select>
+                                {productFilter && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => applyProductFilter('')}
+                                        className="text-foreground border-zinc-600/50 backdrop-blur-sm hover:bg-zinc-700/50"
+                                    >
+                                        Reset
+                                    </Button>
+                                )}
+                            </div>
+                        }
                     />
                 </div>
             </div>

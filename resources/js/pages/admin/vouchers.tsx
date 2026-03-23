@@ -13,9 +13,14 @@ import { useState } from 'react';
 
 interface VouchersPageProps {
     vouchers: Voucher[];
+    products: Array<{
+        id: number;
+        title: string;
+        status: string;
+    }>;
 }
 
-export default function VouchersPage({ vouchers }: VouchersPageProps) {
+export default function VouchersPage({ vouchers, products }: VouchersPageProps) {
     const { flash } = usePage().props as any;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +44,7 @@ export default function VouchersPage({ vouchers }: VouchersPageProps) {
         usage_limit: 1,
         expires_at: '',
         status: 'active' as 'active' | 'inactive',
+        product_ids: [] as number[],
     });
 
     const breadcrumbs = [{ title: 'Admin', href: '/admin' }, { title: 'Vouchers' }];
@@ -103,6 +109,32 @@ export default function VouchersPage({ vouchers }: VouchersPageProps) {
             ),
         },
         {
+            key: 'products' as keyof Voucher,
+            label: 'Nama Produk',
+            render: (_: any, voucher: Voucher) => {
+                const selectedProducts = voucher.products ?? [];
+
+                if (selectedProducts.length === 0) {
+                    return <span className="text-xs text-gray-400">Semua produk</span>;
+                }
+
+                return (
+                    <div className="flex flex-wrap gap-1">
+                        {selectedProducts.slice(0, 2).map((product) => (
+                            <Badge key={product.id} variant="secondary" className="bg-cyan-500/20 text-cyan-300">
+                                {product.title}
+                            </Badge>
+                        ))}
+                        {selectedProducts.length > 2 && (
+                            <Badge variant="secondary" className="bg-zinc-700 text-zinc-300">
+                                +{selectedProducts.length - 2} lainnya
+                            </Badge>
+                        )}
+                    </div>
+                );
+            },
+        },
+        {
             key: 'status' as keyof Voucher,
             label: 'Status',
             sortable: true,
@@ -160,9 +192,23 @@ export default function VouchersPage({ vouchers }: VouchersPageProps) {
             usage_limit: voucher.usage_limit,
             expires_at: voucher.expires_at ? new Date(voucher.expires_at).toISOString().split('T')[0] : '',
             status: voucher.status,
+            product_ids: voucher.products?.map((product) => product.id) || [],
         });
         setEditingVoucher(voucher);
         setIsModalOpen(true);
+    };
+
+    const handleToggleProduct = (productId: number) => {
+        if (data.product_ids.includes(productId)) {
+            setData(
+                'product_ids',
+                data.product_ids.filter((id) => id !== productId),
+            );
+
+            return;
+        }
+
+        setData('product_ids', [...data.product_ids, productId]);
     };
 
     const handleDelete = (voucher: Voucher) => {
@@ -375,6 +421,34 @@ export default function VouchersPage({ vouchers }: VouchersPageProps) {
                                 <option value="inactive">Inactive</option>
                             </select>
                             {errors.status && <p className="mt-1 font-mono text-sm text-red-400">{errors.status}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label className="font-mono text-sm tracking-wider text-gray-300 uppercase">Produk yang Diizinkan</Label>
+                            <div className="max-h-44 space-y-2 overflow-y-auto rounded-lg border border-zinc-700/50 bg-zinc-800/40 p-3">
+                                {products.map((product) => {
+                                    const checked = data.product_ids.includes(product.id);
+
+                                    return (
+                                        <label
+                                            key={product.id}
+                                            className="flex cursor-pointer items-center justify-between gap-3 rounded-md border border-zinc-700/50 px-3 py-2 hover:bg-zinc-700/30"
+                                        >
+                                            <div className="flex-1">
+                                                <p className="text-sm text-zinc-100">{product.title}</p>
+                                                <p className="text-xs text-zinc-400">Status: {product.status}</p>
+                                            </div>
+                                            <input
+                                                type="checkbox"
+                                                checked={checked}
+                                                onChange={() => handleToggleProduct(product.id)}
+                                                className="h-4 w-4"
+                                            />
+                                        </label>
+                                    );
+                                })}
+                            </div>
+                            {errors.product_ids && <p className="mt-1 font-mono text-sm text-red-400">{errors.product_ids}</p>}
                         </div>
 
                         <div className="flex gap-3 pt-6">

@@ -2,32 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Midtrans\Snap;
 use App\Models\User;
 use Inertia\Inertia;
-use Midtrans\Config;
 use App\Models\Order;
 use App\Models\Voucher;
 use Inertia\Response;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use App\Models\UserAnalytic;
-use App\Models\UserPurchase;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
-use App\Services\WhatsappService;
 use App\Services\AffiliateService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Services\PaymentGatewayService;
-use App\Http\Controllers\DuitkuController;
 use App\Services\OrderFinalizationService;
-use App\Mail\Registration\UserRegistrationMail;
 
 class RegisteredUserController extends Controller
 {
@@ -66,6 +57,7 @@ class RegisteredUserController extends Controller
             'duitkuScriptUrl' => $duitkuScriptUrl,
             'registrationType' => $registrationType,
             'minLeadMagnetPrice' => (int) $minLeadMagnetPrice,
+            'registrationProductId' => $product?->id,
         ]);
     }
 
@@ -127,7 +119,8 @@ class RegisteredUserController extends Controller
             $basePrice = $this->getBaseRegistrationPrice($registrationType);
             [$appliedVoucherCode, $calculatedDiscountAmount] = $this->resolveVoucherForRegistration(
                 $request->input('voucher_code'),
-                $basePrice
+                $basePrice,
+                $product->id
             );
             $orderAmount = max($basePrice - $calculatedDiscountAmount, 0);
         }
@@ -230,20 +223,6 @@ class RegisteredUserController extends Controller
                 ], 422);
             }
 
-            $basePrice = $this->getBaseRegistrationPrice($registrationType);
-            [$appliedVoucherCode, $calculatedDiscountAmount] = $this->resolveVoucherForRegistration(
-                $request->input('voucher_code'),
-                $basePrice
-            );
-            $finalPrice = max($basePrice - $calculatedDiscountAmount, 0);
-
-            if ($finalPrice > 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Order belum gratis. Lanjutkan pembayaran melalui gateway.'
-                ], 422);
-            }
-
             $product = $this->resolveRegistrationProduct($registrationType);
             if (!$product) {
                 return response()->json([
@@ -251,6 +230,21 @@ class RegisteredUserController extends Controller
                     'message' => $registrationType === 'jago_canva'
                         ? 'Produk Jago Canva belum dikonfigurasi. Silakan hubungi admin.'
                         : 'Produk default belum dikonfigurasi. Silakan hubungi admin.'
+                ], 422);
+            }
+
+            $basePrice = $this->getBaseRegistrationPrice($registrationType);
+            [$appliedVoucherCode, $calculatedDiscountAmount] = $this->resolveVoucherForRegistration(
+                $request->input('voucher_code'),
+                $basePrice,
+                $product->id
+            );
+            $finalPrice = max($basePrice - $calculatedDiscountAmount, 0);
+
+            if ($finalPrice > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Order belum gratis. Lanjutkan pembayaran melalui gateway.'
                 ], 422);
             }
 
@@ -343,7 +337,7 @@ class RegisteredUserController extends Controller
         return (float) \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000));
     }
 
-    protected function resolveVoucherForRegistration(?string $voucherCode, float $basePrice): array
+    protected function resolveVoucherForRegistration(?string $voucherCode, float $basePrice, ?int $productId = null): array
     {
         if (!$voucherCode) {
             return [null, 0];
@@ -353,6 +347,12 @@ class RegisteredUserController extends Controller
         if (!$voucher || !$voucher->isValid()) {
             throw \Illuminate\Validation\ValidationException::withMessages([
                 'voucher_code' => 'Voucher tidak valid atau sudah kadaluarsa.',
+            ]);
+        }
+
+        if ($productId && !$voucher->isApplicableToProduct($productId)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'voucher_code' => 'Voucher tidak berlaku untuk produk pendaftaran ini.',
             ]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Inertia\Inertia;
 use App\Models\Module;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ModuleMaterial;
 
@@ -13,17 +14,35 @@ class ModuleMaterialController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $selectedProductId = $request->integer('product_id');
+
         $materials = ModuleMaterial::with('module')
+            ->when($selectedProductId, function ($query) use ($selectedProductId) {
+                $query->whereHas('module.course', function ($courseQuery) use ($selectedProductId) {
+                    $courseQuery->where('product_id', $selectedProductId);
+                });
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $modules = Module::select('id', 'name')->orderBy('name')->get();
+        $modules = Module::when($selectedProductId, function ($query) use ($selectedProductId) {
+            $query->whereHas('course', function ($courseQuery) use ($selectedProductId) {
+                $courseQuery->where('product_id', $selectedProductId);
+            });
+        })->select('id', 'name')->orderBy('name')->get();
+
+        $products = Product::select('id', 'title')
+            ->where('status', 'active')
+            ->orderBy('title')
+            ->get();
 
         return Inertia::render('admin/module-material', [
             'materials' => $materials,
             'modules' => $modules,
+            'products' => $products,
+            'selectedProductId' => $selectedProductId,
         ]);
     }
 

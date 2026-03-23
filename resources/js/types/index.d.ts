@@ -1,4 +1,3 @@
-
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
@@ -22,6 +21,10 @@ export interface Voucher {
     used_count: number;
     expires_at?: string;
     status: 'active' | 'inactive';
+    products?: Array<{
+        id: number;
+        title: string;
+    }>;
     created_at: string;
     updated_at: string;
 }

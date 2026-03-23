@@ -10,6 +10,7 @@ interface VoucherInputProps {
     onVoucherRemoved: () => void;
     originalPrice: number;
     registrationType?: 'standard' | 'lead_magnet' | 'jago_canva';
+    productId?: number;
     disabled?: boolean;
 }
 
@@ -17,7 +18,8 @@ export function VoucherInput({
     onVoucherApplied,
     onVoucherRemoved,
     originalPrice,
-    registrationType = 'standard',
+    registrationType,
+    productId,
     disabled = false,
 }: VoucherInputProps) {
     const [voucherCode, setVoucherCode] = useState('');
@@ -35,6 +37,7 @@ export function VoucherInput({
             const response = await axios.post('/api/vouchers/validate', {
                 code: voucherCode.trim().toUpperCase(),
                 registration_type: registrationType,
+                product_id: productId,
             });
 
             const voucherData = response.data;

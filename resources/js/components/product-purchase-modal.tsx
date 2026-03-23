@@ -170,6 +170,7 @@ export function ProductPurchaseModal({ open, onOpenChange, product, triggerToast
                             onVoucherApplied={handleVoucherApplied}
                             onVoucherRemoved={handleVoucherRemoved}
                             originalPrice={product.price}
+                            productId={product.id}
                             disabled={isProcessing}
                         />
                     </div>

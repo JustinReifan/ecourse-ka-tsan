@@ -25,13 +25,16 @@ interface Course {
 
 interface CoursesPageProps {
     courses: Course[];
+    products: Array<{ id: number; title: string }>;
+    selectedProductId?: number | null;
 }
 
-export default function CoursesPage({ courses }: CoursesPageProps) {
+export default function CoursesPage({ courses, products, selectedProductId = null }: CoursesPageProps) {
     const { flash } = usePage().props as any;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingCourse, setEditingCourse] = useState<Course | null>(null);
+    const [productFilter, setProductFilter] = useState<string>(selectedProductId ? String(selectedProductId) : '');
 
     const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
 
@@ -181,6 +184,18 @@ export default function CoursesPage({ courses }: CoursesPageProps) {
         }
     };
 
+    const applyProductFilter = (value: string) => {
+        setProductFilter(value);
+
+        const productId = value ? Number(value) : undefined;
+
+        router.get(route('admin.courses.index'), productId ? { product_id: productId } : {}, {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
+    };
+
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Course Management" />
@@ -209,6 +224,32 @@ export default function CoursesPage({ courses }: CoursesPageProps) {
                         title="Course Management"
                         addButtonText="Add Course"
                         searchPlaceholder="Search courses..."
+                        headerActions={
+                            <div className="flex items-center gap-2">
+                                <select
+                                    value={productFilter}
+                                    onChange={(e) => applyProductFilter(e.target.value)}
+                                    className="border-primary/30 text-foreground bg-primary/10 h-10 min-w-48 rounded-lg border px-3 text-sm backdrop-blur-sm transition-all duration-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none"
+                                >
+                                    <option value="">All Products</option>
+                                    {products.map((product) => (
+                                        <option key={product.id} value={product.id}>
+                                            {product.title}
+                                        </option>
+                                    ))}
+                                </select>
+                                {productFilter && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => applyProductFilter('')}
+                                        className="text-foreground border-zinc-600/50 backdrop-blur-sm hover:bg-zinc-700/50"
+                                    >
+                                        Reset
+                                    </Button>
+                                )}
+                            </div>
+                        }
                     />
                 </div>
             </div>

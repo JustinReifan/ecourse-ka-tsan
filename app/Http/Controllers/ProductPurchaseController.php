@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Voucher;
 use Illuminate\Support\Str;
-use App\Models\UserPurchase;
 use Illuminate\Http\Request;
 use App\Services\AffiliateService;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Services\PaymentGatewayService;
 use App\Services\OrderFinalizationService;
+use Illuminate\Validation\ValidationException;
 
 class ProductPurchaseController extends Controller
 {
@@ -32,10 +32,8 @@ class ProductPurchaseController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|integer|exists:products,id',
-            'final_price' => 'required|numeric',
             'gateway' => 'required|string|in:duitku,midtrans',
             'voucher_code' => 'nullable|string',
-            'discount_amount' => 'nullable|numeric',
         ]);
 
         $gatewayDriver = $request->input('gateway', 'duitku');
@@ -48,6 +46,19 @@ class ProductPurchaseController extends Controller
                 'success' => false,
                 'message' => 'You already own this product.',
             ], 400);
+        }
+
+        [$appliedVoucherCode, $calculatedDiscountAmount, $finalPrice] = $this->resolveVoucherForProduct(
+            $request->input('voucher_code'),
+            (float) $product->price,
+            $product
+        );
+
+        if ($finalPrice > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Produk tidak gratis. Gunakan alur create payment untuk checkout berbayar.',
+            ], 422);
         }
 
         $click = $affiliateService->getLastValidClickForSession($request);
@@ -69,8 +80,8 @@ class ProductPurchaseController extends Controller
             'meta' => [
                 'product' => $productDetails,
                 'affiliate_click_id' => $click ? $click->id : null,
-                'voucher_code' => $request->voucher_code ?? null,
-                'discount_amount' => $request->discount_amount ?? 0,
+                'voucher_code' => $appliedVoucherCode,
+                'discount_amount' => $calculatedDiscountAmount,
             ],
         ]);
 
@@ -147,7 +158,7 @@ class ProductPurchaseController extends Controller
      */
     public function download(Product $product)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Check if user owns the product
         if (!$product->isOwnedBy($user->id)) {
@@ -171,10 +182,8 @@ class ProductPurchaseController extends Controller
         // 1. Validasi
         $validated = $request->validate([
             'product_id' => 'required|integer|exists:products,id',
-            'final_price' => 'required|numeric',
             'gateway' => 'required|string|in:duitku,midtrans',
             'voucher_code' => 'nullable|string',
-            'discount_amount' => 'nullable|numeric',
         ]);
 
         $gatewayDriver = $request->input('gateway', 'duitku');
@@ -187,6 +196,18 @@ class ProductPurchaseController extends Controller
             return response()->json(['message' => 'Anda sudah memiliki produk ini.'], 400);
         }
 
+        [$appliedVoucherCode, $calculatedDiscountAmount, $finalPrice] = $this->resolveVoucherForProduct(
+            $request->input('voucher_code'),
+            (float) $product->price,
+            $product
+        );
+
+        if ($finalPrice <= 0) {
+            return response()->json([
+                'message' => 'Total harga menjadi gratis. Gunakan endpoint free purchase.',
+            ], 422);
+        }
+
         $productDetails = [
             'id' => $product->id,
             'title' => $product->title,
@@ -197,15 +218,15 @@ class ProductPurchaseController extends Controller
         $order = Order::create([
             'order_id' => 'ORD-' . Str::uuid(),
             'user_id' => $user->id, // User sudah login
-            'amount' => $request->final_price,
+            'amount' => $finalPrice,
             'status' => 'pending',
             'payment_method' => $gatewayDriver,
             'type' => 'product',
             'meta' => [
                 'product' => $productDetails,
                 'product_title' => $product->title,
-                'voucher_code' => $request->voucher_code,
-                'discount_amount' => $request->discount_amount ?? 0,
+                'voucher_code' => $appliedVoucherCode,
+                'discount_amount' => $calculatedDiscountAmount,
                 'affiliate_click_id' => null,
                 'follow_up_sent' => false,
             ],
@@ -237,5 +258,30 @@ class ProductPurchaseController extends Controller
             logger()->error("Gagal membuat permintaan pembayaran produk: " . $e->getMessage());
             return response()->json(['message' => $e->getMessage()], 500);
         }
+    }
+
+    protected function resolveVoucherForProduct(?string $voucherCode, float $basePrice, Product $product): array
+    {
+        if (!$voucherCode) {
+            return [null, 0, $basePrice];
+        }
+
+        $voucher = Voucher::where('code', strtoupper($voucherCode))->first();
+        if (!$voucher || !$voucher->isValid()) {
+            throw ValidationException::withMessages([
+                'voucher_code' => 'Voucher tidak valid atau sudah kadaluarsa.',
+            ]);
+        }
+
+        if (!$voucher->isApplicableToProduct($product->id)) {
+            throw ValidationException::withMessages([
+                'voucher_code' => 'Voucher tidak berlaku untuk produk yang dipilih.',
+            ]);
+        }
+
+        $discountAmount = (float) $voucher->calculateDiscount($basePrice);
+        $finalPrice = max($basePrice - $discountAmount, 0);
+
+        return [$voucher->code, $discountAmount, $finalPrice];
     }
 }

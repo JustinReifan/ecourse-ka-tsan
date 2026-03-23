@@ -45,9 +45,16 @@ interface RegisterProps {
     duitkuScriptUrl: string;
     registrationType?: 'standard' | 'lead_magnet' | 'jago_canva';
     minLeadMagnetPrice?: number;
+    registrationProductId?: number | null;
 }
 
-export default function Register({ coursePrice, duitkuScriptUrl, registrationType = 'standard', minLeadMagnetPrice = 1 }: RegisterProps) {
+export default function Register({
+    coursePrice,
+    duitkuScriptUrl,
+    registrationType = 'standard',
+    minLeadMagnetPrice = 1,
+    registrationProductId = null,
+}: RegisterProps) {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [appliedVoucher, setAppliedVoucher] = useState<any>(null);
@@ -438,6 +445,7 @@ export default function Register({ coursePrice, duitkuScriptUrl, registrationTyp
                                 onVoucherRemoved={handleVoucherRemoved}
                                 originalPrice={coursePrice}
                                 registrationType={registrationType}
+                                productId={registrationProductId ?? undefined}
                                 disabled={processing}
                             />
                         </div>
