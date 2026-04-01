@@ -41,7 +41,8 @@ export function LearningBenefits() {
         'Cara membuat game interaktif presentasi',
         'Cara membuat template kalender digital',
         "Cara membuat video murottal Al-Qur'an",
-        'Cara menjadikan kode dengan Canva AI',
+        'Cara mengubah ide menjadi kode dengan Canva AI',
+        'Cara membuat stiker whatsapp yang menjual',
         'Cara membuat carousel panorama aesthetic',
         'Pengenalan fitur tambahan Canva khusus Apps guna mendukung kebutuhan Desain',
     ];
