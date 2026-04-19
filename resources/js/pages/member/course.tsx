@@ -23,7 +23,10 @@ function visitModule(slug: string) {
 
 function ModuleCard({ module, index }: { module: CoursePageProps['course']['modules'][0]; index: number }) {
     return (
-        <div className="group hover:border-primary/30 hover:shadow-primary/10 hover-scale-100 from-card/50 to-card border-primary/30 relative rounded-xl border bg-gradient-to-r p-4 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl">
+        <div
+            onClick={visitModule(module.slug!)}
+            className="group hover:bg-primary/30 hover:border-primary/30 hover:shadow-primary/10 hover-scale-100 from-card/50 to-card border-primary/30 relative cursor-pointer rounded-xl border bg-gradient-to-r p-4 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl"
+        >
             {/* Animated border effect */}
             <div className="from-primary/0 via-primary/5 to-primary/0 absolute inset-0 rounded-xl bg-gradient-to-r opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
@@ -55,10 +58,7 @@ function ModuleCard({ module, index }: { module: CoursePageProps['course']['modu
 
                 {/* Play Button */}
                 <div className="flex-shrink-0">
-                    <button
-                        className="bg-primary/10 border-primary/30 text-primary hover:bg-primary/50 group-hover:animate-glow-pulse flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border transition-all duration-300 hover:scale-110 hover:text-black"
-                        onClick={visitModule(module.slug!)}
-                    >
+                    <button className="bg-primary/10 border-primary/30 text-primary hover:bg-primary/50 group-hover:animate-glow-pulse flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 group-hover:cursor-pointer hover:scale-110 hover:text-black">
                         <Play className="ml-0.5 h-4 w-4" fill="currentColor" />
                     </button>
                 </div>
