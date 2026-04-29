@@ -407,7 +407,6 @@ export default function Register({
                                             id="name"
                                             type="text"
                                             required
-                                            autoFocus
                                             autoComplete="name"
                                             placeholder="Contoh: Sari Putri"
                                             value={data.name}
