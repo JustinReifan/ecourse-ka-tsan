@@ -113,12 +113,13 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
         }
     }, [duitkuScriptUrl]);
 
-    // Trigger survey modal for fresh registrations
+    // Trigger survey modal bagi user baru (customer_age masih null di DB).
+    // Menggunakan Inertia prop — lebih reliable daripada session flash di webhook context.
     useEffect(() => {
-        if (flash.trigger_survey) {
+        if (triggerSurvey) {
             setSurveyModalOpen(true);
         }
-    }, [flash]);
+    }, []);
 
     const handleSurveySubmit = (e: React.FormEvent) => {
         e.preventDefault();

@@ -61,12 +61,16 @@ class MemberProductController extends Controller
 
         $duitkuScriptUrl = Setting::get('duitku_script_url', env('VITE_DUITKU_SCRIPT_URL', ''));
 
+        // Survey trigger: tampilkan jika user belum pernah isi survey (customer_age masih null).
+        // Lebih reliable daripada session flash yang tidak bekerja di webhook context.
+        $triggerSurvey = is_null(auth()->user()->customer_age);
 
         return Inertia::render('member/index', [
             'ownedProducts' => $ownedProducts,
             'availableProducts' => $availableProducts,
             'selectedProduct' => $selectedProduct,
             'duitkuScriptUrl' => $duitkuScriptUrl,
+            'triggerSurvey' => $triggerSurvey,
         ]);
     }
 

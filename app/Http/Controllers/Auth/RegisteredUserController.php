@@ -66,11 +66,10 @@ class RegisteredUserController extends Controller
         // 1. Validasi form
         $validated = $request->validate([
             'gateway' => 'required|string|in:duitku,midtrans',
-            'username' => 'required|string|max:255|alpha_dash|unique:users',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255|min_digits:8|unique:users',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::min(8)],
             'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva',
             'payment_amount' => 'nullable|numeric',
             'final_price' => 'nullable|numeric',
@@ -204,11 +203,10 @@ class RegisteredUserController extends Controller
     {
         try {
             $validated = $request->validate([
-                'username' => 'required|string|max:255|alpha_dash|unique:users',
                 'name' => 'required|string|max:255',
                 'phone' => 'required|string|max:255|min_digits:8|unique:users',
                 'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'password' => ['required', Rules\Password::min(8)],
                 'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva',
                 'voucher_code' => 'nullable|string|max:50',
                 'landing_source' => 'nullable|string|max:255',

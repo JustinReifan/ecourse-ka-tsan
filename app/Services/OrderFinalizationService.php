@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Voucher;
 use App\Models\UserAnalytic;
 use App\Models\UserPurchase;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -44,10 +45,13 @@ class OrderFinalizationService
         // 1. Ambil data form dari meta
         $formData = $order->meta['form_data'];
 
-        // 2. Buat User baru
+        // 2. Generate unique username dari nama
+        $username = $this->generateUniqueUsername($formData['name']);
+
+        // 3. Buat User baru
         $user = User::create([
             'name' => $formData['name'],
-            'username' => $formData['username'],
+            'username' => $username,
             'email' => $formData['email'],
             'phone' => $formData['phone'],
             'password' => Hash::make($formData['password']),
@@ -104,10 +108,8 @@ class OrderFinalizationService
 
         $this->trackPaymentSuccess($order, $user);
 
-        // 7. Flash session to trigger survey modal on member index
-        session()->flash('trigger_survey', true);
-
-        // 8. Kirim Notifikasi Sukses
+        // 7. Kirim Notifikasi Sukses
+        // Note: survey trigger dipindah ke DB check (customer_age === null) di MemberProductController
         try {
             $this->sendSuccessNotifications($user, $conversion, $product);
         } catch (\Exception $e) {
@@ -120,6 +122,33 @@ class OrderFinalizationService
         return $user;
     }
 
+    /**
+     * Generate a unique username from a full name.
+     * e.g. "Sari Putri" → "sariputri" or "sariputri2" if taken.
+     */
+    protected function generateUniqueUsername(string $name): string
+    {
+        // Transliterate accented / non-ASCII chars then strip non-alphanumeric
+        $base = preg_replace('/[^a-z0-9]/', '', strtolower(
+            iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name) ?: $name
+        ));
+
+        // Fallback if name produces empty string (e.g. pure non-Latin chars)
+        if (empty($base)) {
+            $base = 'user' . time();
+        }
+
+        $username = $base;
+        $counter  = 2;
+
+        // Keep incrementing suffix until unique
+        while (User::where('username', $username)->exists()) {
+            $username = $base . $counter;
+            $counter++;
+        }
+
+        return $username;
+    }
 
     public function finalizeProductPurchase(Order $order): ?UserPurchase
     {
@@ -243,7 +272,7 @@ class OrderFinalizationService
             . "Semangat terus belajarnya!";
 
         // $this->waService->sendMessage($memberPhone, $messageToMember);
-        SendWhatsappNotificationJob::dispatch($memberPhone, $messageToMember);
+        // SendWhatsappNotificationJob::dispatch($memberPhone, $messageToMember);
 
         try {
             // Pastikan email user valid sebelum mengirim
@@ -274,7 +303,7 @@ class OrderFinalizationService
                         . "Ada member baru ({$user->name}) yang daftar pake link kamu. Komisi sebesar *{$commissionAmount}* udah masuk ke saldo pending kamu yaa.\n\n"
                         . "Mantap banget! Cek dashboard affiliate kamu gih. Semangat terus tebar link-nya! 😉";
 
-                    SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
+                    // SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
                 }
 
                 // Kirim email
@@ -303,7 +332,7 @@ class OrderFinalizationService
                     . $adminUrl;
 
                 // $this->waService->sendMessage($adminPhone, $messageToAdmin);
-                SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+                // SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
             }
 
             // Kirim email
@@ -331,7 +360,7 @@ class OrderFinalizationService
             . "Pembayaran kamu untuk pendaftaran kamu gagal nih.\n\n"
             . "Coba lagi yuk! Kalau ada masalah, kontak admin yaa.";
         // $this->waService->sendMessage($formData['phone'], $messageToMember);
-        SendWhatsappNotificationJob::dispatch($formData['phone'], $messageToMember);
+        // SendWhatsappNotificationJob::dispatch($formData['phone'], $messageToMember);
     }
 
     public function sendPendingNotification(Order $order): void
@@ -386,7 +415,7 @@ class OrderFinalizationService
             . "Produk *'{$product->title}'* udah aktif di akun kamu dan bisa langsung kamu akses di Member Area yaa.\n\n"
             . "Makasih udah belanja lagi. Selamat belajar!";
         // $this->waService->sendMessage($user->phone, $messageToMember);
-        SendWhatsappNotificationJob::dispatch($user->phone, $messageToMember);
+        // SendWhatsappNotificationJob::dispatch($user->phone, $messageToMember);
 
         // kirim email
         try {
@@ -411,7 +440,7 @@ class OrderFinalizationService
                     . "Member kamu ({$user->name}) baru aja beli produk *'{$product->title}'*. Komisi *{$commissionAmount}* udah masuk ke saldo pending kamu.\n\n"
                     . "Makin cuan! 🔥";
                 // $this->waService->sendMessage($affiliatorUser->phone, $messageToAffiliator);
-                SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
+                // SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
             }
 
             // kirim email
@@ -435,7 +464,7 @@ class OrderFinalizationService
                     . "Komisi: *{$commissionAmount}*\n\n"
                     . "Link approval: {$adminUrl}";
                 // $this->waService->sendMessage($adminPhone, $messageToAdmin);
-                SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+                // SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
             }
 
             try {

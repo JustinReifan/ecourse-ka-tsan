@@ -166,8 +166,6 @@ export function VoucherInput({
                     <AlertDescription className="text-red-400">{error}</AlertDescription>
                 </Alert>
             )}
-
-            <div className="text-center text-xs text-gray-500">Punya kode voucher? Masukkan untuk mendapatkan diskon!</div>
         </div>
     );
 }

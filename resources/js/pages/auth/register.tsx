@@ -1,102 +1,233 @@
+import AppLogo from '@/components/app-logo';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { VoucherInput } from '@/components/voucher-input';
-import { getLandingSource, useAnalytics } from '@/hooks/use-analytics';
-import AuthLayout from '@/layouts/auth-layout';
+import { getLandingSource } from '@/hooks/use-analytics';
 import { Head, useForm } from '@inertiajs/react';
 import axios from 'axios';
-import { CheckCircle, Eye, EyeOff, LoaderCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {
+    Award,
+    BadgePercent,
+    BookOpen,
+    CheckCircle,
+    Eye,
+    EyeOff,
+    Gift,
+    GraduationCap,
+    LoaderCircle,
+    Lock,
+    Map,
+    MessageCircle,
+    Play,
+    RefreshCw,
+    ShieldCheck,
+    Star,
+    TrendingUp,
+    Users,
+    Zap,
+} from 'lucide-react';
+import { useState } from 'react';
 
-// Declare global checkout variable for Duitku
-declare global {
-    interface Window {
-        checkout: {
-            process: (
-                reference: string,
-                options: {
-                    defaultLanguage?: string;
-                    currency?: string;
-                    successEvent?: (result: any) => void;
-                    pendingEvent?: (result: any) => void;
-                    errorEvent?: (result: any) => void;
-                    closeEvent?: (result: any) => void;
-                },
-            ) => void;
-        };
-    }
-}
+// ─────────────────────────────────────────────
+// Types
+// ─────────────────────────────────────────────
 
 type RegisterForm = {
-    username: string;
     name: string;
     phone: string;
     email: string;
     password: string;
-    password_confirmation: string;
 };
 
 interface RegisterProps {
     coursePrice: number;
-    duitkuScriptUrl: string;
+    duitkuScriptUrl: string; // kept for prop compat, not used (no popup)
     registrationType?: 'standard' | 'lead_magnet' | 'jago_canva';
     minLeadMagnetPrice?: number;
     registrationProductId?: number | null;
 }
 
+// ─────────────────────────────────────────────
+// Static Data
+// ─────────────────────────────────────────────
+
+type BenefitItem = { icon: React.ElementType; text: string };
+type RegistrationType = 'standard' | 'lead_magnet' | 'jago_canva';
+
+const BENEFITS_MAP: Record<RegistrationType, BenefitItem[]> = {
+    standard: [
+        { icon: BookOpen, text: '50+ materi pembelajaran lengkap' },
+        { icon: MessageCircle, text: 'Grup Telegram eksklusif member' },
+        { icon: Award, text: 'Sertifikat digital resmi' },
+        { icon: Gift, text: '7+ bonus senilai Rp 10 juta+' },
+        { icon: RefreshCw, text: 'Update materi terbaru seumur hidup' },
+        { icon: GraduationCap, text: 'Bimbingan 1-on-1 dengan mentor' },
+    ],
+    lead_magnet: [
+        { icon: BookOpen, text: 'Pembelajaran 6 Bab' },
+        { icon: Map, text: 'Peta Mulai Bisnis Digital' },
+        { icon: RefreshCw, text: 'Update Materi Terbaru' },
+        { icon: GraduationCap, text: 'Full Course Access' },
+        { icon: BadgePercent, text: 'Affiliate Komisi 50%' },
+    ],
+    jago_canva: [
+        { icon: Users, text: 'Komunitas Eksklusif' },
+        { icon: Play, text: 'Video Tutorial Lengkap' },
+        { icon: Gift, text: 'Bonus Rekaman Beasiswa Ramadhan' },
+        { icon: RefreshCw, text: 'Update Materi Terbaru' },
+        { icon: TrendingUp, text: 'Peluang Affiliate' },
+    ],
+};
+
+const TRUST_BADGES = [
+    { icon: ShieldCheck, label: 'Aman & Terpercaya' },
+    { icon: Zap, label: 'Akses Instan' },
+    { icon: Lock, label: 'Pembayaran Terenkripsi' },
+];
+
+const TESTIMONIALS = [
+    {
+        id: 1,
+        image: '/storage/landing3/testimonials/3.png',
+        caption: 'Bapak Ini awalnya bingung cara jualan di Sosmed, tapi Diajarin Sampai Bisa Hasilin Rp 80 JUTA',
+    },
+    {
+        id: 2,
+        image: '/storage/landing3/testimonials/1.png',
+        caption: 'Seorang Bapak-Bapak Guru Ngaji biasa bisa dapetin penghasilan tambahan Rp 5 JUTA',
+    },
+    {
+        id: 3,
+        image: '/storage/landing3/testimonials/2.png',
+        caption: 'Awalnya Ibu Rumah Tangga ini Takut Jualan, tapi Dibimbing Sampai Berani Jualan dan Dapetin Rp 2 JUTA',
+    },
+    {
+        id: 4,
+        image: '/storage/landing3/testimonials/4.png',
+        caption: 'Ibu Ini Awalnya Gaptek dan Sibuk Ngurus Anak Tapi Bisa Hasilkan Uang Pertamanya Dari Sosmed',
+    },
+];
+
+// ─────────────────────────────────────────────
+// Sub-components
+// ─────────────────────────────────────────────
+
+function TrustBadges() {
+    return (
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+            {TRUST_BADGES.map(({ icon: Icon, label }) => (
+                <div
+                    key={label}
+                    className="border-primary/20 bg-primary/5 flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium"
+                >
+                    <Icon className="text-primary h-3.5 w-3.5" />
+                    <span className="text-foreground/80">{label}</span>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function SocialProofBadge() {
+    return (
+        <div className="border-primary/30 bg-primary/10 inline-flex items-center gap-2 rounded-full border px-4 py-2">
+            <div className="flex -space-x-1">
+                {['S', 'B', 'R'].map((initial, i) => (
+                    <div
+                        key={i}
+                        className="bg-primary/40 border-background text-foreground flex h-6 w-6 items-center justify-center rounded-full border-2 text-[10px] font-bold"
+                    >
+                        {initial}
+                    </div>
+                ))}
+            </div>
+            <span className="text-primary text-sm font-semibold">
+                🚀 <span className="text-foreground font-bold">1.400+ </span> orang sudah bergabung
+            </span>
+        </div>
+    );
+}
+
+function BenefitList({ benefits }: { benefits: BenefitItem[] }) {
+    return (
+        <ul className="space-y-3">
+            {benefits.map(({ icon: Icon, text }) => (
+                <li key={text} className="flex items-center gap-3">
+                    <div className="bg-primary/10 border-primary/20 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border">
+                        <Icon className="text-primary h-3.5 w-3.5" />
+                    </div>
+                    <span className="text-foreground/90 text-sm leading-snug">{text}</span>
+                </li>
+            ))}
+        </ul>
+    );
+}
+
+function TestimonialCard({ testimonial }: { testimonial: (typeof TESTIMONIALS)[0] }) {
+    return (
+        <div className="border-primary/20 bg-card/60 group hover:border-primary/40 hover:shadow-primary/5 overflow-hidden rounded-xl border backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
+            <div className="overflow-hidden">
+                <img
+                    src={testimonial.image}
+                    alt={`Testimoni ${testimonial.id}`}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                />
+            </div>
+            <div className="p-4">
+                <div className="mb-2 flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                </div>
+                <p className="text-muted-foreground mb-3 text-sm leading-relaxed italic">{testimonial.caption}</p>
+            </div>
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────
+// Main Component
+// ─────────────────────────────────────────────
+
 export default function Register({
     coursePrice,
-    duitkuScriptUrl,
     registrationType = 'standard',
     minLeadMagnetPrice = 1,
     registrationProductId = null,
 }: RegisterProps) {
-    const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [appliedVoucher, setAppliedVoucher] = useState<any>(null);
     const [finalPrice, setFinalPrice] = useState(coursePrice);
     const [customAmount, setCustomAmount] = useState<number>(minLeadMagnetPrice);
-    const { trackEngagement, trackConversion, trackPayment } = useAnalytics();
-    const [isSendingNotif, setIsSendingNotif] = useState(false);
-    const [selectedGateway, setSelectedGateway] = useState('duitku');
+    const [toast, setToast] = useState<{ message: string; isError?: boolean } | null>(null);
+    const [selectedGateway] = useState('duitku');
 
     const isLeadMagnet = registrationType === 'lead_magnet';
 
-    const formatRupiah = (number: number) => {
-        return new Intl.NumberFormat('id-ID').format(number);
-    };
+    const productType =
+        registrationType == 'standard'
+            ? 'Affiliate Jago Jualan Masterclass'
+            : registrationType == 'jago_canva'
+              ? 'Jago Canva Masterclass'
+              : 'Mengenal Manisnya Bisnis Digital Class';
 
-    const { data, setData, post, processing, errors, reset, setError } = useForm<Required<RegisterForm>>({
-        username: '',
+    const { data, setData, processing, errors, setError } = useForm<RegisterForm>({
         name: '',
         phone: '',
         email: '',
         password: '',
-        password_confirmation: '',
     });
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const formatRupiah = (n: number) => new Intl.NumberFormat('id-ID').format(n);
 
-    useEffect(() => {
-        // Dynamically load Midtrans script
-        const script = document.createElement('script');
-        // script.src = 'https://app.midtrans.com/snap/snap.js';
-        // script.setAttribute('data-client-key', import.meta.env.VITE_MIDTRANS_CLIENT_KEY);
-        // script.type = 'text/javascript';
-        // script.async = true;
-
-        // Duitku - use the script URL from props (database)
-        script.src = duitkuScriptUrl || import.meta.env.VITE_DUITKU_SCRIPT_URL || '';
-
-        if (script.src) {
-            document.body.appendChild(script);
-        }
-    }, []);
+    const showToast = (message: string, isError = false) => {
+        setToast({ message, isError });
+        setTimeout(() => setToast(null), 4000);
+    };
 
     const handleVoucherApplied = (voucherData: any) => {
         setAppliedVoucher(voucherData);
@@ -108,411 +239,357 @@ export default function Register({
         setFinalPrice(coursePrice);
     };
 
-    const sendNotification = async (phone: string, message: string) => {
-        setIsSendingNotif(true);
-
-        try {
-            const response = await axios.post('/api/send-message', {
-                message: message,
-                phone: phone,
-            });
-        } catch (err: any) {
-            const message = err.response?.data?.message || 'Gagal mengirim pesan.';
-            setToastMessage(message);
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 4000);
-        } finally {
-            setIsSendingNotif(false);
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // For lead magnet, validate minimum amount
         if (isLeadMagnet && customAmount < minLeadMagnetPrice) {
-            setToastMessage(`Minimal pembayaran adalah Rp ${formatRupiah(minLeadMagnetPrice)}`);
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 4000);
+            showToast(`Minimal pembayaran adalah Rp ${formatRupiah(minLeadMagnetPrice)}`, true);
             return;
         }
 
-        let paymentData;
-
-        // Determine the final price to use
         const priceToCharge = isLeadMagnet ? customAmount : finalPrice;
 
-        try {
-            // 1. Minta Snap Token + validasi form
-            const registrationData = {
-                ...data,
-                register: true,
-                gateway: selectedGateway,
-                final_price: priceToCharge,
-                voucher_code: appliedVoucher?.voucher?.code || null,
-                discount_amount: appliedVoucher?.discount || 0,
-                registration_type: registrationType,
-                payment_amount: isLeadMagnet ? customAmount : null,
-                landing_source: getLandingSource(),
-            };
+        const payload = {
+            ...data,
+            gateway: selectedGateway,
+            final_price: priceToCharge,
+            voucher_code: appliedVoucher?.voucher?.code || null,
+            discount_amount: appliedVoucher?.discount || 0,
+            registration_type: registrationType,
+            payment_amount: isLeadMagnet ? customAmount : null,
+            landing_source: getLandingSource(),
+        };
 
-            // check if price = 0, bypass payment
-            if (priceToCharge === 0) {
-                setToastMessage('Memproses akun...');
-                setShowToast(true);
-                setTimeout(() => setShowToast(false), 3000);
-
-                const response = await axios.post(route('register.force'), registrationData);
-
-                if (response.data.success) {
-                    setToastMessage('Sukses membuat akun! Redirecting...');
-                    setShowToast(true);
-                    setTimeout(() => setShowToast(false), 4000);
-
+        // ── Kasus harga 0 (voucher 100%) ──
+        if (priceToCharge === 0) {
+            showToast('Memproses akun...');
+            try {
+                const res = await axios.post(route('register.force'), payload);
+                if (res.data.success) {
                     window.location.href = route('member.index');
                 } else {
-                    setToastMessage(response.data.message || 'Gagal memproses akun.');
-                    setShowToast(true);
-                    setTimeout(() => setShowToast(false), 4000);
+                    showToast(res.data.message || 'Gagal memproses akun.', true);
                 }
-                return;
+            } catch (err: any) {
+                showToast(err.response?.data?.message || 'Terjadi kesalahan. Coba lagi.', true);
             }
+            return;
+        }
 
-            setToastMessage('Memproses pembayaran...');
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
+        // ── Normal flow: redirect ke Duitku ──
+        showToast('Memproses pembayaran...');
+        try {
+            const res = await axios.post(route('register.create-payment'), payload);
 
-            const res = await axios.post(route('register.create-payment'), registrationData);
-            const checkout = window.checkout;
-
-            if (res.data.type === 'duitku_reference' && checkout) {
-                checkout.process(res.data.reference, {
-                    defaultLanguage: 'id',
-                    currency: 'IDR',
-                    successEvent: async function (result: any) {
-                        setToastMessage('Pembayaran berhasil! Memproses akun...'); // Pesan baru
-                        setShowToast(true);
-                        setTimeout(() => setShowToast(false), 5000); // Durasi lebih lama
-
-                        try {
-                            const response = await axios.post(route('payments.confirm-registration'), {
-                                reference: result.reference,
-                                order_id: result.merchantOrderId,
-                            });
-
-                            if (response.data.success) {
-                                window.location.href = route('member.index');
-                            } else {
-                                setToastMessage(response.data.message || 'Gagal memproses akun.');
-                                setShowToast(true);
-                                setTimeout(() => setShowToast(false), 4000);
-                            }
-                        } catch (err: any) {
-                            setToastMessage(err.response?.data?.message || 'Gagal membuat akun.');
-                            setShowToast(true);
-                            setTimeout(() => setShowToast(false), 4000);
-                        }
-                    },
-                    pendingEvent: function (result: any) {
-                        setToastMessage('Payment pending, silakan selesaikan pembayaran.');
-                        setShowToast(true);
-                        setTimeout(() => setShowToast(false), 4000);
-                    },
-                    errorEvent: function (error: any) {
-                        setToastMessage('Payment failed, please try again.');
-                        setShowToast(true);
-                        setTimeout(() => setShowToast(false), 4000);
-                    },
-                    closeEvent: function (result: any) {
-                        setToastMessage('Payment canceled');
-                        setShowToast(true);
-                        setTimeout(() => setShowToast(false), 4000);
-                    },
-                });
-            } else if (!checkout) {
-                // 3. TAMBAHKAN INI: Error jika script Duitku gagal di-load
-                console.error('Duitku checkout script not loaded.');
-                setToastMessage('Gagal memuat gateway pembayaran. Coba refresh halaman.');
-                setShowToast(true);
-                setTimeout(() => setShowToast(false), 4000);
+            if (res.data.paymentUrl) {
+                // Redirect langsung — tidak ada popup, tidak ada delay
+                window.location.href = res.data.paymentUrl;
             } else {
-                // 4. TAMBAHKAN INI: Error jika respon server tidak valid
-                console.error('Invalid response type from server:', res.data.type);
-                setToastMessage('Respon server tidak valid. Hubungi admin.');
-                setShowToast(true);
-                setTimeout(() => setShowToast(false), 4000);
+                showToast('Gagal mendapatkan link pembayaran. Coba lagi.', true);
             }
-            // --- SELESAI PERBAIKAN ---
         } catch (err: any) {
-            if (err.response && err.response.data && err.response.data.errors) {
+            // Handle Laravel validation errors
+            if (err.response?.data?.errors) {
                 const validationErrors = err.response.data.errors;
-
                 Object.keys(validationErrors).forEach((field) => {
                     if (field in data) {
                         setError(field as keyof RegisterForm, validationErrors[field][0]);
                     }
                 });
+                showToast('Mohon periksa data yang kamu isi.', true);
             } else {
-                // 5. PERBAIKI BLOK CATCH ANDA: Tampilkan error ke user
-                const message = err.response?.data?.message || 'Terjadi kesalahan. Coba lagi.';
-                setToastMessage(message);
-                setShowToast(true);
-                setTimeout(() => setShowToast(false), 4000);
-                console.error(err); // Tetap log di console
+                showToast(err.response?.data?.message || 'Terjadi kesalahan. Coba lagi.', true);
             }
         }
     };
 
-    const handleFieldFocus = (fieldName: string) => {
-        // trackEngagement('form_field_focus', { field: fieldName });
-    };
-
-    const handleFieldBlur = (fieldName: string) => {
-        // trackEngagement('form_field_blur', { field: fieldName });
-    };
+    const priceDisplay = isLeadMagnet ? customAmount : finalPrice;
+    const originalDisplay = coursePrice;
+    const hasDiscount = !isLeadMagnet && appliedVoucher;
 
     return (
-        <AuthLayout title="Daftar Akun" description="Masukkan informasi anda untuk membuat akun">
-            <Head title="Register" />
+        <>
+            <Head title="Daftar & Mulai Belajar" />
+
             {/* Toast Notification */}
-            {showToast && (
-                <div className="animate-fade-in fixed top-4 right-4 z-50">
-                    <Alert className="border-primary/50 bg-primary/10 backdrop-blur-sm">
-                        <CheckCircle className="text-primary h-4 w-4" />
-                        <AlertDescription className="text-primary font-medium">{toastMessage}</AlertDescription>
-                    </Alert>
+            {toast && (
+                <div className="animate-fade-in fixed top-4 right-4 left-4 z-50 sm:left-auto sm:w-auto">
+                    <div
+                        className={`flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-sm ${
+                            toast.isError ? 'border-red-500/40 bg-red-500/10 text-red-400' : 'border-primary/40 bg-primary/10 text-primary'
+                        }`}
+                    >
+                        <CheckCircle className="h-4 w-4 shrink-0" />
+                        <span className="text-sm font-medium">{toast.message}</span>
+                    </div>
                 </div>
             )}
 
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-4 md:grid-cols-2">
-                        <div className="grid gap-4">
-                            <Label htmlFor="username">
-                                Username <span className="text-muted-foreground ml-1 text-[11px] font-normal">(Tanpa spasi & simbol)</span>
-                            </Label>
-                            <Input
-                                id="username"
-                                type="text"
-                                required
-                                autoFocus
-                                tabIndex={1}
-                                autoComplete="username"
-                                value={data.username}
-                                onChange={(e) => {
-                                    let val = e.target.value;
-
-                                    // 1. Ubah ke huruf kecil semua (opsional, tapi disarankan)
-                                    val = val.toLowerCase();
-
-                                    // 2. Hapus Spasi & Simbol (Hanya terima a-z dan 0-9)
-                                    // Regex ini berarti: Ganti karakter APAPUN yang BUKAN huruf kecil/angka dengan string kosong
-                                    val = val.replace(/[^a-z0-9]/g, '');
-
-                                    setData('username', val);
-                                }}
-                                // --------------------------
-                                onFocus={() => handleFieldFocus('username')}
-                                onBlur={() => handleFieldBlur('username')}
-                                disabled={processing}
-                                placeholder="contoh: sariputri88"
-                            />
-
-                            {/* Helper Text untuk memperjelas */}
-                            {/* <p className="text-muted-foreground -mt-2 text-[11px]">*Hanya huruf dan angka, disambung</p> */}
-
-                            <InputError message={errors.username} className="mt-2" />
+            <div className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
+                {/* ── Header ── */}
+                <header className="border-border/30 bg-background/60 sticky top-0 z-30 border-b backdrop-blur-md">
+                    <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6">
+                        {/* Constrain AppLogo size in this context */}
+                        <div className="[&_a]:flex [&_a]:items-center [&_div]:size-auto [&_img]:h-12 [&_img]:w-auto">
+                            <AppLogo />
                         </div>
-                        <div className="grid gap-4">
-                            <Label htmlFor="name">
-                                Name <span className="text-muted-foreground ml-1 text-[11px] font-normal">(Nama lengkap, boleh spasi)</span>
-                            </Label>
-                            <Input
-                                id="name"
-                                type="text"
-                                required
-                                tabIndex={1}
-                                autoComplete="name"
-                                value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
-                                onFocus={() => handleFieldFocus('name')}
-                                onBlur={() => handleFieldBlur('name')}
-                                disabled={processing}
-                                placeholder="Nama lengkap anda"
-                            />
-                            <InputError message={errors.name} className="mt-2" />
+                        <div className="text-muted-foreground text-sm">
+                            Sudah punya akun?{' '}
+                            <TextLink href={route('login')} className="text-primary font-medium hover:underline">
+                                Masuk
+                            </TextLink>
                         </div>
                     </div>
+                </header>
 
-                    <div className="grid gap-4">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            tabIndex={2}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            onFocus={() => handleFieldFocus('email')}
-                            onBlur={() => handleFieldBlur('email')}
-                            disabled={processing}
-                            placeholder="nama@gmail.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
-
-                    <div className="grid gap-4">
-                        <Label htmlFor="phone">Phone number</Label>
-                        <Input
-                            id="phone"
-                            type="phone"
-                            required
-                            tabIndex={2}
-                            autoComplete="phone"
-                            value={data.phone}
-                            onChange={(e) => setData('phone', e.target.value)}
-                            onFocus={() => handleFieldFocus('phone')}
-                            onBlur={() => handleFieldBlur('phone')}
-                            disabled={processing}
-                            placeholder="628xxxxxxxxx"
-                        />
-                        <InputError message={errors.phone} />
-                    </div>
-
-                    <div className="grid gap-4 lg:grid-cols-2">
-                        <div className="grid gap-4">
-                            <Label htmlFor="password">Password</Label>
-                            <div className="relative">
-                                <Input
-                                    id="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    required
-                                    tabIndex={3}
-                                    autoComplete="new-password"
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    onFocus={() => handleFieldFocus('password')}
-                                    onBlur={() => handleFieldBlur('password')}
-                                    disabled={processing}
-                                    placeholder="Password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                                    tabIndex={-1}
-                                >
-                                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
+                <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
+                    {/* ── Two-column layout (desktop) / single-column (mobile) ── */}
+                    <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:gap-12">
+                        {/* ════════════════════════════════
+                            LEFT COLUMN — social proof + benefits
+                        ════════════════════════════════ */}
+                        <div className="space-y-8">
+                            {/* Social proof badge */}
+                            <div className="space-y-4">
+                                <SocialProofBadge />
+                                <h1 className="text-foreground text-3xl leading-tight font-bold sm:text-4xl">
+                                    Akses{' '}
+                                    <span className="from-primary via-primary/80 bg-gradient-to-r to-cyan-400 bg-clip-text text-transparent">
+                                        {productType}
+                                    </span>
+                                </h1>
+                                <TrustBadges />
                             </div>
-                            <InputError message={errors.password} />
-                        </div>
-                        <div className="grid gap-4">
-                            <Label htmlFor="password_confirmation">Confirm password</Label>
-                            <div className="relative">
-                                <Input
-                                    id="password_confirmation"
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    required
-                                    tabIndex={4}
-                                    autoComplete="new-password"
-                                    value={data.password_confirmation}
-                                    onChange={(e) => setData('password_confirmation', e.target.value)}
-                                    onFocus={() => handleFieldFocus('password_confirmation')}
-                                    onBlur={() => handleFieldBlur('password_confirmation')}
-                                    disabled={processing}
-                                    placeholder="Konfirmasi password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                                    tabIndex={-1}
-                                >
-                                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
+
+                            {/* Benefit list — konten berbeda per tipe produk */}
+                            <div className="border-primary/20 bg-card/40 rounded-2xl border p-6 backdrop-blur-sm">
+                                <h2 className="text-foreground mb-4 flex items-center gap-2 font-semibold">
+                                    <CheckCircle className="text-primary h-5 w-5" />
+                                    Yang kamu dapatkan:
+                                </h2>
+                                <BenefitList benefits={BENEFITS_MAP[registrationType]} />
                             </div>
-                            <InputError message={errors.password_confirmation} />
-                        </div>
-                    </div>
 
-                    {/* Voucher Section - Only show for standard registration */}
-                    {!isLeadMagnet && (
-                        <div className="grid gap-4">
-                            <VoucherInput
-                                onVoucherApplied={handleVoucherApplied}
-                                onVoucherRemoved={handleVoucherRemoved}
-                                originalPrice={coursePrice}
-                                registrationType={registrationType}
-                                productId={registrationProductId ?? undefined}
-                                disabled={processing}
-                            />
-                        </div>
-                    )}
-
-                    {/* PWYW Input - Only show for lead magnet */}
-                    {isLeadMagnet && (
-                        <div className="grid gap-4">
-                            <Label htmlFor="custom_amount">Nominal Pembayaran (Bayar Suka Suka)</Label>
-                            <div className="relative">
-                                <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2 text-sm">Rp</span>
-                                <Input
-                                    id="custom_amount"
-                                    type="number"
-                                    min={minLeadMagnetPrice}
-                                    value={customAmount}
-                                    onChange={(e) => setCustomAmount(Math.max(0, parseInt(e.target.value) || 0))}
-                                    disabled={processing}
-                                    className="pl-10"
-                                    placeholder={`Minimal ${formatRupiah(minLeadMagnetPrice)}`}
-                                />
-                            </div>
-                            <p className="text-muted-foreground text-xs">Minimal pembayaran: Rp {formatRupiah(minLeadMagnetPrice)}</p>
-                        </div>
-                    )}
-
-                    {/* Final Price Display */}
-                    <div className="grid gap-4">
-                        <div className="relative">
-                            <div className="border-primary/50 from-primary/5 to-primary/10 rounded-lg border bg-gradient-to-r p-4">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-foreground text-sm font-medium">{isLeadMagnet ? 'Total Pembayaran:' : 'Harga:'}</span>
-                                    <div className="text-right">
-                                        {!isLeadMagnet && appliedVoucher && (
-                                            <div className="text-xs text-gray-500 line-through">Rp {formatRupiah(coursePrice)}</div>
-                                        )}
-                                        <div className="text-primary text-lg font-bold">
-                                            Rp {formatRupiah(isLeadMagnet ? customAmount : finalPrice)}
-                                        </div>
-                                        {!isLeadMagnet && appliedVoucher && (
-                                            <div className="text-xs text-green-400">Hemat Rp {formatRupiah(appliedVoucher.discount)}!</div>
-                                        )}
+                            {/* Testimonials — DESKTOP ONLY: visible in left column */}
+                            {registrationType === 'standard' && (
+                                <div className="hidden space-y-4 lg:block">
+                                    <h2 className="text-foreground flex items-center gap-2 font-semibold">
+                                        <Users className="text-primary h-5 w-5" />
+                                        Lihat Hasil Nyata Dari Alumni:
+                                    </h2>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {TESTIMONIALS.map((t) => (
+                                            <TestimonialCard key={t.id} testimonial={t} />
+                                        ))}
                                     </div>
                                 </div>
+                            )}
+                        </div>
+
+                        {/* ════════════════════════════════
+                            RIGHT COLUMN — checkout form
+                        ════════════════════════════════ */}
+                        <div className="lg:sticky lg:top-16 lg:self-start">
+                            <div className="border-primary/20 bg-card/60 overflow-hidden rounded-2xl border shadow-2xl shadow-black/20 backdrop-blur-xl">
+                                {/* Form header */}
+                                <div className="from-primary/10 to-primary/5 border-primary/20 border-b bg-gradient-to-r px-6 py-5">
+                                    <h2 className="text-foreground text-lg font-bold">Daftar Sekarang</h2>
+                                    <p className="text-muted-foreground mt-0.5 text-sm">Isi data di bawah untuk mulai belajar</p>
+                                </div>
+
+                                <form onSubmit={handleSubmit} className="space-y-5 p-6">
+                                    {/* Name */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="name" className="text-sm font-medium">
+                                            Nama Lengkap
+                                        </Label>
+                                        <Input
+                                            id="name"
+                                            type="text"
+                                            required
+                                            autoFocus
+                                            autoComplete="name"
+                                            placeholder="Contoh: Sari Putri"
+                                            value={data.name}
+                                            onChange={(e) => setData('name', e.target.value)}
+                                            disabled={processing}
+                                            className="bg-background/50"
+                                        />
+                                        <InputError message={errors.name} />
+                                    </div>
+
+                                    {/* Email */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="email" className="text-sm font-medium">
+                                            Alamat Email
+                                        </Label>
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            required
+                                            autoComplete="email"
+                                            placeholder="email@gmail.com"
+                                            value={data.email}
+                                            onChange={(e) => setData('email', e.target.value)}
+                                            disabled={processing}
+                                            className="bg-background/50"
+                                        />
+                                        <InputError message={errors.email} />
+                                    </div>
+
+                                    {/* WhatsApp */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="phone" className="text-sm font-medium">
+                                            Nomor WhatsApp
+                                        </Label>
+                                        <Input
+                                            id="phone"
+                                            type="tel"
+                                            required
+                                            autoComplete="tel"
+                                            placeholder="628xxxxxxxxxx"
+                                            value={data.phone}
+                                            onChange={(e) => setData('phone', e.target.value)}
+                                            disabled={processing}
+                                            className="bg-background/50"
+                                        />
+                                        <InputError message={errors.phone} />
+                                        <p className="text-muted-foreground text-xs">Gunakan format internasional: 628xxxx</p>
+                                    </div>
+
+                                    {/* Password */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="password" className="text-sm font-medium">
+                                            Buat Password
+                                        </Label>
+                                        <div className="relative">
+                                            <Input
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                required
+                                                autoComplete="new-password"
+                                                placeholder="Minimal 8 karakter"
+                                                value={data.password}
+                                                onChange={(e) => setData('password', e.target.value)}
+                                                disabled={processing}
+                                                className="bg-background/50 pr-10"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword((v) => !v)}
+                                                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 transition-colors"
+                                                tabIndex={-1}
+                                                aria-label={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
+                                            >
+                                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                            </button>
+                                        </div>
+                                        <InputError message={errors.password} />
+                                    </div>
+
+                                    {/* Lead magnet PWYW input */}
+                                    {isLeadMagnet && (
+                                        <div className="space-y-2">
+                                            <Label htmlFor="custom_amount" className="text-sm font-medium">
+                                                Nominal Pembayaran (Bayar Suka-Suka)
+                                            </Label>
+                                            <div className="relative">
+                                                <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2 text-sm">Rp</span>
+                                                <Input
+                                                    id="custom_amount"
+                                                    type="number"
+                                                    min={minLeadMagnetPrice}
+                                                    value={customAmount}
+                                                    onChange={(e) => setCustomAmount(Math.max(0, parseInt(e.target.value) || 0))}
+                                                    disabled={processing}
+                                                    className="bg-background/50 pl-10"
+                                                    placeholder={`Minimal ${formatRupiah(minLeadMagnetPrice)}`}
+                                                />
+                                            </div>
+                                            <p className="text-muted-foreground text-xs">Minimal: Rp {formatRupiah(minLeadMagnetPrice)}</p>
+                                        </div>
+                                    )}
+
+                                    {/* Voucher input — only for standard/jago_canva */}
+                                    {!isLeadMagnet && (
+                                        <VoucherInput
+                                            onVoucherApplied={handleVoucherApplied}
+                                            onVoucherRemoved={handleVoucherRemoved}
+                                            originalPrice={coursePrice}
+                                            registrationType={registrationType}
+                                            productId={registrationProductId ?? undefined}
+                                            disabled={processing}
+                                        />
+                                    )}
+
+                                    {/* Order summary */}
+                                    <div className="border-primary/20 bg-primary/5 space-y-2 rounded-xl border p-4">
+                                        <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">Ringkasan Pesanan</p>
+                                        <div className="flex items-start justify-between gap-2">
+                                            <span className="text-foreground/80 text-sm">{productType}</span>
+                                            <div className="text-right">
+                                                {hasDiscount && (
+                                                    <div className="text-muted-foreground text-xs line-through">
+                                                        Rp {formatRupiah(originalDisplay)}
+                                                    </div>
+                                                )}
+                                                <div className="text-primary text-lg font-bold">Rp {formatRupiah(priceDisplay)}</div>
+                                                {hasDiscount && (
+                                                    <div className="text-xs font-medium text-green-400">
+                                                        Hemat Rp {formatRupiah(appliedVoucher.discount)}!
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* CTA Button */}
+                                    <Button
+                                        id="checkout-btn"
+                                        type="submit"
+                                        disabled={processing}
+                                        className="hover:bg-primary/90 h-12 w-full rounded-xl text-base font-bold text-white/90 shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-xl disabled:opacity-60"
+                                    >
+                                        {processing ? (
+                                            <>
+                                                <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
+                                                Memproses...
+                                            </>
+                                        ) : (
+                                            <>🔒 Bayar Sekarang</>
+                                        )}
+                                    </Button>
+
+                                    {/* Micro trust copy */}
+                                    <p className="text-muted-foreground text-center text-xs leading-relaxed">🔒 Pembayaran diproses secara aman.</p>
+                                </form>
+                            </div>
+
+                            {/* Guarantee note */}
+                            <div className="mt-4 flex items-center justify-center gap-2 text-center">
+                                <ShieldCheck className="text-primary h-4 w-4 shrink-0" />
+                                <p className="text-muted-foreground text-xs">Akses seumur hidup </p>
                             </div>
                         </div>
                     </div>
+                    {/* end grid */}
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={processing}>
-                        {processing ? (
-                            <>
-                                <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                                Memproses Pembayaran...
-                            </>
-                        ) : (
-                            'Gabung Sekarang'
-                        )}
-                    </Button>
+                    {/* Testimonials — MOBILE ONLY: below form, hidden on desktop */}
+                    {registrationType === 'standard' && (
+                        <div className="mt-30 space-y-4 lg:hidden">
+                            <h2 className="text-foreground flex items-center gap-2 font-semibold">
+                                <Users className="text-primary h-5 w-5" />
+                                Lihat Hasil Nyata Dari Alumni:
+                            </h2>
+                            <div className="grid grid-cols-1 gap-4">
+                                {TESTIMONIALS.map((t) => (
+                                    <TestimonialCard key={t.id} testimonial={t} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
-
-                <div className="text-muted-foreground text-center text-sm">
-                    Sudah punya akun?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
-                        Masuk
-                    </TextLink>
-                </div>
-            </form>
-        </AuthLayout>
+            </div>
+        </>
     );
 }

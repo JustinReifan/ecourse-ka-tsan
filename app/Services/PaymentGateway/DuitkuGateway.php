@@ -44,7 +44,7 @@ class DuitkuGateway implements PaymentGatewayInterface
             $order->amount,
             $customerData['email'],
             $productName,
-            null
+            url('/payment/status') // Duitku will append: ?merchantOrderId=...&resultCode=...&reference=...
         );
 
         $data = json_decode($response);

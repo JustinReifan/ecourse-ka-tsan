@@ -48,6 +48,59 @@ Route::post('/register/create-payment', [RegisteredUserController::class, 'creat
 Route::post('/api/payments/confirm-registration', [ProductPurchaseController::class, 'confirmInstantPayment'])
     ->name('payments.confirm-registration');
 
+// Payment status page — Waiting Room setelah user kembali dari Duitku
+// Public: user belum tentu login saat landing di sini
+Route::get('/payment/status', function (\Illuminate\Http\Request $request) {
+    // Duitku mengirim merchantOrderId sebagai query param ke returnUrl
+    $orderId = $request->query('merchantOrderId') ?? $request->query('order_id');
+    return \Inertia\Inertia::render('payment/status', [
+        'orderId' => $orderId,
+    ]);
+})->name('payment.status');
+
+// Public polling endpoint — digunakan halaman /payment/status untuk cek status order
+Route::get('/api/payment/check/{orderId}', function (string $orderId) {
+    $order = \App\Models\Order::where('order_id', $orderId)
+        ->select('order_id', 'status', 'type')
+        ->first();
+
+    if (!$order) {
+        return response()->json(['status' => 'not_found'], 404);
+    }
+
+    return response()->json(['status' => $order->status]);
+})->name('payment.check');
+
+// Auto-login route — dipanggil setelah user klik "Lanjutkan ke Member Area" di status page.
+// Webhook tidak bisa Auth::login() (session konteks berbeda), jadi kita login di sini.
+Route::get('/payment/login/{orderId}', function (string $orderId) {
+    // Cari order yang sudah completed dan punya user
+    $order = \App\Models\Order::where('order_id', $orderId)
+        ->where('status', 'completed')
+        ->whereNotNull('user_id')
+        ->first();
+
+    if (!$order) {
+        return redirect()->route('login')
+            ->with('error', 'Order belum terkonfirmasi. Silakan coba beberapa saat lagi.');
+    }
+
+    $user = \App\Models\User::find($order->user_id);
+
+    if (!$user) {
+        return redirect()->route('login');
+    }
+
+    // Jika sudah login sebagai user yang sama, langsung ke member
+    if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::id() === $user->id) {
+        return redirect()->route('member.index');
+    }
+
+    \Illuminate\Support\Facades\Auth::login($user, true); // remember = true
+
+    return redirect()->intended(route('member.index'));
+})->name('payment.login');
+
 // Product purchase routes (public, requires auth)
 Route::middleware('auth')->group(function () {
     Route::post('/products/create-payment', [ProductPurchaseController::class, 'createPaymentRequest'])
