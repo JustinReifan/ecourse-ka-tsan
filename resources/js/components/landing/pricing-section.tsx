@@ -87,8 +87,6 @@ export function PricingSection() {
         trackCTA('pricing_card', 'Gabung Sekarang', route('register'));
         router.visit(route('register'), {
             method: 'get',
-            preserveState: true,
-            preserveScroll: true,
         });
     };
 
@@ -96,8 +94,6 @@ export function PricingSection() {
         trackCTA('pricing_promo_link', 'Punya Kode Promo?', route('register'));
         router.visit(route('register'), {
             method: 'get',
-            preserveState: true,
-            preserveScroll: true,
         });
     };
 
