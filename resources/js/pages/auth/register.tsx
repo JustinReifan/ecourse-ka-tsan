@@ -64,7 +64,7 @@ const BENEFITS_MAP: Record<RegistrationType, BenefitItem[]> = {
         { icon: Award, text: 'Sertifikat digital resmi' },
         { icon: Gift, text: '7+ bonus senilai Rp 10 juta+' },
         { icon: RefreshCw, text: 'Update materi terbaru seumur hidup' },
-        { icon: GraduationCap, text: 'Bimbingan 1-on-1 dengan mentor' },
+        { icon: GraduationCap, text: 'Bimbingan 1-on-1 dengan mentor via chat' },
     ],
     lead_magnet: [
         { icon: BookOpen, text: 'Pembelajaran 6 Bab' },
