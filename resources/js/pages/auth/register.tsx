@@ -35,6 +35,12 @@ import { useState } from 'react';
 // Types
 // ─────────────────────────────────────────────
 
+declare global {
+    interface Window {
+        fbq?: (...args: any[]) => void;
+    }
+}
+
 type RegisterForm = {
     name: string;
     phone: string;
@@ -266,6 +272,23 @@ export default function Register({
             try {
                 const res = await axios.post(route('register.force'), payload);
                 if (res.data.success) {
+                    // Fire Meta Pixel AddToCart (browser-side) for dedup with CAPI
+                    if (window.fbq && registrationType === 'standard') {
+                        const orderId = res.data.order_id || '';
+                        const eventId = orderId ? `addtocart-${orderId}` : undefined;
+                        window.fbq(
+                            'track',
+                            'AddToCart',
+                            {
+                                content_name: productType,
+                                content_type: 'product',
+                                content_ids: ['affiliate-jago-jualan-masterclass'],
+                                value: 0,
+                                currency: 'IDR',
+                            },
+                            eventId ? { eventID: eventId } : {},
+                        );
+                    }
                     window.location.href = route('member.index');
                 } else {
                     showToast(res.data.message || 'Gagal memproses akun.', true);
@@ -282,6 +305,23 @@ export default function Register({
             const res = await axios.post(route('register.create-payment'), payload);
 
             if (res.data.paymentUrl) {
+                // Fire Meta Pixel AddToCart (browser-side) for dedup with CAPI
+                if (window.fbq && registrationType === 'standard') {
+                    const orderId = res.data.orderId || '';
+                    const eventId = orderId ? `addtocart-${orderId}` : undefined;
+                    window.fbq(
+                        'track',
+                        'AddToCart',
+                        {
+                            content_name: productType,
+                            content_type: 'product',
+                            content_ids: ['affiliate-jago-jualan-masterclass'],
+                            value: priceToCharge,
+                            currency: 'IDR',
+                        },
+                        eventId ? { eventID: eventId } : {},
+                    );
+                }
                 // Redirect langsung — tidak ada popup, tidak ada delay
                 window.location.href = res.data.paymentUrl;
             } else {
