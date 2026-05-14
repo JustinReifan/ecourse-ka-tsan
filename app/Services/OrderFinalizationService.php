@@ -303,7 +303,7 @@ class OrderFinalizationService
                         . "Ada member baru ({$user->name}) yang daftar pake link kamu. Komisi sebesar *{$commissionAmount}* udah masuk ke saldo pending kamu yaa.\n\n"
                         . "Mantap banget! Cek dashboard affiliate kamu gih. Semangat terus tebar link-nya! 😉";
 
-                    // SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
+                    SendWhatsappNotificationJob::dispatch($affiliatorUser->phone, $messageToAffiliator);
                 }
 
                 // Kirim email
@@ -321,19 +321,19 @@ class OrderFinalizationService
 
 
             // 2b. Kirim Pesan Notifikasi ke Owner/Admin Website
-            // if ($this->adminNumber) {
-            //     $affiliatorName = $affiliator->name; // Ambil nama dari data affiliate
+            if ($this->adminNumber) {
+                $affiliatorName = $affiliator->name; // Ambil nama dari data affiliate
 
-            //     $messageToAdmin = "Halo Bos! Ada komisi baru masuk nih 🤑\n\n"
-            //         . "Buat affiliator: *{$affiliatorName}*\n"
-            //         . "Dari member baru: *{$user->name}*\n"
-            //         . "Sebesar: *{$commissionAmount}*\n\n"
-            //         . "Jangan lupa di-approve di admin panel ya:\n"
-            //         . $adminUrl;
+                $messageToAdmin = "Halo Bos! Ada komisi baru masuk nih 🤑\n\n"
+                    . "Buat affiliator: *{$affiliatorName}*\n"
+                    . "Dari member baru: *{$user->name}*\n"
+                    . "Sebesar: *{$commissionAmount}*\n\n"
+                    . "Jangan lupa di-approve di admin panel ya:\n"
+                    . $adminUrl;
 
-            //     $this->waService->sendMessage($adminPhone, $messageToAdmin);
-            //     SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
-            // }
+                $this->waService->sendMessage($this->adminNumber, $messageToAdmin);
+                SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+            }
 
             // Kirim email
             try {
@@ -456,16 +456,16 @@ class OrderFinalizationService
             }
 
             // 2b. Ke Admin
-            // if ($this->adminNumber) {
-            //     $messageToAdmin = "Info Bos! Ada penjualan upsell 📈\n\n"
-            //         . "Affiliator: *{$affiliator->name}*\n"
-            //         . "Member: *{$user->name}*\n"
-            //         . "Produk: *{$product->title}*\n"
-            //         . "Komisi: *{$commissionAmount}*\n\n"
-            //         . "Link approval: {$adminUrl}";
-            //     $this->waService->sendMessage($adminPhone, $messageToAdmin);
-            //     SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
-            // }
+            if ($this->adminNumber) {
+                $messageToAdmin = "Info Bos! Ada penjualan upsell 📈\n\n"
+                    . "Affiliator: *{$affiliator->name}*\n"
+                    . "Member: *{$user->name}*\n"
+                    . "Produk: *{$product->title}*\n"
+                    . "Komisi: *{$commissionAmount}*\n\n"
+                    . "Link approval: {$adminUrl}";
+                $this->waService->sendMessage($this->adminNumber, $messageToAdmin);
+                SendWhatsappNotificationJob::dispatch($this->adminNumber, $messageToAdmin);
+            }
 
             try {
 

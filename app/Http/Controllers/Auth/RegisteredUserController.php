@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Services\PaymentGatewayService;
+use App\Services\MetaConversionService;
 use App\Services\OrderFinalizationService;
 
 class RegisteredUserController extends Controller
@@ -145,6 +146,8 @@ class RegisteredUserController extends Controller
                 'product_id' => $product ? $product->id : null,
                 'session_id' => request()->session()->getId(),
                 'landing_source' => $request->landing_source,
+                '_fbp' => $request->cookie('_fbp'),
+                '_fbc' => $request->cookie('_fbc'),
             ],
         ]);
 
@@ -186,7 +189,29 @@ class RegisteredUserController extends Controller
                 Log::error('Analytics Conversion Tracking Failed: ' . $e->getMessage());
             }
 
-            // 7. Kirim data ke front-end
+            // 7. Kirim AddToCart event ke Meta CAPI (hanya untuk produk standard/default)
+            if ($registrationType === 'standard') {
+                try {
+                    $metaService = app(MetaConversionService::class);
+                    // Event ID deterministik: retry aman, Meta auto-dedup
+                    $eventId = 'addtocart-' . $order->order_id;
+                    $metaService->sendAddToCartServer(
+                        eventId: $eventId,
+                        amount: (float) $orderAmount,
+                        email: $validated['email'],
+                        phone: $validated['phone'],
+                        clientIp: $request->ip(),
+                        clientUserAgent: $request->userAgent(),
+                        sourceUrl: $request->header('Referer', $request->url()),
+                        fbp: $request->cookie('_fbp'),
+                        fbc: $request->cookie('_fbc'),
+                    );
+                } catch (\Exception $e) {
+                    Log::error('[Meta CAPI] AddToCart failed on createPaymentRequest: ' . $e->getMessage());
+                }
+            }
+
+            // 8. Kirim data ke front-end
             return response()->json($paymentDetails);
         } catch (\Exception $e) {
             logger()->error("Failed to create payment request: " . $e->getMessage());
@@ -263,6 +288,8 @@ class RegisteredUserController extends Controller
                     'product_id' => $product ? $product->id : null,
                     'session_id' => request()->session()->getId(),
                     'landing_source' => $request->landing_source,
+                    '_fbp' => $request->cookie('_fbp'),
+                    '_fbc' => $request->cookie('_fbc'),
                 ],
             ]);
 
@@ -287,6 +314,28 @@ class RegisteredUserController extends Controller
             } catch (\Exception $e) {
                 // Silent fail agar tidak mengganggu proses pembayaran utama
                 Log::error('Analytics Conversion Tracking Failed on force register: ' . $e->getMessage());
+            }
+
+            // Kirim AddToCart event ke Meta CAPI (hanya untuk produk standard/default)
+            if ($registrationType === 'standard') {
+                try {
+                    $metaService = app(MetaConversionService::class);
+                    // Event ID deterministik: retry aman, Meta auto-dedup
+                    $eventId = 'addtocart-' . $order->order_id;
+                    $metaService->sendAddToCartServer(
+                        eventId: $eventId,
+                        amount: (float) 0, // free registration
+                        email: $validated['email'],
+                        phone: $validated['phone'],
+                        clientIp: $request->ip(),
+                        clientUserAgent: $request->userAgent(),
+                        sourceUrl: $request->header('Referer', $request->url()),
+                        fbp: $request->cookie('_fbp'),
+                        fbc: $request->cookie('_fbc'),
+                    );
+                } catch (\Exception $e) {
+                    Log::error('[Meta CAPI] AddToCart failed on forceRegister: ' . $e->getMessage());
+                }
             }
 
             $user = $this->orderFinalizationService->finalizeRegistration($order);

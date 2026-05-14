@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->encryptCookies(except: ['appearance', 'sidebar_state', 'affiliate_click_id']);
+        $middleware->encryptCookies(except: ['appearance', 'sidebar_state', 'affiliate_click_id', '_fbp', '_fbc']);
 
         $middleware->web(append: [
             \App\Http\Middleware\CaptureAffiliate::class,

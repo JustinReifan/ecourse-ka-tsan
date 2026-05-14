@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Setting;
 use App\Models\UserAnalytic;
 use Illuminate\Http\Request;
+use App\Services\MetaConversionService;
 use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
@@ -31,7 +32,7 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function track(Request $request)
+    public function track(Request $request, MetaConversionService $metaService)
     {
         // Debug request
         Log::info('Analytics Request:', $request->all());
@@ -55,8 +56,19 @@ class AnalyticsController extends Controller
             'created_at' => now(),
         ]);
 
+        // Send server-side events to Meta Conversions API
+        $eventId = $request->input('event_data.event_id');
+        $eventType = $request->input('event_type');
+
+        if ($eventId) {
+            if ($eventType === 'visit') {
+                $metaService->sendPageView($request, $eventId);
+            }
+        }
+
         return response()->json(['success' => true]);
     }
+
 
     private function getAnalyticsStats($startDate)
     {
