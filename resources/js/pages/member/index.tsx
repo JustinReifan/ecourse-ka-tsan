@@ -39,10 +39,16 @@ interface ProductsPageProps extends PageProps {
     selectedProduct: Product | null;
     duitkuScriptUrl: string;
     triggerSurvey?: boolean;
+    purchasePixelData?: {
+        event_id: string;
+        amount: number;
+        order_id: string;
+    } | null;
 }
 
 declare global {
     interface Window {
+        fbq?: (...args: any[]) => void;
         checkout: {
             process: (
                 reference: string,
@@ -71,7 +77,7 @@ const REFERRAL_SOURCES = [
     { value: 'other', label: 'Lainnya' },
 ];
 
-export default function MemberProducts({ ownedProducts, availableProducts, selectedProduct, duitkuScriptUrl, triggerSurvey }: ProductsPageProps) {
+export default function MemberProducts({ ownedProducts, availableProducts, selectedProduct, duitkuScriptUrl, triggerSurvey, purchasePixelData }: ProductsPageProps) {
     const [selectedCatalogProduct, setSelectedCatalogProduct] = useState<Product | null>(selectedProduct);
     const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
     const [productToPurchase, setProductToPurchase] = useState<Product | null>(null);
@@ -120,6 +126,20 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
             setSurveyModalOpen(true);
         }
     }, []);
+
+    // Fire Meta Pixel Purchase event (browser-side) for CAPI deduplication.
+    // Only fires once per order — backend marks `pixel_fired=true` after sending data.
+    useEffect(() => {
+        if (purchasePixelData && window.fbq) {
+            window.fbq('track', 'Purchase', {
+                content_name: 'Affiliate Jago Jualan Masterclass',
+                content_type: 'product',
+                content_ids: ['panduan-23-langkah'],
+                value: purchasePixelData.amount,
+                currency: 'IDR',
+            }, { eventID: purchasePixelData.event_id });
+        }
+    }, [purchasePixelData]);
 
     const handleSurveySubmit = (e: React.FormEvent) => {
         e.preventDefault();

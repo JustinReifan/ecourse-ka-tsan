@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\UserPurchase;
@@ -65,12 +66,41 @@ class MemberProductController extends Controller
         // Lebih reliable daripada session flash yang tidak bekerja di webhook context.
         $triggerSurvey = is_null(auth()->user()->customer_age);
 
+        // Purchase pixel: cek apakah ada order completed yang belum di-fire pixel-nya.
+        // Ini akan dikirim ke frontend untuk fire fbq('track', 'Purchase') sekali saja.
+        $purchasePixelData = null;
+        $pendingPixelOrder = Order::where('user_id', $userId)
+            ->where('status', 'completed')
+            ->where('type', 'registration')
+            ->whereJsonContains('meta->registration_type', 'standard')
+            ->where(function ($q) {
+                $q->whereNull('meta->pixel_fired')
+                  ->orWhere('meta->pixel_fired', false);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+        if ($pendingPixelOrder) {
+            $purchasePixelData = [
+                'event_id' => 'purchase-' . $pendingPixelOrder->order_id,
+                'amount' => (float) $pendingPixelOrder->amount,
+                'order_id' => $pendingPixelOrder->order_id,
+            ];
+
+            // Mark pixel as fired to prevent duplicate firing
+            $meta = $pendingPixelOrder->meta;
+            $meta['pixel_fired'] = true;
+            $pendingPixelOrder->meta = $meta;
+            $pendingPixelOrder->save();
+        }
+
         return Inertia::render('member/index', [
             'ownedProducts' => $ownedProducts,
             'availableProducts' => $availableProducts,
             'selectedProduct' => $selectedProduct,
             'duitkuScriptUrl' => $duitkuScriptUrl,
             'triggerSurvey' => $triggerSurvey,
+            'purchasePixelData' => $purchasePixelData,
         ]);
     }
 

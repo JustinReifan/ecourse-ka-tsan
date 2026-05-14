@@ -211,8 +211,10 @@ class RegisteredUserController extends Controller
                 }
             }
 
-            // 8. Kirim data ke front-end
-            return response()->json($paymentDetails);
+            // 8. Kirim data ke front-end (include orderId for Meta Pixel dedup)
+            return response()->json(array_merge($paymentDetails, [
+                'orderId' => $order->order_id,
+            ]));
         } catch (\Exception $e) {
             logger()->error("Failed to create payment request: " . $e->getMessage());
             return response()->json(['message' => $e->getMessage()], 500);
@@ -343,7 +345,7 @@ class RegisteredUserController extends Controller
             event(new Registered($user));
             Auth::login($user);
 
-            return response()->json(['success' => true, 'message' => 'Registrasi berhasil diproses.']);
+            return response()->json(['success' => true, 'message' => 'Registrasi berhasil diproses.', 'order_id' => $order->order_id]);
         } catch (\Exception $e) {
             Log::error('Gagal melakukan registrasi: ' . $e->getMessage());
 
