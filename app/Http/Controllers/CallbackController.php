@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Services\MetaConversionService;
 use App\Services\PaymentGatewayService;
 use App\Services\OrderFinalizationService;
 
@@ -56,6 +58,35 @@ class CallbackController extends Controller
                 }
 
                 DB::commit();
+
+                // Kirim Purchase event ke Meta CAPI (hanya untuk registrasi produk standard/default)
+                if ($order->type === 'registration') {
+                    $registrationType = $order->meta['registration_type'] ?? null;
+
+                    if ($registrationType === 'standard') {
+                        try {
+                            $metaService = app(MetaConversionService::class);
+                            // Event ID deterministik: webhook retry → event_id sama → Meta auto-dedup
+                            $eventId = 'purchase-' . $order->order_id;
+                            $formData = $order->meta['form_data'] ?? [];
+
+                            $metaService->sendPurchase(
+                                eventId: $eventId,
+                                amount: (float) $order->amount,
+                                email: $formData['email'] ?? null,
+                                phone: $formData['phone'] ?? null,
+                                clientIp: $request->ip(),
+                                clientUserAgent: $request->userAgent(),
+                                fbp: $order->meta['_fbp'] ?? null,
+                                fbc: $order->meta['_fbc'] ?? null,
+                            );
+                        } catch (\Exception $e) {
+                            Log::error('[Meta CAPI] Purchase failed on webhook callback: ' . $e->getMessage(), [
+                                'order_id' => $order->order_id,
+                            ]);
+                        }
+                    }
+                }
             } elseif ($result['status'] === 'failed') {
                 $order->update(['status' => 'failed', 'meta->reference' => $result['reference']]);
                 $this->orderService->sendFailedNotification($order);

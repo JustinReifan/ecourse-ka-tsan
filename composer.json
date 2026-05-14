@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "duitkupg/duitku-php": "dev-master",
+        "facebook/php-business-sdk": "^25.0",
         "inertiajs/inertia-laravel": "^2.0",
         "james-heinrich/getid3": "^1.9",
         "laravel/framework": "^12.0",
