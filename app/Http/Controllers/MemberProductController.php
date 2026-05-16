@@ -68,14 +68,21 @@ class MemberProductController extends Controller
 
         // Purchase pixel: cek apakah ada order completed yang belum di-fire pixel-nya.
         // Ini akan dikirim ke frontend untuk fire fbq('track', 'Purchase') sekali saja.
+        //
+        // PENTING: Gunakan cutoff date agar order lama (sebelum fitur pixel di-deploy)
+        // tidak men-trigger false Purchase event saat user lama login ke member area.
+        // Tanggal cutoff = saat fitur browser pixel di-deploy ke production.
+        $pixelCutoffDate = '2026-05-14 00:00:00';
+
         $purchasePixelData = null;
         $pendingPixelOrder = Order::where('user_id', $userId)
             ->where('status', 'completed')
             ->where('type', 'registration')
             ->whereJsonContains('meta->registration_type', 'standard')
+            ->where('created_at', '>=', $pixelCutoffDate)
             ->where(function ($q) {
                 $q->whereNull('meta->pixel_fired')
-                  ->orWhere('meta->pixel_fired', false);
+                    ->orWhere('meta->pixel_fired', false);
             })
             ->orderBy('updated_at', 'desc')
             ->first();
