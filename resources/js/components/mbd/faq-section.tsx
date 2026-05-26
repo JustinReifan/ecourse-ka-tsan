@@ -140,10 +140,10 @@ export function FaqSection() {
                                     <div className="bg-primary/20 border-primary/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border">
                                         <MessageCircle className="text-primary h-5 w-5" />
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <h3 className="text-foreground font-semibold">Whatsapp</h3>
                                         <p className="text-muted-foreground text-sm">+6282253204242</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <div className="bg-primary/20 border-primary/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border">
