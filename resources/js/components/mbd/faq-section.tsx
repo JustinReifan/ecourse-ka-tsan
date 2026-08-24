@@ -136,7 +136,7 @@ export function FaqSection() {
                         {/* Contact CTA */}
                         <div className="animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
                             <div className="space-y-4 rounded-2xl py-2 backdrop-blur-sm">
-                                <div className="flex items-center gap-3">
+                                {/* <div className="flex items-center gap-3">
                                     <div className="bg-primary/20 border-primary/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border">
                                         <MessageCircle className="text-primary h-5 w-5" />
                                     </div>
@@ -144,7 +144,7 @@ export function FaqSection() {
                                         <h3 className="text-foreground font-semibold">Whatsapp</h3>
                                         <p className="text-muted-foreground text-sm">+6282253204242</p>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="flex items-center gap-3">
                                     <div className="bg-primary/20 border-primary/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border">
                                         <MapPin className="text-primary h-5 w-5" />
