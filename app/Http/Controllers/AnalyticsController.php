@@ -78,32 +78,27 @@ class AnalyticsController extends Controller
 
         $uniqueVisitors = UserAnalytic::where('event_type', 'visit')
             ->where('created_at', '>=', $startDate)
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         $engagementRate = UserAnalytic::where('event_type', 'engagement')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->type', 'dwell_time')
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         $registrations = UserAnalytic::where('event_type', 'conversion')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->type', 'registration')
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
-        $paymentAnalytics = UserAnalytic::where('event_type', 'payment')
+        $payments = UserAnalytic::where('event_type', 'payment')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->status', 'success')
-            ->get();
+            ->count();
 
-        $payments = $paymentAnalytics->count();
-
-        $revenue = $paymentAnalytics->sum(function ($analytic) {
-            // Pastikan casting ke integer/float aman
-            return (float) ($analytic->event_data['amount'] ?? 0);
-        });
+        $revenue = UserAnalytic::where('event_type', 'payment')
+            ->where('created_at', '>=', $startDate)
+            ->where('event_data->status', 'success')
+            ->sum(DB::raw('CAST(JSON_UNQUOTE(JSON_EXTRACT(event_data, "$.amount")) AS DECIMAL(15,2))'));
 
 
         return [
@@ -112,7 +107,7 @@ class AnalyticsController extends Controller
             'engagement_rate' => $totalVisits > 0 ? round(($engagementRate / $totalVisits) * 100, 2) : 0,
             'conversion_rate' => $totalVisits > 0 ? round(($registrations / $totalVisits) * 100, 2) : 0,
             'conversion_to_payment_rate' => $registrations > 0 ? round(($payments / $registrations) * 100, 2) : 0,
-            'payment_rate' => $registrations > 0 ? round(($payments / $totalVisits) * 100, 2) : 0,
+            'payment_rate' => $totalVisits > 0 ? round(($payments / $totalVisits) * 100, 2) : 0,
             'total_revenue' => $revenue,
             'registrations' => $registrations,
             'payments' => $payments,
@@ -150,26 +145,22 @@ class AnalyticsController extends Controller
     {
         $visits = UserAnalytic::where('event_type', 'visit')
             ->where('created_at', '>=', $startDate)
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         $engaged = UserAnalytic::where('event_type', 'engagement')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->type', 'dwell_time')
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         $registrations = UserAnalytic::where('event_type', 'conversion')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->type', 'registration')
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         $payments = UserAnalytic::where('event_type', 'payment')
             ->where('created_at', '>=', $startDate)
             ->where('event_data->status', 'success')
-            ->distinct('session_id')
-            ->count();
+            ->count(DB::raw('DISTINCT session_id'));
 
         return [
             ['stage' => 'Visits', 'count' => $visits, 'percentage' => 100],

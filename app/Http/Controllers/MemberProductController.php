@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\UserPurchase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MemberProductController extends Controller
 {
@@ -69,37 +70,47 @@ class MemberProductController extends Controller
         // Purchase pixel: cek apakah ada order completed yang belum di-fire pixel-nya.
         // Ini akan dikirim ke frontend untuk fire fbq('track', 'Purchase') sekali saja.
         //
-        // PENTING: Gunakan cutoff date agar order lama (sebelum fitur pixel di-deploy)
-        // tidak men-trigger false Purchase event saat user lama login ke member area.
-        // Tanggal cutoff = saat fitur browser pixel di-deploy ke production.
+        // PENTING:
+        // 1. Cutoff date: order sebelum tanggal ini diabaikan (sebelum fitur pixel di-deploy).
+        // 2. Hanya order BARU (< 3 hari) yang bisa trigger pixel — cegah ghost event dari
+        //    member lama yang login berulang dengan pixel_fired yang belum ter-set.
+        // 3. Gunakan DB transaction + lockForUpdate untuk cegah race condition
+        //    (user buka 2 tab bersamaan → 2 ghost event).
         $pixelCutoffDate = '2026-05-14 00:00:00';
+        $pixelMaxAgeDays = 3; // hanya order dalam 3 hari terakhir yang bisa trigger pixel
 
         $purchasePixelData = null;
-        $pendingPixelOrder = Order::where('user_id', $userId)
-            ->where('status', 'completed')
-            ->where('type', 'registration')
-            ->whereJsonContains('meta->registration_type', 'standard')
-            ->where('created_at', '>=', $pixelCutoffDate)
-            ->where(function ($q) {
-                $q->whereNull('meta->pixel_fired')
-                    ->orWhere('meta->pixel_fired', false);
-            })
-            ->orderBy('updated_at', 'desc')
-            ->first();
 
-        if ($pendingPixelOrder) {
-            $purchasePixelData = [
-                'event_id' => 'purchase-' . $pendingPixelOrder->order_id,
-                'amount' => (float) $pendingPixelOrder->amount,
-                'order_id' => $pendingPixelOrder->order_id,
-            ];
+        DB::transaction(function () use ($userId, $pixelCutoffDate, $pixelMaxAgeDays, &$purchasePixelData) {
+            $pendingPixelOrder = Order::where('user_id', $userId)
+                ->where('status', 'completed')
+                ->where('type', 'registration')
+                ->whereJsonContains('meta->registration_type', 'standard')
+                ->where('created_at', '>=', $pixelCutoffDate)
+                ->where('created_at', '>=', now()->subDays($pixelMaxAgeDays)) // max 3 hari lalu
+                ->where(function ($q) {
+                    $q->whereNull('meta->pixel_fired')
+                        ->orWhere('meta->pixel_fired', false);
+                })
+                ->orderBy('updated_at', 'desc')
+                ->lockForUpdate() // cegah race condition: 2 request bersamaan
+                ->first();
 
-            // Mark pixel as fired to prevent duplicate firing
-            $meta = $pendingPixelOrder->meta;
-            $meta['pixel_fired'] = true;
-            $pendingPixelOrder->meta = $meta;
-            $pendingPixelOrder->save();
-        }
+            if ($pendingPixelOrder) {
+                // Mark pixel as fired SEBELUM set purchasePixelData,
+                // agar jika ada exception saat render, tidak ada ghost event.
+                $meta = $pendingPixelOrder->meta;
+                $meta['pixel_fired'] = true;
+                $pendingPixelOrder->meta = $meta;
+                $pendingPixelOrder->save();
+
+                $purchasePixelData = [
+                    'event_id' => 'purchase-' . $pendingPixelOrder->order_id,
+                    'amount' => (float) $pendingPixelOrder->amount,
+                    'order_id' => $pendingPixelOrder->order_id,
+                ];
+            }
+        });
 
         return Inertia::render('member/index', [
             'ownedProducts' => $ownedProducts,
