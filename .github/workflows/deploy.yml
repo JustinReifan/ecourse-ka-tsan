@@ -1,4 +1,4 @@
-name: Deploy Split Structure - Staging
+name: Deploy Staging (Laravel & Public)
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     env:
       SERVER_IP: '72.61.210.213'
       SERVER_USER: 'root'
@@ -48,33 +49,24 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      # ---------------------------------------------------------
-      # SYNC 1: Pindahkan Core Laravel
-      # ---------------------------------------------------------
       - name: Sync Core Laravel to Server
         run: |
           rsync -avz --delete \
-          --exclude='.env' \
-          --exclude='/storage/' \
-          --exclude='/bootstrap/cache/' \
-          --exclude='/.git/' \
-          --exclude='/node_modules/' \
-          --exclude='/public/' \
-          ./ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR_LARAVEL }}
+            --exclude='.env' \
+            --exclude='/storage/' \
+            --exclude='/bootstrap/cache/' \
+            --exclude='/.git/' \
+            --exclude='/node_modules/' \
+            --exclude='/public/' \
+            ./ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR_LARAVEL }}/
 
-      # ---------------------------------------------------------
-      # SYNC 2: Pindahkan Aset Public
-      # ---------------------------------------------------------
       - name: Sync Public Assets to public_html
         run: |
           rsync -avz --delete \
-          --exclude='index.php' \
-          --exclude='.htaccess' \
-          ./public/ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR_PUBLIC }}
+            --exclude='index.php' \
+            --exclude='.htaccess' \
+            ./public/ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR_PUBLIC }}/
 
-      # ---------------------------------------------------------
-      # POST-DEPLOYMENT
-      # ---------------------------------------------------------
       - name: Run Artisan & Move Manifest
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -83,16 +75,24 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/public/build
-            cp ${{ env.TARGET_DIR_PUBLIC }}/build/manifest.json ${{ env.TARGET_DIR_LARAVEL }}/public/build/manifest.json
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/storage/app/public
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/storage/framework/cache
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/storage/framework/sessions
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/storage/framework/views
+            mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/storage/logs
+
+            cp ${{ env.TARGET_DIR_PUBLIC }}/build/manifest.json \
+              ${{ env.TARGET_DIR_LARAVEL }}/public/build/manifest.json
 
             cd ${{ env.TARGET_DIR_PUBLIC }}
             ln -sfn ../laravel/storage/app/public storage
 
+            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_LARAVEL }}
+            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_PUBLIC }}
+            chmod -R 775 ${{ env.TARGET_DIR_LARAVEL }}/storage
+            chmod -R 775 ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache
+
             cd ${{ env.TARGET_DIR_LARAVEL }}
             php artisan optimize:clear
             php artisan migrate --force
-
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_LARAVEL }}
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_PUBLIC }}
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_LARAVEL }}/storage
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache
