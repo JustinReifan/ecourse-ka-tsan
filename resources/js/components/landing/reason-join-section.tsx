@@ -127,7 +127,7 @@ export function ReasonJoinSection() {
                             {/* Main image */}
                             <div className="border-border/20 shadow-primary/5 relative overflow-hidden rounded-3xl border shadow-2xl">
                                 <img
-                                    src="/storage/landing/whyjoin.png"
+                                    src="/landing/whyjoin.png"
                                     alt="Professional designer working with Canva interface creating stunning designs"
                                     className="h-[400px] w-full object-cover transition-transform duration-1000 hover:scale-110"
                                     loading="lazy"

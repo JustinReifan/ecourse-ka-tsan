@@ -14,11 +14,11 @@ export function PainPointSection() {
     const { trackCTA } = useAnalytics();
 
     const painPoints = [
-        'Mau mulai dari mana?',
-        'Udah coba jualan & ngonten tapi sepi?',
-        'Nyoba iklan berbayar tapi boncos?',
-        'Udah coba affiliate/bikin produk digital tapi ga tau cara promosiin nya?',
-        'Malu nampilin wajah buat ngonten?',
+        'Sudah pernah coba jualan (termasuk stok produk fisik) tapi perputarannya tidak stabil ,  modal keluar, hasil tidak jelas.',
+        'Punya cicilan/utang yang jadi beban pikiran sehari-hari.',
+        'Gaptek dan merasa dunia digital/sosmed itu rumit ,  takut tidak akan sanggup mengikuti.',
+        'Takut uang yang dikeluarkan untuk belajar tidak balik modal.',
+        'Kalau belajar sendiri lewat video course biasa, gampang berhenti di tengah jalan karena tidak ada yang mengoreksi progres.',
     ];
 
     const handleCtaClick = () => {
@@ -36,8 +36,11 @@ export function PainPointSection() {
                 {/* Header Section */}
                 <div className="mb-6 text-center lg:mb-16">
                     <h2 className="text-foreground mb-3 text-2xl font-bold lg:text-6xl">
-                        Aku Tahu Kamu Pengen Punya Penghasilan Sendiri, <span className="text-primary text-4xl lg:text-6xl">Tapi Bingung:</span>
+                        Kenapa Kamu Masih <span className="text-primary text-4xl lg:text-6xl">KETINGGALAN?</span>
                     </h2>
+                    <p className="text-muted-foreground mx-auto max-w-3xl text-lg md:text-xl">
+                        Orang lain sudah mulai cuan dari HP-nya. Sementara kamu masih di titik yang sama ,  bingung, takut, dan belum mulai.
+                    </p>
                 </div>
 
                 {/* Main Content Grid */}
@@ -48,7 +51,7 @@ export function PainPointSection() {
                             {/* Main image */}
                             <div className="border-border/20 shadow-primary/5 relative overflow-hidden rounded-3xl border shadow-2xl">
                                 <img
-                                    src="/storage/landing/whyjoin.png"
+                                    src="/landing/whyjoin.png"
                                     alt="Professional designer working with Canva interface creating stunning designs"
                                     className="h-[400px] w-full object-cover transition-transform duration-1000 hover:scale-110"
                                     loading="lazy"
@@ -90,13 +93,31 @@ export function PainPointSection() {
                             </ul>
 
                             <div className="pt-5 text-center md:text-start">
-                                <h3 className="text-foreground text-xl font-medium md:text-2xl">Tenang, Kamu gak sendiri!</h3>
-                                <p className="text-muted-foreground mt-1 text-lg">Aku dulu ngalamin hal yang sama.</p>
+                                <h3 className="text-foreground text-xl font-medium md:text-2xl">Kalau dibiarkan, 5 tahun lagi kamu masih di titik yang sama.</h3>
+                                <p className="text-muted-foreground mt-1 text-lg">Dan semakin lama menunda, semakin ketat persaingannya.</p>
                             </div>
                         </div>
-                        <div className="pt-3 text-center text-2xl leading-tight font-semibold md:py-6">
-                            <h3 className="text-primary">Kabar baiknya, aku mau bimbing kamu</h3>
-                            <p className="text-foreground mt-1">Secara langsung 1-on-1 via WA</p>
+                        {/* Unique Mechanism Bridge */}
+                        <div className="pt-3 text-center md:py-6">
+                            <h3 className="text-primary text-2xl font-bold md:text-3xl">Kenapa Video Course Biasa Gagal Membuatmu Cuan?</h3>
+                            <p className="text-muted-foreground mt-2 text-lg">Karena belajar sendiri tanpa koreksi = tidak tahu apakah sudah di jalur yang benar.</p>
+                            <div className="from-primary/10 border-primary/20 mt-4 rounded-2xl border bg-gradient-to-r p-6 text-left backdrop-blur-sm">
+                                <h4 className="text-foreground mb-3 text-lg font-bold">Inilah yang bikin Gumpreneur BEDA:</h4>
+                                <ul className="text-muted-foreground space-y-2">
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-primary mt-1">✓</span>
+                                        <span><strong>Grup WA kecil</strong> ,  maksimal 10 orang, jadi kamu benar-benar diperhatikan.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-primary mt-1">✓</span>
+                                        <span><strong>10 tugas dikoreksi langsung mentor</strong> ,  bukan cuma nonton video tanpa arah.</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <span className="text-primary mt-1">✓</span>
+                                        <span><strong>Bebas tanya 1-on-1 via chat</strong> ,  kapan pun mentok, langsung tanya.</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                         {/* CTA Button */}

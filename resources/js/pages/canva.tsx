@@ -135,7 +135,7 @@ export default function Canva({ coursePrice }: CanvaProps) {
 
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="overflow-hidden rounded-2xl">
-                                    <img src="/storage/canva/hero-img.webp" alt="" className="mx-auto h-full w-4xl rounded-2xl object-cover" />
+                                    <img src="/canva/hero-img.webp" alt="" className="mx-auto h-full w-4xl rounded-2xl object-cover" />
                                 </div>
                             </div>
 

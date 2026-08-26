@@ -152,7 +152,7 @@ export default function Test1Hero() {
                             <div>
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="mx-auto overflow-hidden rounded-2xl bg-black shadow-2xl lg:max-w-3xl">
-                                    <img src="/storage/landing/hero/thumb3.png" alt="" className="h-full w-full object-cover" />
+                                    <img src="/landing/hero/thumb3.png" alt="" className="h-full w-full object-cover" />
                                 </div>
                             </div>
 
@@ -183,7 +183,7 @@ export default function Test1Hero() {
                                 <div className="relative">
                                     <div className="border-border/50 shadow-primary/10 aspect-[4/3] overflow-hidden rounded-2xl border shadow-2xl">
                                         <img
-                                            src="/storage/canvathumb2.webp"
+                                            src="/canvathumb2.webp"
                                             alt="DaVinci Resolve workspace"
                                             className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                                             loading="lazy"

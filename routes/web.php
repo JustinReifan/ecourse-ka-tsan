@@ -30,13 +30,28 @@ Route::get('/jago-canva', function () {
 })->name('canva');
 
 
-Route::get('/', function () {
+Route::get('/', function (\Illuminate\Http\Request $request) {
     $settings = \App\Models\Setting::getAllCached();
-    return Inertia::render('test3', [
-        'landingBadge' => $settings['landing_badge'] ?? 'OPEN BATCH',
-        'coursePrice' =>  $settings['course_price'] ?? 0,
+    $variant = 'benefit';
 
-    ]);
+    $response = Inertia::render('test3', [
+        'landingBadge' => $settings['landing_badge'] ?? 'OPEN BATCH',
+        'coursePrice' => 399000,
+        'abVariant' => $variant,
+    ])->toResponse($request);
+
+    // Varian B is the active campaign headline. Keep the cookie for analytics attribution.
+    return $response->withCookie(cookie(
+        'gumpreneur_ab_variant',
+        $variant,
+        60 * 24 * 30,
+        '/',
+        null,
+        $request->isSecure(),
+        true,
+        false,
+        'Lax',
+    ));
 })->name('home');
 
 

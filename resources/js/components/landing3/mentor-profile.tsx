@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Award, CheckCircle, Instagram, Play, TrendingUp } from 'lucide-react';
+import { Award, CheckCircle, Instagram, MessageCircle, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 
 interface Credential {
@@ -10,25 +10,18 @@ interface Credential {
     verified: boolean;
 }
 
-interface Achievement {
-    id: string;
-    image: string;
-    title: string;
-    description: string;
-}
-
 const credentials: Credential[] = [
     {
         id: '1',
         title: '13+ Tahun Praktisi Jualan Online',
-        description: 'Bukan sekadar teori. Terbukti membangun brand @latheefa_id dengan konsistensi penjualan ribuan produk setiap tahunnya.',
+        description: 'Berpengalaman membangun brand @latheefa_id dengan konsistensi penjualan yang terbukti.',
         icon: <Award className="h-5 w-5" />,
         verified: true,
     },
     {
         id: '2',
         title: 'Sertifikasi BNSP Social Media Marketing',
-        description: 'Kompetensi yang diakui negara. Tersertifikasi resmi sebagai ahli Social Media Marketing dengan standar profesional.',
+        description: 'Tersertifikasi resmi BNSP Social Media Marketing.',
         icon: <CheckCircle className="h-5 w-5" />,
         verified: true,
     },
@@ -38,45 +31,6 @@ const credentials: Credential[] = [
         description: 'Strategi konten yang tervalidasi dengan 7.3 Juta+ tayangan dan komunitas loyal 48 Ribu+ pengikut di Instagram.',
         icon: <TrendingUp className="h-5 w-5" />,
         verified: true,
-    },
-];
-
-const achievements: Achievement[] = [
-    {
-        id: '1',
-        image: '/storage/landing/mentor/1.png',
-        title: 'Hollywood Project',
-        description: 'Color grading for indie film',
-    },
-    {
-        id: '2',
-        image: '/storage/landing/mentor/2.png',
-        title: 'Netflix Series',
-        description: 'Post-production supervisor',
-    },
-    {
-        id: '3',
-        image: '/storage/landing/mentor/3.png',
-        title: 'Music Video',
-        description: 'Grammy nominated artist',
-    },
-    {
-        id: '4',
-        image: '/storage/landing/mentor/4.png',
-        title: 'Commercial Work',
-        description: 'Fortune 500 companies',
-    },
-    {
-        id: '5',
-        image: '/storage/landing/mentor/5.png',
-        title: 'Documentary',
-        description: 'Award winning documentary',
-    },
-    {
-        id: '6',
-        image: '/storage/landing/mentor/6.png',
-        title: 'Training Content',
-        description: 'Educational video series',
     },
 ];
 
@@ -118,66 +72,6 @@ function CredentialItem({ credential, delay }: CredentialItemProps) {
                     )}
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">{credential.description}</p>
-            </div>
-        </div>
-    );
-}
-
-interface AchievementImageProps {
-    achievement: Achievement;
-    delay: number;
-}
-
-function AchievementImage({ achievement, delay }: AchievementImageProps) {
-    const [imageLoaded, setImageLoaded] = useState(false);
-
-    return (
-        <div
-            className={cn(
-                'group relative overflow-hidden rounded-xl',
-                'bg-card/30 border-border/30 hover:border-primary/40 border',
-                'transition-all duration-500 hover:-translate-y-1 hover:scale-105',
-                'hover:shadow-primary/10 hover:shadow-xl',
-                'animate-fade-in cursor-pointer',
-            )}
-            style={{ animationDelay: `${delay}ms`, animationFillMode: 'both' }}
-        >
-            <div className="relative aspect-[4/3] overflow-hidden">
-                {/* Loading skeleton */}
-                {!imageLoaded && <div className="from-muted/20 via-muted/10 to-muted/20 absolute inset-0 animate-pulse bg-gradient-to-r" />}
-
-                <img
-                    src={achievement.image}
-                    alt={achievement.title}
-                    className={cn(
-                        'h-full w-full object-cover transition-all duration-700',
-                        'group-hover:scale-110',
-                        imageLoaded ? 'opacity-100' : 'opacity-0',
-                    )}
-                    onLoad={() => setImageLoaded(true)}
-                    loading="lazy"
-                />
-
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                {/* Content Overlay */}
-                {/* <div className="absolute inset-0 flex flex-col justify-end p-4">
-                    <h4 className="mb-1 font-semibold text-white">{achievement.title}</h4>
-                    <p className="text-xs text-white/80">{achievement.description}</p>
-                </div> */}
-
-                {/* Play Icon Overlay */}
-                {/* <div
-                    className={cn(
-                        'absolute inset-0 flex items-center justify-center',
-                        'opacity-0 transition-opacity duration-300 group-hover:opacity-100',
-                    )}
-                >
-                    <div className="bg-primary/90 border-primary/30 flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-sm">
-                        <Play className="text-primary-foreground ml-0.5 h-5 w-5" fill="currentColor" />
-                    </div>
-                </div> */}
             </div>
         </div>
     );
@@ -241,7 +135,7 @@ export function MentorProfile() {
                                             )}
 
                                             <img
-                                                src="/storage/landing/mentor/hero.png"
+                                                src="/landing/mentor/hero.png"
                                                 alt="Professional Video Editor"
                                                 className={cn(
                                                     'h-full w-full object-cover transition-all duration-700',
@@ -305,11 +199,11 @@ export function MentorProfile() {
                                 <div className="text-muted-foreground space-y-3 text-sm">
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>6+ Tahun Pengalaman Dalam Membuat Video Youtube</span>
+                                        <span>13+ tahun praktisi jualan online</span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>Berhasil Membuat 2 Channel Yang Sukses Dimonetisasi</span>
+                                        <span>Tersertifikasi BNSP Social Media Marketing</span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="text-primary h-4 w-4 shrink-0" />
@@ -317,63 +211,31 @@ export function MentorProfile() {
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>Portfolio internasional dengan brand Fortune 500</span>
+                                        <span>Pendampingan personal melalui chat</span>
                                     </div>
                                 </div>
                             </div> */}
                         </div>
 
-                        {/* Right Side - Portfolio Grid */}
-                        <div className="space-y-8">
-                            <div className="animate-fade-in" style={{ animationDelay: '1200ms', animationFillMode: 'both' }}>
-                                <h4 className="text-foreground mb-6 flex items-center gap-2 text-xl font-bold">
-                                    <Play className="text-primary h-5 w-5" />
-                                    Portfolio & Recent Works
-                                </h4>
-                            </div>
-
-                            {/* Achievement Grid */}
-                            <div className="grid grid-cols-2 gap-4">
-                                {achievements.map((achievement, index) => (
-                                    <AchievementImage key={achievement.id} achievement={achievement} delay={1400 + index * 100} />
-                                ))}
-                            </div>
-
-                            {/* Trust Indicators */}
-                            <div className="animate-fade-in space-y-6" style={{ animationDelay: '2000ms', animationFillMode: 'both' }}>
-                                {/* <div className="from-primary/10 via-primary/5 to-primary/10 border-primary/20 rounded-2xl border bg-gradient-to-r p-6 backdrop-blur-sm">
-                                    <h5 className="text-foreground mb-4 font-bold">Mengapa Memilih Tsania?</h5>
-                                    <div className="text-muted-foreground space-y-3 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                            <span>8+ tahun pengalaman di industri Hollywood & Netflix</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                            <span>50,000+ siswa telah berhasil menguasai editing professional</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                            <span>Tersertifikasi langsung dari Blackmagic Design</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                            <span>Portfolio internasional dengan brand Fortune 500</span>
-                                        </div>
-                                    </div>
-                                </div> */}
-
-                                {/* Personal Quote */}
-                                <div className="bg-card/30 border-border/30 relative rounded-2xl border p-6 backdrop-blur-sm">
-                                    <div className="text-primary/30 absolute -top-2 -left-2 font-serif text-4xl">"</div>
-                                    <blockquote className="text-foreground pl-6 leading-relaxed italic">
-                                        "Semakin banyak membuat alasan, semakin sedikit langkahmu berjalan"
-                                    </blockquote>
-                                    <div className="mt-4 text-right">
-                                        <cite className="text-muted-foreground text-sm not-italic">- Tsania Latheefa</cite>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="from-primary/10 border-primary/20 space-y-6 rounded-2xl border bg-gradient-to-br p-8 backdrop-blur-sm">
+                            <h4 className="text-foreground flex items-center gap-3 text-2xl font-bold">
+                                <MessageCircle className="text-primary h-6 w-6" />
+                                Pendampingan Personal Selama 70 Hari
+                            </h4>
+                            <p className="text-muted-foreground text-lg leading-relaxed">
+                                Kak Tsania mengoreksi 10 tugas praktik dan menjadi tempat bertanya lewat chat 1-on-1 kapan pun peserta mentok.
+                            </p>
+                            <ul className="text-muted-foreground space-y-4">
+                                <li className="flex gap-3">
+                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Grup WhatsApp maksimal 10 orang.
+                                </li>
+                                <li className="flex gap-3">
+                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Koreksi tugas langsung, bukan belajar sendirian.
+                                </li>
+                                <li className="flex gap-3">
+                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Tanya-jawab lewat chat tanpa biaya tambahan.
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

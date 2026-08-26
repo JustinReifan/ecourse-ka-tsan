@@ -53,7 +53,7 @@ function CourseCard({ course }: { course: Course }) {
             <div className="from-secondary to-muted relative aspect-video overflow-hidden bg-gradient-to-br">
                 {course.thumbnail ? (
                     <img
-                        src={'/storage/' + course.thumbnail}
+                        src={'/' + course.thumbnail}
                         alt={course.name}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"

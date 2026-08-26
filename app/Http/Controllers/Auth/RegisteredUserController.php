@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
                 \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000))
             );
         } else {
-            $coursePrice = \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000));
+            $coursePrice = 399000;
         }
 
         $duitkuScriptUrl = \App\Models\Setting::get('duitku_script_url', env('VITE_DUITKU_SCRIPT_URL', ''));
@@ -383,7 +383,7 @@ class RegisteredUserController extends Controller
             );
         }
 
-        return (float) \App\Models\Setting::get('course_price', env('VITE_COURSE_PRICE', 500000));
+        return 399000.0;
     }
 
     protected function resolveVoucherForRegistration(?string $voucherCode, float $basePrice, ?int $productId = null): array

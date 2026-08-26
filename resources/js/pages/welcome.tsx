@@ -173,7 +173,7 @@ export default function Welcome() {
 
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="overflow-hidden rounded-2xl border border-neutral-800/60 bg-black shadow-2xl">
-                                    <img src="/storage/landing/hero/herosection.png" alt="" className="h-full w-full object-cover" />
+                                    <img src="/landing/hero/herosection.png" alt="" className="h-full w-full object-cover" />
                                 </div>
                             </div>
 
@@ -206,7 +206,7 @@ export default function Welcome() {
                                 <div className="relative">
                                     <div className="border-border/50 shadow-primary/10 aspect-[4/3] overflow-hidden rounded-2xl border shadow-2xl">
                                         <img
-                                            src="/storage/canvathumb2.webp"
+                                            src="/canvathumb2.webp"
                                             alt="DaVinci Resolve workspace"
                                             className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                                             loading="lazy"

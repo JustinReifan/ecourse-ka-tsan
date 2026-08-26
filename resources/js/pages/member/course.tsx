@@ -120,7 +120,7 @@ export default function Course({ course }: CoursePageProps) {
                                 <div className="sticky top-8">
                                     <div className="group relative overflow-hidden rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-black">
                                         <img
-                                            src={'/storage/' + course.thumbnail}
+                                            src={'/' + course.thumbnail}
                                             alt={course.name}
                                             className="h-64 w-full object-cover opacity-80 transition-opacity duration-500 group-hover:opacity-100"
                                         />
@@ -178,7 +178,7 @@ export default function Course({ course }: CoursePageProps) {
                                 <div className="sticky top-8">
                                     <div className="group from-card/50 to-card relative overflow-hidden rounded-2xl border border-neutral-800 bg-gradient-to-br">
                                         <img
-                                            src={'/storage/' + course.thumbnail}
+                                            src={'/' + course.thumbnail}
                                             alt={course.name}
                                             className="h-64 w-full object-cover opacity-80 transition-opacity duration-500 group-hover:opacity-100"
                                         />

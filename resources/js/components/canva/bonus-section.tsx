@@ -22,7 +22,7 @@ const bonusData: BonusData[] = [
         value: 'Rp 299.000',
         description:
             'Gak perlu pusing mikirin mau jualan apa. Dapetin ide produk digital yang udah ada, jadi kamu bisa langsung siap jualan tanpa perlu mikir dari nol.',
-        image: '/storage/canva/bonus/ide-produk.webp',
+        image: '/canva/bonus/ide-produk.webp',
     },
     {
         id: 2,
@@ -31,7 +31,7 @@ const bonusData: BonusData[] = [
         value: 'Rp 599.000',
         description:
             'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi hasil produk digital dan tumbuh bareng biar semangatmu gak kendor.',
-        image: '/storage/canva/bonus/grup-diskusi.webp',
+        image: '/canva/bonus/grup-diskusi.webp',
     },
 ];
 
@@ -125,7 +125,7 @@ function OtherBonusCard() {
         <div className="group mx-auto flex w-full max-w-lg flex-col items-center text-center">
             <div className="border-border/50 bg-muted/5 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border">
                 <img
-                    src="/storage/landing3/bonus/otherbonus.png" // Placeholder
+                    src="/landing3/bonus/otherbonus.png" // Placeholder
                     alt="Other Bonus"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"

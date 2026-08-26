@@ -2,9 +2,9 @@
 import { CtaButton2 } from '@/components/landing3/cta-button-2';
 import { useAnalytics } from '@/hooks/use-analytics';
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'; // <-- Sesuaikan path ke file yg Anda buat
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import Autoplay from 'embla-carousel-autoplay'; // Plugin untuk autoplay
+import Autoplay from 'embla-carousel-autoplay';
 import { Star } from 'lucide-react';
 import * as React from 'react';
 
@@ -12,33 +12,28 @@ interface TestimonialGrid {
     id: string;
     imageUrl: string;
     alt: string;
-    subtitle: string;
 }
 
 const testimonialsGrid: TestimonialGrid[] = [
     {
         id: '1',
-        imageUrl: '/storage/landing3/testimonials/1.png',
+        imageUrl: '/landing3/testimonials/1.png',
         alt: 'Testimonial 1',
-        subtitle: 'Seorang Bapak-Bapak Guru Ngaji biasa bisa dapetin penghasilan tambahan Rp 5 JUTA',
     },
     {
         id: '2',
-        imageUrl: '/storage/landing3/testimonials/2.png',
+        imageUrl: '/landing3/testimonials/2.png',
         alt: 'Testimonial 2',
-        subtitle: 'Awalnya Ibu Rumah Tangga ini Takut Jualan, tapi Dibimbing Sampai Berani Jualan dan Dapetin Rp 2 JUTA',
     },
     {
         id: '3',
-        imageUrl: '/storage/landing3/testimonials/3.png',
+        imageUrl: '/landing3/testimonials/3.png',
         alt: 'Testimonial 3',
-        subtitle: 'Bapak Ini awalnya bingung cara jualan di Sosmed, tapi Diajarin Sampai Bisa Hasilin Rp 80 JUTA',
     },
     {
         id: '4',
-        imageUrl: '/storage/landing3/testimonials/4.png',
+        imageUrl: '/landing3/testimonials/4.png',
         alt: 'Testimonial 4',
-        subtitle: 'Ibu Ini Awalnya Gaptek dan Sibuk Ngurus Anak Tapi Bisa Hasilkan Uang Pertamanya Dari Sosmed',
     },
 ];
 
@@ -48,16 +43,15 @@ interface Testimonial {
     alt: string;
 }
 
-// Ganti path ini dengan path ke gambar testimoni 9:16 Anda
 const testimonials: Testimonial[] = [
-    { id: '1', imageUrl: '/storage/landing/testimonials/testimoni3.png', alt: 'Testimonial 1' },
-    { id: '2', imageUrl: '/storage/landing/testimonials/testimoni4.png', alt: 'Testimonial 2' },
-    { id: '3', imageUrl: '/storage/landing/testimonials/testimoni5.png', alt: 'Testimonial 3' },
-    { id: '4', imageUrl: '/storage/landing/testimonials/testimoni6.png', alt: 'Testimonial 4' },
-    { id: '5', imageUrl: '/storage/landing/testimonials/testimoni7.jpg', alt: 'Testimonial 5' },
-    { id: '6', imageUrl: '/storage/landing/testimonials/testimoni8.jpg', alt: 'Testimonial 6' },
-    { id: '7', imageUrl: '/storage/landing/testimonials/testimoni9.jpg', alt: 'Testimonial 7' },
-    { id: '8', imageUrl: '/storage/landing/testimonials/testimoni10.jpg', alt: 'Testimonial 8' },
+    { id: '1', imageUrl: '/landing/testimonials/testimoni3.png', alt: 'Testimonial 1' },
+    { id: '2', imageUrl: '/landing/testimonials/testimoni4.png', alt: 'Testimonial 2' },
+    { id: '3', imageUrl: '/landing/testimonials/testimoni5.png', alt: 'Testimonial 3' },
+    { id: '4', imageUrl: '/landing/testimonials/testimoni6.png', alt: 'Testimonial 4' },
+    { id: '5', imageUrl: '/landing/testimonials/testimoni7.jpg', alt: 'Testimonial 5' },
+    { id: '6', imageUrl: '/landing/testimonials/testimoni8.jpg', alt: 'Testimonial 6' },
+    { id: '7', imageUrl: '/landing/testimonials/testimoni9.jpg', alt: 'Testimonial 7' },
+    { id: '8', imageUrl: '/landing/testimonials/testimoni10.jpg', alt: 'Testimonial 8' },
 ];
 
 interface TestimonialCardProps {
@@ -71,17 +65,15 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         <div
             className={cn(
                 'group relative overflow-hidden rounded-2xl',
-                'aspect-[9/16]', // Aspek rasio 9:16 (potret)
+                'aspect-[9/16]',
                 'from-card/80 to-card/40 bg-gradient-to-br backdrop-blur-sm',
                 'border-border/30 border',
                 'transition-all duration-700',
                 'hover:shadow-primary/20 hover:shadow-2xl',
             )}
         >
-            {/* Skeleton loading */}
             {!imageLoaded && <div className="from-muted/20 via-muted/10 to-muted/20 absolute inset-0 animate-pulse bg-gradient-to-r" />}
 
-            {/* Gambar Testimoni */}
             <img
                 src={testimonial.imageUrl}
                 alt={testimonial.alt}
@@ -98,14 +90,11 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
     );
 }
 
-// --- 3. Komponen Section Utama ---
-
 export function TestimonialsSection() {
-    const { trackVisit, trackCTA } = useAnalytics();
+    const { trackCTA } = useAnalytics();
 
     const handleCtaClick = () => {
         trackCTA('testimonial_section', 'Gabung Sekarang', '#pricing-section');
-        // scroll to pricing section
         const pricingSection = document.getElementById('pricing-section');
         if (pricingSection) {
             pricingSection.scrollIntoView({ behavior: 'smooth' });
@@ -114,7 +103,6 @@ export function TestimonialsSection() {
 
     return (
         <section className="relative py-6 lg:py-32">
-            {/* Background */}
             <div className="via-primary/5 absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />
 
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -124,21 +112,21 @@ export function TestimonialsSection() {
                         <div className="animate-fade-in">
                             <div className="bg-primary/10 border-primary/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm">
                                 <Star className="text-primary h-4 w-4" />
-                                <span className="text-primary text-sm font-medium">Testimoni Member</span>
+                                <span className="text-primary text-sm font-medium">Testimoni Alumni</span>
                             </div>
                         </div>
 
                         <div className="animate-fade-in space-y-4">
                             <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
-                                <span className="block">Hasil Nyata Member yang Sudah </span>
+                                <span className="block">Mereka Sudah Buktikan,</span>
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
-                                    Terapkan Strategi Di Kelas Ini!
+                                    Sekarang Giliran Kamu!
                                 </span>
                             </h2>
                         </div>
                     </div>
 
-                    {/* --- Grid Testimonial (Pengganti Carousel) --- */}
+                    {/* Grid Testimonial */}
                     <div className="animate-fade-in mx-auto max-w-5xl" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
                         <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
                             {testimonialsGrid.map((testimonial, index) => (
@@ -152,19 +140,15 @@ export function TestimonialsSection() {
                                         />
                                     </div>
 
-                                    {/* Subtitle / Highlight Text */}
-                                    <div className="px-2 text-center">
-                                        <p className="text-foreground/90 text-lg leading-snug font-medium">
-                                            {/* Pastikan di data testimonials ada field 'subtitle' atau 'highlight' */}"
-                                            {testimonial.subtitle || 'Tulis highlight testimoni di sini...'}"
-                                        </p>
-                                    </div>
+                                    <p className="text-muted-foreground px-2 text-center text-sm">
+                                        Dokumentasi testimoni alumni — baca pengalaman asli pada gambar.
+                                    </p>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* --- Carousel Responsif --- */}
+                    {/* Carousel */}
                     <div className="animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
                         <Carousel
                             plugins={[
@@ -174,7 +158,7 @@ export function TestimonialsSection() {
                                 }),
                             ]}
                             opts={{
-                                align: 'center', // Item aktif akan selalu di tengah
+                                align: 'center',
                                 loop: true,
                             }}
                             className="w-full"
@@ -183,18 +167,7 @@ export function TestimonialsSection() {
                                 {testimonials.map((testimonial) => (
                                     <CarouselItem
                                         key={testimonial.id}
-                                        className={cn(
-                                            'pl-4',
-                                            // --- INI KUNCI RESPONSIVENYA ---
-                                            // HP (default): 75% width
-                                            'basis-3/4',
-                                            // Tablet kecil (sm): 50% width
-                                            'sm:basis-1/2',
-                                            // Tablet besar (lg): 33.3% width
-                                            'lg:basis-1/3',
-                                            // Desktop (xl): 25% width
-                                            'xl:basis-1/4',
-                                        )}
+                                        className={cn('pl-4', 'basis-3/4', 'sm:basis-1/2', 'lg:basis-1/3', 'xl:basis-1/4')}
                                     >
                                         <div className="p-1">
                                             <TestimonialCard testimonial={testimonial} />
@@ -203,7 +176,6 @@ export function TestimonialsSection() {
                                 ))}
                             </CarouselContent>
 
-                            {/* Tombol Navigasi (tersembunyi di HP, muncul di desktop) */}
                             <CarouselPrevious className="hidden sm:inline-flex" />
                             <CarouselNext className="hidden sm:inline-flex" />
                         </Carousel>
@@ -211,11 +183,14 @@ export function TestimonialsSection() {
                 </div>
                 {/* CTA Button */}
                 <div className="text-center">
-                    <button onClick={() => handleCtaClick()}>
-                        <CtaButton2 size="lg" withInstruction className="group transform text-center transition-all duration-300 hover:scale-105">
-                            <span className="relative z-10">Gabung Sekarang</span>
-                        </CtaButton2>
-                    </button>
+                    <CtaButton2
+                        onClick={handleCtaClick}
+                        size="lg"
+                        withInstruction
+                        className="group transform text-center transition-all duration-300 hover:scale-105"
+                    >
+                        <span className="relative z-10">Gabung Sekarang</span>
+                    </CtaButton2>
                 </div>
             </div>
         </section>

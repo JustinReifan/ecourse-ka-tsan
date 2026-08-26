@@ -94,7 +94,7 @@ export default function CoursesPage({ courses, products, selectedProductId = nul
         {
             key: 'thumbnail' as keyof Course,
             label: 'Thumbnail',
-            render: (value: string) => <img src={'/storage/' + value} className="w-12 rounded bg-cover" alt="thumbnail" />,
+            render: (value: string) => <img src={'/' + value} className="w-12 rounded bg-cover" alt="thumbnail" />,
         },
         {
             key: 'description' as keyof Course,
@@ -147,7 +147,7 @@ export default function CoursesPage({ courses, products, selectedProductId = nul
             status: course.status,
         });
         setEditingCourse(course);
-        setThumbnailPreview(course.thumbnail ? `/storage/${course.thumbnail}` : null);
+        setThumbnailPreview(course.thumbnail ? `/${course.thumbnail}` : null);
         setIsModalOpen(true);
     };
 
@@ -319,7 +319,7 @@ export default function CoursesPage({ courses, products, selectedProductId = nul
                                         setThumbnailPreview(URL.createObjectURL(file));
                                     } else {
                                         // Jika batal, kembalikan ke preview asli (jika ada)
-                                        setThumbnailPreview(editingCourse?.thumbnail ? `/storage/${editingCourse.thumbnail}` : null);
+                                        setThumbnailPreview(editingCourse?.thumbnail ? `/${editingCourse.thumbnail}` : null);
                                     }
                                 }}
                                 className="rounded-lg border-zinc-700/50 bg-zinc-800/50 text-white backdrop-blur-sm focus:border-cyan-400 focus:ring-cyan-400/20"

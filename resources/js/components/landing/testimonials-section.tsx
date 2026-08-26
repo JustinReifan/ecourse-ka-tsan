@@ -16,15 +16,15 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-    { id: '1', imageUrl: '/storage/landing/testimonials/testimoni1.png', alt: 'Testimonial 1' },
-    { id: '2', imageUrl: '/storage/landing/testimonials/testimoni2.png', alt: 'Testimonial 2' },
-    { id: '3', imageUrl: '/storage/landing/testimonials/testimoni3.png', alt: 'Testimonial 3' },
-    { id: '4', imageUrl: '/storage/landing/testimonials/testimoni4.png', alt: 'Testimonial 4' },
-    { id: '5', imageUrl: '/storage/landing/testimonials/testimoni5.png', alt: 'Testimonial 5' },
-    { id: '6', imageUrl: '/storage/landing/testimonials/testimoni6.png', alt: 'Testimonial 6' },
-    { id: '7', imageUrl: '/storage/landing/testimonials/testimoni7.png', alt: 'Testimonial 7' },
-    { id: '8', imageUrl: '/storage/landing/testimonials/testimoni8.png', alt: 'Testimonial 8' },
-    { id: '9', imageUrl: '/storage/landing/testimonials/testimoni9.png', alt: 'Testimonial 9' },
+    { id: '1', imageUrl: '/landing/testimonials/testimoni1.png', alt: 'Testimonial 1' },
+    { id: '2', imageUrl: '/landing/testimonials/testimoni2.png', alt: 'Testimonial 2' },
+    { id: '3', imageUrl: '/landing/testimonials/testimoni3.png', alt: 'Testimonial 3' },
+    { id: '4', imageUrl: '/landing/testimonials/testimoni4.png', alt: 'Testimonial 4' },
+    { id: '5', imageUrl: '/landing/testimonials/testimoni5.png', alt: 'Testimonial 5' },
+    { id: '6', imageUrl: '/landing/testimonials/testimoni6.png', alt: 'Testimonial 6' },
+    { id: '7', imageUrl: '/landing/testimonials/testimoni7.jpg', alt: 'Testimonial 7' },
+    { id: '8', imageUrl: '/landing/testimonials/testimoni8.jpg', alt: 'Testimonial 8' },
+    { id: '9', imageUrl: '/landing/testimonials/testimoni9.jpg', alt: 'Testimonial 9' },
 ];
 
 interface TestimonialCardProps {

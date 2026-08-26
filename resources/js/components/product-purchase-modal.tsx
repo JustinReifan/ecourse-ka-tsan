@@ -156,7 +156,7 @@ export function ProductPurchaseModal({ open, onOpenChange, product, triggerToast
                 <div className="space-y-4 py-4">
                     {product.thumbnail && (
                         <div className="aspect-video w-full overflow-hidden rounded-lg">
-                            <img src={'/storage/' + product.thumbnail} alt={product.title} className="h-full w-full object-cover" />
+                            <img src={'/' + product.thumbnail} alt={product.title} className="h-full w-full object-cover" />
                         </div>
                     )}
 

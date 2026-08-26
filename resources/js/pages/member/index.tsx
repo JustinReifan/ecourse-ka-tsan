@@ -205,7 +205,7 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
 
             <div className="from-secondary to-muted relative aspect-video overflow-hidden bg-gradient-to-br">
                 {course.thumbnail ? (
-                    <img src={'/storage/' + course.thumbnail} alt={course.name} className="h-full w-full object-cover opacity-30" />
+                    <img src={'/' + course.thumbnail} alt={course.name} className="h-full w-full object-cover opacity-30" />
                 ) : (
                     <div className="flex h-full items-center justify-center">
                         <BookOpen className="text-muted-foreground h-12 w-12 opacity-30" />
@@ -277,7 +277,7 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
                                             <div className="from-secondary to-muted relative aspect-video overflow-hidden bg-gradient-to-br">
                                                 {product.thumbnail ? (
                                                     <img
-                                                        src={'/storage/' + product.thumbnail}
+                                                        src={'/' + product.thumbnail}
                                                         alt={product.title}
                                                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                                     />
@@ -349,7 +349,7 @@ export default function MemberProducts({ ownedProducts, availableProducts, selec
                                 <div className="from-secondary to-muted relative aspect-video overflow-hidden bg-gradient-to-br">
                                     {selectedCatalogProduct.thumbnail ? (
                                         <img
-                                            src={'/storage/' + selectedCatalogProduct.thumbnail}
+                                            src={'/' + selectedCatalogProduct.thumbnail}
                                             alt={selectedCatalogProduct.title}
                                             className="h-full w-full object-cover"
                                         />

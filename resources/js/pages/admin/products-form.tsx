@@ -41,7 +41,7 @@ export default function ProductForm({ product, courses }: ProductFormProps) {
     const isEditing = !!product;
     const [selectedCourseIds, setSelectedCourseIds] = useState<number[]>(product?.courses?.map((c) => c.id) || []);
 
-    const [thumbnailPreview, setThumbnailPreview] = useState<string | null>('/storage/' + product?.thumbnail || null);
+    const [thumbnailPreview, setThumbnailPreview] = useState<string | null>('/' + product?.thumbnail || null);
 
     const { data, setData, post, processing, errors, progress } = useForm({
         title: product?.title || '',

@@ -1,0 +1,211 @@
+import AppLogo from '@/components/app-logo';
+import { BonusSection } from '@/components/landing3/bonus-section';
+import { CtaButton2 } from '@/components/landing3/cta-button-2';
+import { FaqSection } from '@/components/landing3/faq-section';
+import { LearningBenefits } from '@/components/landing3/learning-benefits';
+import { MentorProfile } from '@/components/landing3/mentor-profile';
+import { PainPointSection } from '@/components/landing3/pain-point-section';
+import { PricingSection } from '@/components/landing3/pricing-section';
+import { TestimonialsSection } from '@/components/landing3/testimonials-section';
+import { useAnalytics } from '@/hooks/use-analytics';
+import { useDwellTime } from '@/hooks/use-dwell-time';
+import { useScrollTracking } from '@/hooks/use-scroll-tracking';
+import { cn } from '@/lib/utils';
+import { type SharedData } from '@/types';
+import { Head, Link, usePage } from '@inertiajs/react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { Rocket } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface WelcomeProps {
+    landingBadge: string;
+}
+
+interface Props {
+    coursePrice: number;
+}
+
+export default function Test3Hero({ coursePrice }: Props) {
+    const { auth, landingBadge } = usePage<SharedData & WelcomeProps>().props;
+    const { trackVisit, trackCTA } = useAnalytics();
+    const [isHovered, setIsHovered] = useState(false);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    }, []);
+
+    // Initialize tracking hooks
+    useScrollTracking();
+    useDwellTime();
+
+    // Track page visit on mount
+    useEffect(() => {
+        trackVisit();
+    }, [trackVisit]);
+
+    // Track CTA button click
+    const handleCtaClick = () => {
+        trackCTA('hero_section', 'PELAJARI STRATEGINYA', '#pricing-section');
+        // scroll to pricing section
+        const pricingSection = document.getElementById('pricing-section');
+        if (pricingSection) {
+            pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    return (
+        <>
+            <Head title="Landing">
+                <link rel="preconnect" href="https://fonts.bunny.net" />
+                <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800" rel="stylesheet" />
+            </Head>
+
+            <div className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
+                {/* Navigation */}
+                <header className="border-border/50 bg-background/80 relative z-50 border-none backdrop-blur-md">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <nav className="flex h-16 items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <AppLogo />
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                {auth.user ? (
+                                    <Link
+                                        href={route('member.index')}
+                                        className="border-primary/20 text-foreground hover:border-primary/50 hover:bg-card/50 bg-card/30 inline-block rounded-lg border px-4 py-2 text-sm leading-normal transition-all duration-300"
+                                    >
+                                        Member area
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href={route('login')}
+                                            className="text-foreground hover:bg-card hover:border-primary/50 border-primary/30 bg-card/50 inline-block rounded-lg border px-4 py-2 text-sm leading-normal transition-all duration-300"
+                                        >
+                                            Login Member
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+
+                {/* Hero Section */}
+                <section
+                    className="relative overflow-hidden pt-6 lg:pt-8"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="space-y-3 text-center">
+                            <div className="flex justify-center">
+                                <div
+                                    className={cn(
+                                        'border-primary/30 from-primary/20 to-accent/20 text-primary inline-flex items-center gap-2 rounded-full border bg-gradient-to-r px-4 py-2 text-sm font-medium',
+                                        'animate-glow-pulse hover:border-primary/40 transition-all duration-500',
+                                        'shadow-primary/30 shadow-lg backdrop-blur-sm',
+                                    )}
+                                >
+                                    {/* Teks Copywriting */}
+                                    <span className="text-foreground text-xs md:text-sm">
+                                        <p>⭐⭐⭐⭐⭐</p>
+                                        <span className="font-bold">4.9/5.0</span> dari <span className="font-bold">500+ murid</span> yang sudah
+                                        berhasil hasilkan jutaan dengan metode ini.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div
+                                className={cn(
+                                    'border-primary/30 from-primary/20 to-accent/20 text-foreground inline-flex items-center gap-2 rounded-full border bg-gradient-to-r px-4 py-2 text-xs font-bold',
+                                    'animate-glow-pulse hover:border-primary/40 transition-all duration-500',
+                                    'shadow-primary/30 shadow-lg backdrop-blur-sm',
+                                )}
+                            >
+                                <Rocket className="h-4 w-4" />
+                                <span>{landingBadge}</span>
+                            </div>
+
+                            <div className="space-y-3">
+                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+                                    Dibimbing Mendapatkan{' '}
+                                    <span className="from-primary via-primary/80 to-primary animate-gradient-x bg-gradient-to-r bg-clip-text text-transparent">
+                                        5 Juta Pertama Dari Sosmed
+                                    </span>
+                                </h1>
+                                <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-2xl">
+                                    Contek Strategi Aku <span className="font-bold">Hasilkan Rp 150+ JUTA</span> Dari Konten & Produk Digital -
+                                    Meskipun <span className="font-bold">Kamu Pemula dan Gaptek</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* image/video hero section */}
+                <section className="relative overflow-hidden py-0 lg:pt-12 lg:pb-24">
+                    {/* Konten Utama */}
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="space-y-6">
+                            <div>
+                                {/* kalau gak ada vsl, thumbnail doang */}
+                                <div className="mx-auto overflow-hidden rounded-2xl bg-black shadow-2xl lg:max-w-3xl">
+                                    <img src="/landing/hero/thumb3.png" alt="" className="h-full w-full object-cover" />
+                                </div>
+                            </div>
+
+                            {/* CTA Button */}
+                            <div className="text-center">
+                                <button onClick={() => handleCtaClick()}>
+                                    <CtaButton2
+                                        size="lg"
+                                        className="group transform text-center transition-all duration-300 hover:scale-105"
+                                        withInstruction
+                                    >
+                                        <span className="relative z-10">PELAJARI STRATEGINYA</span>
+                                    </CtaButton2>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <PainPointSection />
+
+                <TestimonialsSection />
+
+                <LearningBenefits />
+
+                <BonusSection />
+
+                <MentorProfile />
+
+                <PricingSection coursePrice={coursePrice} />
+
+                <FaqSection />
+
+                {/* Footer */}
+                <footer className="relative backdrop-blur-sm">
+                    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+                        <div className="text-center">
+                            <div className="mb-4 flex items-center justify-center gap-3">
+                                <div className="flex items-center justify-center rounded-lg">
+                                    {/* <Youtube className="text-primary h-4 w-4" /> */}
+                                    <AppLogo />
+                                </div>
+                                {/* <span className="text-foreground text-xl font-bold">Editor Amplifier</span> */}
+                            </div>
+                            <p className="text-muted-foreground text-sm">© 2026 Grow Up Muslim Preneur. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </>
+    );
+}

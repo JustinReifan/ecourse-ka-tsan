@@ -90,30 +90,30 @@ const BENEFITS_MAP: Record<RegistrationType, BenefitItem[]> = {
 
 const TRUST_BADGES = [
     { icon: ShieldCheck, label: 'Aman & Terpercaya' },
-    { icon: Zap, label: 'Akses Instan' },
+    { icon: Zap, label: 'Proses Online' },
     { icon: Lock, label: 'Pembayaran Terenkripsi' },
 ];
 
 const TESTIMONIALS = [
     {
         id: 1,
-        image: '/storage/landing3/testimonials/3.png',
-        caption: 'Bapak Ini awalnya bingung cara jualan di Sosmed, tapi Diajarin Sampai Bisa Hasilin Rp 80 JUTA',
+        image: '/landing3/testimonials/3.png',
+        caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 2,
-        image: '/storage/landing3/testimonials/1.png',
-        caption: 'Seorang Bapak-Bapak Guru Ngaji biasa bisa dapetin penghasilan tambahan Rp 5 JUTA',
+        image: '/landing3/testimonials/1.png',
+        caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 3,
-        image: '/storage/landing3/testimonials/2.png',
-        caption: 'Awalnya Ibu Rumah Tangga ini Takut Jualan, tapi Dibimbing Sampai Berani Jualan dan Dapetin Rp 2 JUTA',
+        image: '/landing3/testimonials/2.png',
+        caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 4,
-        image: '/storage/landing3/testimonials/4.png',
-        caption: 'Ibu Ini Awalnya Gaptek dan Sibuk Ngurus Anak Tapi Bisa Hasilkan Uang Pertamanya Dari Sosmed',
+        image: '/landing3/testimonials/4.png',
+        caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
 ];
 

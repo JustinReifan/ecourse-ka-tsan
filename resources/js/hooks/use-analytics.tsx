@@ -65,6 +65,7 @@ export function useAnalytics() {
             const enrichedEventData = {
                 ...event.event_data,
                 landing_source: landingSource,
+                ab_variant: getCookieValue('gumpreneur_ab_variant') || 'unassigned',
             };
 
             const eventData = {
@@ -78,7 +79,7 @@ export function useAnalytics() {
                 utm_term: event.utm_term || urlParams.get('utm_term'),
             };
 
-            await fetch('/analytics/track', {
+            await fetch('/api/analytics/track', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

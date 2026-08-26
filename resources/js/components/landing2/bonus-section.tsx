@@ -19,7 +19,7 @@ export const bonusData = {
                 duration: '1 jam 40 Menit',
                 description:
                     'Ini adalah Full Course Pertama sekaligus Terpanjang yang pernah gw buat. didalamnya berisi semua pembahasan aspek youtube mulai dari niche, circle of competition, thumbnail, scriptwriting, video editing, algoritma youtube, dll. ini adalah materi terdaging yang ada disini',
-                thumbnail: '/storage/landing/bonusCourses/bonus-course-1.jpg',
+                thumbnail: '/landing/bonusCourses/bonus-course-1.jpg',
             },
             {
                 id: 2,
@@ -27,7 +27,7 @@ export const bonusData = {
                 duration: '50+ Menit',
                 description:
                     'Di Full Course kedua ini, lu bakal belajar  lebih lanjut soal cara membangun channel baru dan sampai ke 1000 subscriber dan 4000 jam tayang dari 0. Kita akan mendalami banyak hal mulai dari faktor x, tipe tipe youtuber, dan proses penuh gimana caranya lu bisa membuat video youtube yang bisa mendapat banyak views',
-                thumbnail: '/storage/landing/bonusCourses/bonus-course-2.jpg',
+                thumbnail: '/landing/bonusCourses/bonus-course-2.jpg',
             },
             {
                 id: 3,
@@ -35,7 +35,7 @@ export const bonusData = {
                 duration: '24+ Menit',
                 description:
                     'Di Full Course ini, lu bakal belajar  metode mencari ide video TERBAIK sekaligus TERCEPAT. metode ini udah digunain oleh youtuber besar seperti mrbeast, ryan trahan, dan youtuber besar lainnya. bisa dibilang, ini adalah rahasia mereka, itu kenapa course ini akan sangat valuable. ',
-                thumbnail: '/storage/landing/bonusCourses/bonus-course-3.jpg',
+                thumbnail: '/landing/bonusCourses/bonus-course-3.jpg',
             },
             {
                 id: 4,
@@ -43,7 +43,7 @@ export const bonusData = {
                 duration: '??+ Menit',
                 description:
                     'Sebelum lu mulai lakuin apapun buat sukses. tentunya lu harus pahamin game yang lu coba mainin. disini lu bakal belajar secara lengkap gimana persisnya algoritma youtube bekerja. dan apa yang bikin video dapet views dan enggak.',
-                thumbnail: '/storage/landing/bonusCourses/tanda-tanya.jpg',
+                thumbnail: '/landing/bonusCourses/tanda-tanya.jpg',
             },
             {
                 id: 5,
@@ -51,7 +51,7 @@ export const bonusData = {
                 duration: '??+ Menit',
                 description:
                     'Di Full Course ini, lu bakal belajar semua yang lu perlu tahu soal thumbnail. mulai dari apa itu thumbnail, gimana cara thumbnail bisa bikin lu dapet banyak views, serta formula asli dan panduan lengkap soal gimana caranya lu bisa membuat thumbnail lu sendiri untuk video youtube lu',
-                thumbnail: '/storage/landing/bonusCourses/tanda-tanya.jpg',
+                thumbnail: '/landing/bonusCourses/tanda-tanya.jpg',
             },
             {
                 id: 6,
@@ -59,7 +59,7 @@ export const bonusData = {
                 duration: '??+ Menit',
                 description:
                     'Di Full Course ini, lu bakal belajar Hook. salah satu bagian terpenting di youtube yaitu 30 detik pertama yang terkenal karena memiliki penuruan paling drastis di retensi penonton. disini lu bakal belajar lengkap caranya menyusun hook yang bisa membuat persentase retensi tinggi.',
-                thumbnail: '/storage/landing/bonusCourses/tanda-tanya.jpg',
+                thumbnail: '/landing/bonusCourses/tanda-tanya.jpg',
             },
             {
                 id: 7,
@@ -67,7 +67,7 @@ export const bonusData = {
                 duration: '??+ Menit',
                 description:
                     'Dan di Full Course Terakhir ini, lu bakal belajar Scriptwriting. ini akan menjadi seluruh inti dari video lu. dan yang nentuin video lu bagus atau enggak yaitu seni dari penyusunan script video itu sendiri. disini kita bakal bahas lengkap struktur struktur dan apa yang harus lu pahami soal script, demi membuat video youtube lu sendiri,',
-                thumbnail: '/storage/landing/bonusCourses/tanda-tanya.jpg',
+                thumbnail: '/landing/bonusCourses/tanda-tanya.jpg',
             },
         ],
     },
@@ -79,7 +79,7 @@ export const bonusData = {
             value: 'Rp 399.000',
             description:
                 'Selain kurikulum dari kelas ini, kamu juga bakal dapet akses ke 30+ video tutorial lynk.id, editing capcut, editing canva, dari O sampai siap jual beserta update materinya',
-            image: '/storage/landing/bonus/1.png',
+            image: '/landing/bonus/1.png',
             features: ['50+ Template Premium', 'Color Grading Presets', 'Custom Transitions'],
         },
         {
@@ -89,7 +89,7 @@ export const bonusData = {
             value: 'Rp 499.000',
             description:
                 'Bongkar peta jalan dari nol banget sampai pecah telur. Kita bahas mindset dan strategi biar kontenmu bukan cuma dapet likes, tapi beneran bisa menghasilkan duit.',
-            image: '/storage/landing/bonus/2.png',
+            image: '/landing/bonus/2.png',
             features: ['200+ Music Tracks', 'Bebas Copyright', 'Update Bulanan'],
         },
         {
@@ -99,7 +99,7 @@ export const bonusData = {
             value: 'Rp 399.000',
             description:
                 'Mau punya produk digital sendiri? Aku ajarin cara bikin Ebook & Storybook yang layak jual dari nol, walau kamu merasa nggak jago nulis sekalipun.',
-            image: '/storage/landing/bonus/3.png',
+            image: '/landing/bonus/3.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
         {
@@ -109,7 +109,7 @@ export const bonusData = {
             value: 'Rp 149.000',
             description:
                 'Gak PD nampil muka? Atau lagi males syuting? Tenang, aku kasih stok 170+ video estetik siap pakai. Tinggal templok teks, upload, beres! Gak ada alasan kehabisan stok konten',
-            image: '/storage/landing/bonus/4.png',
+            image: '/landing/bonus/4.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
         {
@@ -119,7 +119,7 @@ export const bonusData = {
             value: 'Rp 249.000',
             description:
                 'Contekan strategi lewat tulisan. Mulai dari ide lead magnet penarik massa sampai rahasia algoritma Reels viral, semuanya tinggal kamu baca dan tiru polanya',
-            image: '/storage/landing/bonus/5.png',
+            image: '/landing/bonus/5.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
         {
@@ -129,7 +129,7 @@ export const bonusData = {
             value: 'Rp 2.999.000',
             description:
                 'Bingung pas praktek? Chat aku aja! Ini jalur VIP khusus buat kamu tanya-tanya sepuasnya langsung ke WhatsApp pribadiku. Serasa punya mentor privat!',
-            image: '/storage/landing/bonus/6.png',
+            image: '/landing/bonus/6.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
         {
@@ -139,7 +139,7 @@ export const bonusData = {
             value: 'Rp 1.499.000',
             description:
                 'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi konten, dan tumbuh bareng biar semangatmu gak kendor.',
-            image: '/storage/landing/bonus/7.png',
+            image: '/landing/bonus/7.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
         {
@@ -149,17 +149,17 @@ export const bonusData = {
             value: 'Rp 4.599.000',
             description:
                 'Kita tatap muka virtual rutin tiap 2 minggu! Sesi bedah akun, evaluasi progress, dan tanya jawab langsung biar kamu dipastikan nggak salah arah. ',
-            image: '/storage/landing/bonus/8.png',
+            image: '/landing/bonus/8.png',
             features: ['60 Menit Review', 'Feedback Detail', 'Action Plan'],
         },
     ],
 };
 
 const bonusImages = [
-    { id: 1, image: '/storage/landing/bonus/7.png' },
-    { id: 2, image: '/storage/landing/bonus/4.png' },
-    { id: 3, image: '/storage/landing/bonus/1.png' },
-    { id: 4, image: '/storage/landing/bonus/8.png' },
+    { id: 1, image: '/landing/bonus/7.png' },
+    { id: 2, image: '/landing/bonus/4.png' },
+    { id: 3, image: '/landing/bonus/1.png' },
+    { id: 4, image: '/landing/bonus/8.png' },
 ];
 
 export function BonusSection() {
