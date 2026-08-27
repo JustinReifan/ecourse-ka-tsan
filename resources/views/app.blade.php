@@ -23,8 +23,7 @@
     <title inertia>{{ config('app.name') }}</title>
     <meta name="description" content="Gumpreneur - Program bimbingan 1-on-1 untuk mulai hasilkan Rp 10 Juta Pertamamu dari Sosmed. Dibimbing langsung oleh mentor berpengalaman.">
 
-    <link rel="icon" href="/favicon.svg" sizes="any">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     {{-- Preload critical LCP image --}}
