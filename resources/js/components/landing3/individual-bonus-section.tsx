@@ -115,7 +115,7 @@ export function IndividualBonusSection({ bonus, index }: IndividualBonusSectionP
                         {/* Bold Title */}
                         <div className="space-y-4">
                             {/* Title Section */}
-                            <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                                 <span className="text-foreground block">{bonus.title.split(' ').slice(0, 2).join(' ')}</span>
                                 <span className="from-primary via-primary/80 to-primary mt-2 block bg-gradient-to-r bg-clip-text text-transparent">
                                     {bonus.title.split(' ').slice(2).join(' ')}

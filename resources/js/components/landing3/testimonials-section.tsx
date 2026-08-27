@@ -117,7 +117,7 @@ export function TestimonialsSection() {
                         </div>
 
                         <div className="animate-fade-in space-y-4">
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
+                            <h2 className="text-foreground text-3xl font-bold sm:text-5xl lg:text-6xl">
                                 <span className="block">Mereka Sudah Buktikan,</span>
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
                                     Sekarang Giliran Kamu!

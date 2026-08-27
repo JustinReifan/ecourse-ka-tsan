@@ -29,7 +29,7 @@ export function BonusSection() {
                             <span className="text-primary text-sm font-medium">Bonus Penyelesaian</span>
                         </div>
 
-                        <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                        <h2 className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                             <p className="text-foreground">Bonus Khusus untuk yang</p>
                             <p className="mt-2">
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">

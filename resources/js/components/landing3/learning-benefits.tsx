@@ -58,7 +58,7 @@ export function LearningBenefits() {
                         <span className="text-primary text-sm font-medium">Setelah 70 Hari</span>
                     </div>
 
-                    <h3 className="text-foreground text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                    <h3 className="text-foreground text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                         <span className="block">Kamu Bisa Jadi</span>
                         <span className="from-primary via-primary/80 to-primary mt-1 block bg-gradient-to-r bg-clip-text text-transparent">
                             Seseorang yang Cuan dari Sosmed
@@ -72,7 +72,7 @@ export function LearningBenefits() {
 
                 {/* 1. HEADER SECTION (Manfaat yang Didapat) */}
                 <div className="mx-auto mb-8 max-w-4xl space-y-4 text-center md:mb-16">
-                    <h3 className="text-foreground text-3xl font-bold tracking-tight md:text-4xl">
+                    <h3 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                         Yang Kamu Dapat di Program Ini:
                     </h3>
                 </div>

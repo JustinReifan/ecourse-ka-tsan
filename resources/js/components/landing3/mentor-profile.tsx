@@ -98,7 +98,7 @@ export function MentorProfile() {
                         </div>
 
                         <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
+                            <h2 className="text-foreground text-3xl font-bold sm:text-5xl lg:text-6xl">
                                 <span className="block">Mentor Tepat untuk </span>
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
                                     Langkah Awalmu
@@ -164,7 +164,7 @@ export function MentorProfile() {
                             {/* Nameplate */}
                             <div className="animate-fade-in space-y-4 text-center" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
                                 <div>
-                                    <h3 className="text-foreground mb-2 text-3xl sm:text-4xl font-bold">Tsania Latheefa</h3>
+                                    <h3 className="text-foreground mb-2 text-3xl sm:text-5xl font-bold">Tsania Latheefa</h3>
                                     <p className="text-primary text-lg font-medium">Content Creator</p>
                                     <p className="text-muted-foreground">Instagram</p>
                                 </div>

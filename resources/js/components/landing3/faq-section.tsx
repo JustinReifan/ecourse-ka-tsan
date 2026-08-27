@@ -147,7 +147,7 @@ export function FaqSection() {
                             </div>
 
                             <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                                <h2 className="text-foreground text-4xl leading-tight font-bold md:text-5xl lg:text-6xl">
+                                <h2 className="text-foreground text-3xl leading-tight font-bold sm:text-5xl lg:text-6xl">
                                     <span className="block">Pertanyaan Yang</span>
                                     <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
                                         Sering Ditanyakan
