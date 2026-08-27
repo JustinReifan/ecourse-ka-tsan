@@ -167,8 +167,8 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     </button>
                                 </div>
                                 
-                                <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 bg-background/50 backdrop-blur-sm p-2 rounded-2xl inline-flex w-full sm:w-auto">
-                                    <div className="flex -space-x-3">
+                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 bg-background/50 backdrop-blur-sm p-3 sm:p-2 rounded-2xl w-fit mx-auto lg:mx-0">
+                                    <div className="flex -space-x-3 shrink-0">
                                         {[1, 2, 3, 4, 5].map((i) => (
                                             <img 
                                                 key={i} 
@@ -178,15 +178,15 @@ export default function Test3Hero({ coursePrice }: Props) {
                                             />
                                         ))}
                                     </div>
-                                    <div className="text-left pl-1 sm:pl-2">
-                                        <div className="flex text-amber-400 mb-0.5 sm:mb-1 justify-start">
+                                    <div className="text-center sm:text-left pl-0 sm:pl-2 mt-1 sm:mt-0">
+                                        <div className="flex text-amber-400 mb-1 sm:mb-0.5 justify-center sm:justify-start">
                                             {[1, 2, 3, 4, 5].map((i) => (
                                                 <svg key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current drop-shadow-sm" viewBox="0 0 24 24">
                                                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                 </svg>
                                             ))}
                                         </div>
-                                        <p className="text-xs text-muted-foreground font-medium">
+                                        <p className="text-xs sm:text-xs text-muted-foreground font-medium">
                                             Lihat pengalaman asli peserta<br className="hidden sm:block"/> di bawah ini
                                         </p>
                                     </div>
@@ -194,12 +194,12 @@ export default function Test3Hero({ coursePrice }: Props) {
                             </div>
                             
                             {/* Right Content */}
-                            <div className="relative z-10 w-full max-w-lg mx-auto lg:max-w-none mt-0 sm:mt-8 lg:-mt-10 xl:-mt-16">
+                            <div className="relative z-10 w-full max-w-lg mx-auto lg:max-w-none mt-4 sm:mt-8 lg:-mt-10 xl:-mt-16">
                                 {/* The Large Background Curve (Light Blue) Behind the Girl, full to top & right, clipped at bottom */}
                                 <div className="absolute bottom-0 left-[-10%] sm:left-[5%] right-[-50vw] top-[-300px] lg:top-[-500px] bg-primary/10 rounded-l-full -z-10 pointer-events-none" />
                                 
                                 {/* Hero Image - Using /hero.png from public directory */}
-                                <div className="relative flex justify-center items-end h-[220px] sm:h-[450px] lg:h-[500px] xl:h-[580px]">
+                                <div className="relative flex justify-center items-end h-[340px] sm:h-[450px] lg:h-[500px] xl:h-[580px]">
                                     <img 
                                         src="/hero.webp" 
                                         alt="Kak Tsania Latheefa" 
@@ -208,23 +208,23 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 </div>
                                 
                                 {/* Floating Card 1: Top Right */}
-                                <div className="absolute top-4 sm:top-12 right-0 sm:-right-8 lg:right-0 bg-background rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex items-center gap-2 sm:gap-3 border border-border/50 z-20">
-                                    <div className="bg-primary/10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-primary">
+                                <div className="absolute top-4 sm:top-12 right-2 sm:-right-8 lg:right-0 bg-background rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex items-center gap-2 sm:gap-3 border border-border/50 z-20">
+                                    <div className="bg-primary/10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-primary shrink-0">
                                         <Heart className="w-3 h-3 sm:w-5 sm:h-5 fill-current" />
                                     </div>
-                                    <p className="text-xs sm:text-sm font-semibold max-w-[100px] sm:max-w-[150px] leading-tight text-foreground">
+                                    <p className="text-xs sm:text-sm font-semibold max-w-[120px] sm:max-w-[150px] leading-tight text-foreground">
                                         Dibimbing sampai praktik, bukan cuma nonton
                                     </p>
                                 </div>
                                 
                                 {/* Floating Card 2: Middle Right */}
-                                <div className="absolute top-[40%] -right-2 sm:-right-12 lg:-right-16 bg-background rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-xl border border-border/50 min-w-[130px] sm:min-w-[220px] z-20">
+                                <div className="absolute top-[42%] right-2 sm:-right-12 lg:-right-16 bg-background rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-xl border border-border/50 min-w-[130px] sm:min-w-[220px] z-20">
                                     <p className="text-xs text-muted-foreground font-medium mb-0.5 sm:mb-1">Target Income</p>
-                                    <p className="text-lg sm:text-3xl font-extrabold mb-0 sm:mb-0.5 text-foreground">Rp10 Juta</p>
+                                    <p className="text-base sm:text-3xl font-extrabold mb-0 sm:mb-0.5 text-foreground">Rp10 Juta</p>
                                     <p className="text-xs text-emerald-500 font-medium mb-1.5 sm:mb-3">Kejar target pertamamu</p>
                                     
                                     {/* SVG Line Chart */}
-                                    <svg className="w-full h-8 sm:h-16" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                    <svg className="w-full h-6 sm:h-16" viewBox="0 0 100 40" preserveAspectRatio="none">
                                         <defs>
                                             <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
                                                 <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
@@ -238,15 +238,15 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 </div>
                                 
                                 {/* Floating Card 3: Bottom Left */}
-                                <div className="absolute bottom-6 sm:bottom-10 -left-2 sm:-left-8 lg:-left-10 bg-background rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-xl border border-border/50 max-w-[180px] sm:max-w-[260px] z-20">
-                                    <div className="flex gap-2 sm:gap-3 mb-2 sm:mb-3">
-                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover shrink-0" />
+                                <div className="absolute bottom-4 sm:bottom-10 left-2 sm:-left-8 lg:-left-10 bg-background rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-xl border border-border/50 max-w-[170px] sm:max-w-[260px] z-20">
+                                    <div className="flex gap-2 sm:gap-3 mb-1.5 sm:mb-3 items-start">
+                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-6 h-6 sm:w-12 sm:h-12 rounded-full object-cover shrink-0 mt-0.5" />
                                         <p className="text-xs sm:text-sm text-foreground font-medium leading-snug">
                                             "Chat 1-on-1 kapan pun mentok, sangat membantu!"
                                         </p>
                                     </div>
-                                    <div className="flex justify-between items-center ml-10 sm:ml-15">
-                                        <p className="text-xs text-muted-foreground font-medium">- Member Alumni</p>
+                                    <div className="flex justify-between items-center pl-8 sm:pl-15">
+                                        <p className="text-xs text-muted-foreground font-medium">- Alumni</p>
                                         <div className="flex text-amber-400">
                                             {[1, 2, 3, 4, 5].map((i) => (
                                                 <svg key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">
