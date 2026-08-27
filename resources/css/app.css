@@ -274,3 +274,25 @@
     background-size: 200% 200%;
     animation: gradient-x 3s ease infinite;
 }
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes bounce-x {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+}
+
+.animate-bounce-x {
+    animation: bounce-x 1.5s ease-in-out infinite;
+}

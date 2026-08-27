@@ -1,22 +1,25 @@
 import AppLogo from '@/components/app-logo';
-import { BonusSection } from '@/components/landing3/bonus-section';
 import { CtaButton2 } from '@/components/landing3/cta-button-2';
-import { FaqSection } from '@/components/landing3/faq-section';
-import { LearningBenefits } from '@/components/landing3/learning-benefits';
-import { MentorProfile } from '@/components/landing3/mentor-profile';
-import { PainPointSection } from '@/components/landing3/pain-point-section';
-import { PricingSection } from '@/components/landing3/pricing-section';
-import { TestimonialsSection } from '@/components/landing3/testimonials-section';
-import { TimelineSection } from '@/components/landing3/timeline-section';
-import { GoalsSection } from '@/components/landing3/goals-section';
+import { lazy, Suspense } from 'react';
+
+// Lazy load ALL below-the-fold sections to reduce initial bundle size
+const PainPointSection = lazy(() => import('@/components/landing3/pain-point-section').then(m => ({ default: m.PainPointSection })));
+const GoalsSection = lazy(() => import('@/components/landing3/goals-section').then(m => ({ default: m.GoalsSection })));
+const LearningBenefits = lazy(() => import('@/components/landing3/learning-benefits').then(m => ({ default: m.LearningBenefits })));
+const TestimonialsSection = lazy(() => import('@/components/landing3/testimonials-section').then(m => ({ default: m.TestimonialsSection })));
+const MentorProfile = lazy(() => import('@/components/landing3/mentor-profile').then(m => ({ default: m.MentorProfile })));
+const TimelineSection = lazy(() => import('@/components/landing3/timeline-section').then(m => ({ default: m.TimelineSection })));
+const BonusSection = lazy(() => import('@/components/landing3/bonus-section').then(m => ({ default: m.BonusSection })));
+const PricingSection = lazy(() => import('@/components/landing3/pricing-section').then(m => ({ default: m.PricingSection })));
+const FaqSection = lazy(() => import('@/components/landing3/faq-section').then(m => ({ default: m.FaqSection })));
+
 import { useAnalytics } from '@/hooks/use-analytics';
 import { useDwellTime } from '@/hooks/use-dwell-time';
 import { useScrollTracking } from '@/hooks/use-scroll-tracking';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { CheckCircle2, Heart, MessageCircle, Rocket, Star, Users } from 'lucide-react';
+
+import { Heart } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 interface WelcomeProps {
@@ -31,12 +34,7 @@ export default function Test3Hero({ coursePrice }: Props) {
     const { auth, landingBadge } = usePage<SharedData & WelcomeProps>().props;
     const { trackVisit, trackCTA } = useAnalytics();
 
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
-    }, []);
+
 
     // Initialize tracking hooks
     useScrollTracking();
@@ -79,10 +77,7 @@ export default function Test3Hero({ coursePrice }: Props) {
 
     return (
         <>
-            <Head title="Landing">
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800" rel="stylesheet" />
-            </Head>
+            <Head title="Landing" />
 
             <div className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
                 {/* Navigation */}
@@ -166,6 +161,9 @@ export default function Test3Hero({ coursePrice }: Props) {
                                                 src={`https://randomuser.me/api/portraits/women/${40 + i}.jpg`} 
                                                 alt="Testimoni" 
                                                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-background object-cover shadow-sm" 
+                                                width="48"
+                                                height="48"
+                                                loading="lazy"
                                             />
                                         ))}
                                     </div>
@@ -195,6 +193,9 @@ export default function Test3Hero({ coursePrice }: Props) {
                                         src="/hero.webp" 
                                         alt="Kak Tsania Latheefa" 
                                         className="h-full w-auto object-contain object-bottom drop-shadow-2xl" 
+                                        width="580"
+                                        height="580"
+                                        fetchPriority="high"
                                     />
                                 </div>
                                 
@@ -231,7 +232,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 {/* Floating Card 3: Bottom Left */}
                                 <div className="absolute bottom-4 sm:bottom-10 left-2 sm:-left-8 lg:-left-10 bg-background rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-xl border border-border/50 max-w-[170px] sm:max-w-[260px] z-20">
                                     <div className="flex gap-2 sm:gap-3 mb-1.5 sm:mb-3 items-start">
-                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-6 h-6 sm:w-12 sm:h-12 rounded-full object-cover shrink-0 mt-0.5" />
+                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-6 h-6 sm:w-12 sm:h-12 rounded-full object-cover shrink-0 mt-0.5" width="48" height="48" loading="lazy" />
                                         <p className="text-xs sm:text-sm text-foreground font-medium leading-snug">
                                             "Chat 1-on-1 kapan pun mentok, sangat membantu!"
                                         </p>
@@ -253,29 +254,42 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </section>
 
-                {/* Problem + Agitasi */}
-                <PainPointSection />
+                {/* Below-the-fold sections - all lazy loaded */}
+                <Suspense fallback={null}>
+                    <PainPointSection />
+                </Suspense>
 
-                {/* Goals */}
-                <GoalsSection />
+                <Suspense fallback={null}>
+                    <GoalsSection />
+                </Suspense>
 
-                {/* Bridge/Mekanisme + Outcome */}
-                <LearningBenefits />
+                <Suspense fallback={null}>
+                    <LearningBenefits />
+                </Suspense>
 
-                {/* Testimoni / Social Proof */}
-                <TestimonialsSection />
+                <Suspense fallback={null}>
+                    <TestimonialsSection />
+                </Suspense>
 
-                {/* Mentor Profile */}
-                <MentorProfile />
+                <Suspense fallback={null}>
+                    <MentorProfile />
+                </Suspense>
 
-                <TimelineSection />
+                <Suspense fallback={null}>
+                    <TimelineSection />
+                </Suspense>
 
-                {/* Bonus */}
-                <BonusSection />
+                <Suspense fallback={null}>
+                    <BonusSection />
+                </Suspense>
 
-                <PricingSection coursePrice={coursePrice} />
+                <Suspense fallback={null}>
+                    <PricingSection coursePrice={coursePrice} />
+                </Suspense>
 
-                <FaqSection />
+                <Suspense fallback={null}>
+                    <FaqSection />
+                </Suspense>
 
                 <div className={`border-primary/30 bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t p-3 backdrop-blur md:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${showStickyCta ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}>
                     <CtaButton2 onClick={handleCtaClick} className="w-full" aria-label="Gabung Program Gumpreneur">
