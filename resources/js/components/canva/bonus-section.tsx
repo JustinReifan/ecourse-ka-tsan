@@ -125,7 +125,7 @@ function OtherBonusCard() {
         <div className="group mx-auto flex w-full max-w-lg flex-col items-center text-center">
             <div className="border-border/50 bg-muted/5 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border">
                 <img
-                    src="/landing3/bonus/otherbonus.png" // Placeholder
+                    src="/landing3/bonus/otherbonus.webp" // Placeholder
                     alt="Other Bonus"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"

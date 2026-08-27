@@ -27,7 +27,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '2.5 jam',
         description:
             'Dulu: Bingung berminggu-minggu mikirin mau jualan apa, ujung-ujungnya ragu dan berhenti. Sekarang: Pakai Wheels of Life dan bantuan AI, kamu bisa temukan winning niche cuma dalam hitungan menit! Jangan sampai buang waktu bangun bisnis di kolam yang kering. Di sini kita bedah cara validasi ide biar nggak boncos di tengah jalan.',
-        thumbnail: '/landing/curriculum/14.png',
+        thumbnail: '/landing/curriculum/14.webp',
         topics: [
             'Fundamental: Menentukan Niche & Target Audience',
             "Menggunakan Framework 'Wheels of Life' untuk Validasi Niche",
@@ -47,7 +47,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '4.2 jam',
         description:
             'Punya followers banyak tapi nggak ada tempat jualan? Sama aja bohong. Ubah bio link kamu jadi MESIN UANG otomatis. Kita bakal setup Lynk.id dari nol sampai jadi toko online profesional yang siap terima duit 24 jam. Nggak perlu jago coding, nggak perlu bayar programmer mahal. Tinggal klik, geser, jadi!',
-        thumbnail: '/landing/curriculum/15.png',
+        thumbnail: '/landing/curriculum/15.webp',
         topics: [
             'Setup Akun: Pendaftaran, Profil, dan Tautkan Sosmed',
             'Kustomisasi Tampilan (Font, Button, Warna) & Statistik',
@@ -74,7 +74,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '6.8 jam',
         description:
             'Masih ngedit video berjam-jam sampai mata pedes? Stop cara lama! Aku kasih tau jalan pintasnya: Bikin konten visual di Canva + edit video sat-set di CapCut. Bahkan kalau kamu blank ide, kita suruh AI mikir buat kamu. Hasilnya? Konten high quality serasa punya tim editor profesional, padahal cuma modal HP!',
-        thumbnail: '/landing/curriculum/16.png',
+        thumbnail: '/landing/curriculum/16.webp',
         topics: [
             'Riset Ide Hook & Caption Reels Menggunakan ChatGPT',
             'Batching Content: Strategi Konsistensi Tanpa Burnout',
@@ -97,7 +97,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '3.7 jam',
         description:
             'Main Instagram jangan cuma ngejar likes, tapi kejar trust. Algoritma berubah terus? Nggak masalah kalau pondasi branding kamu kuat. Di bab ini, kita bongkar rahasia bikin profil yang "mahal", strategi konten Faceless (buat yang malu tampil), sampai cara baca sinyal algoritma biar konten kamu terus disorong ke audience yang tepat.',
-        thumbnail: '/landing/curriculum/17.png',
+        thumbnail: '/landing/curriculum/17.webp',
         topics: [
             'Optimasi Bio & Integrasi Link LYNK.ID',
             'Strategi Akun Creator & Transisi Akun Lama vs Baru',
@@ -118,7 +118,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '3.1 jam',
         description:
             'TikTok itu tambang emas, tapi banyak yang kena banned karena asal main. Jangan sampai akun yang udah capek dibangun hilang gitu aja. Pelajari cara main aman, teknik hook yang bikin orang betah nonton sampai habis, dan strategi naruh link jualan biar nggak dianggap spam sama TikTok. Main cerdas, bukan main ganas.',
-        thumbnail: '/landing/curriculum/18.png',
+        thumbnail: '/landing/curriculum/18.webp',
         topics: ['Strategi Penautan Link Bio (Di bawah & Di atas 1k Followers)', 'Teknik Recording & Hack Algoritma TikTok Anti Pelanggaran'],
         difficulty: 'Intermediate',
         students: 7890,
@@ -131,7 +131,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '1.8 jam',
         description:
             'Masih balesin DM satu-satu secara manual? Big No! Waktumu terlalu berharga buat jadi CS seharian. Aktifkan "Asisten Robot" kamu sekarang. Mau jam 2 pagi atau lagi liburan, ManyChat bakal bantu jawab calon pembeli dan arahkan mereka sampai closing. Otomatisasi adalah kunci passive income yang sebenarnya!',
-        thumbnail: '/landing/curriculum/19.png',
+        thumbnail: '/landing/curriculum/19.webp',
         topics: ['Setup Auto Reply Instagram (via HP & Laptop)', 'Setup DM Automation TikTok', 'Integrasi Lanjutan dengan DIBALES.AI'],
         difficulty: 'Beginner',
         students: 11250,
@@ -144,7 +144,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '1.8 jam',
         description:
             'Sosmed bisa hilang, tapi database kontak adalah aset abadi. Pelajari seni closing di WhatsApp tanpa terlihat maksa. Kita bahas strategi funneling, cara bikin status WA yang bikin orang kepo dan beli, sampai manajemen database pakai AI. Sekali broadcast, orderan langsung deras!',
-        thumbnail: '/landing/curriculum/20.png',
+        thumbnail: '/landing/curriculum/20.webp',
         topics: [
             'Strategi Funneling & Closing Cepat di WhatsApp',
             'Optimasi WhatsApp Story untuk Jangkauan Maksimal',
@@ -161,7 +161,7 @@ const curriculumModules: CurriculumModule[] = [
         duration: '1.8 jam',
         description:
             'Bikin konten capek-capek tapi nggak tau kenapa sepi? Atau ramai tapi nggak ada yang beli? Masalahnya satu: Kamu nggak bisa baca data. Di sini kita belajar bedah insight. Cari tahu mana yang winning, mana yang sampah. Stop main tebak-tebakan, mulailah ambil keputusan bisnis berdasarkan data nyata!',
-        thumbnail: '/landing/curriculum/21.png',
+        thumbnail: '/landing/curriculum/21.webp',
         topics: ['Cara Membaca & Menganalisis Data Performa Konten', 'Evaluasi Strategi Berdasarkan Insight Data'],
         difficulty: 'Beginner',
         students: 11250,
@@ -173,7 +173,7 @@ const curriculumModules: CurriculumModule[] = [
         videoCount: 8,
         duration: '1.8 jam',
         description: 'Disini kamu akan belajar gimana caranya bisa mulai hasilkan uang pertama mu dengan konten',
-        thumbnail: '/landing/curriculum/22.png',
+        thumbnail: '/landing/curriculum/22.webp',
         topics: ['Materi cuan dari konten'],
         difficulty: 'Beginner',
         students: 11250,
@@ -185,7 +185,7 @@ const curriculumModules: CurriculumModule[] = [
         videoCount: 8,
         duration: '1.8 jam',
         description: 'Checklist Materi',
-        thumbnail: '/landing/curriculum/23.png',
+        thumbnail: '/landing/curriculum/23.webp',
         topics: ['Checklist Materi'],
         difficulty: 'Beginner',
         students: 11250,
@@ -197,7 +197,7 @@ const curriculumModules: CurriculumModule[] = [
         videoCount: 8,
         duration: '1.8 jam',
         description: 'Disini kamu akan di siapkan untuk mulai membuat produk digital kamu sendiri.',
-        thumbnail: '/landing/curriculum/24.png',
+        thumbnail: '/landing/curriculum/24.webp',
         topics: [
             'Panduan membuat ebook profesional sampai layout',
             'Panduan membuat story book yang hasilin cuan',
@@ -215,7 +215,7 @@ const curriculumModules: CurriculumModule[] = [
         videoCount: 8,
         duration: '1.8 jam',
         description: 'Hukum asal affiliator',
-        thumbnail: '/landing/curriculum/24.png',
+        thumbnail: '/landing/curriculum/24.webp',
         topics: ['Hukum asal affiliator'],
         difficulty: 'Beginner',
         students: 11250,

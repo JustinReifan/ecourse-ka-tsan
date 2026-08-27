@@ -91,14 +91,14 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     </Link>
                                 )}
                                 <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-2.5 px-6 rounded-full transition-all text-sm hidden sm:block shadow-md">
-                                    Enroll Now — {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(coursePrice || 399000).replace(/\s/g, '')}
+                                    Enroll Now
                                 </button>
                             </div>
                         </nav>
                     </div>
                 </header>
 
-                <section className="relative overflow-hidden pt-10 pb-20 lg:pt-16 lg:pb-32 bg-background">
+                <section className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
                     
                     {/* Decorative Shapes based on the image */}
                     {/* Top Left yellow half circle */}
@@ -113,19 +113,19 @@ export default function Test3Hero({ coursePrice }: Props) {
                     <div className="absolute bottom-[30%] right-[8%] w-10 h-10 bg-amber-400 rounded-bl-full rounded-br-full -rotate-12 hidden lg:block" />
 
                     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center">
+                        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-0 sm:gap-12 lg:gap-8 items-center">
                             
                             {/* Left Content */}
                             <div className="z-10 max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
-                                <p className="text-primary font-bold text-sm sm:text-base mb-4 tracking-wide uppercase">
+                                <p className="text-primary font-bold text-sm sm:text-base mb-2 sm:mb-4 tracking-wide uppercase">
                                     {landingBadge} — PROGRAM RAMAH PEMULA
                                 </p>
                                 
-                                <h1 className="text-foreground text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.2] tracking-tight mb-6">
+                                <h1 className="text-foreground text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
                                     Sementara yang Lain Udah Mulai <br className="hidden lg:block"/>
                                     Cuan dari HP-nya, Kamu Masih <br className="hidden lg:block"/>
                                     Nunggu <span className="text-primary">"Waktu yang Tepat"?</span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-full text-amber-500 ml-3 align-middle -mt-1">
+                                    <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-full text-amber-500 ml-2 sm:ml-3 align-middle -mt-1">
                                         <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
                                             <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
@@ -135,36 +135,36 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     </span>
                                 </h1>
                                 
-                                <p className="text-muted-foreground text-base sm:text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+                                <p className="text-muted-foreground text-base sm:text-lg lg:text-xl leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
                                     70 hari dibimbing 1-on-1 via WhatsApp. <span className="text-foreground font-semibold">10 tugas dikoreksi langsung mentor</span> dalam grup kecil maksimal 10 orang.
                                 </p>
                                 
-                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 mb-12">
-                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-4 px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-lg">
-                                        GABUNG SEKARANG — {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(coursePrice || 399000).replace(/\s/g, '')}
+                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5 mb-3 sm:mb-12">
+                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-base sm:text-lg">
+                                        GABUNG SEKARANG
                                     </button>
                                 </div>
                                 
-                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 bg-background/50 backdrop-blur-sm p-2 rounded-2xl inline-flex">
+                                <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 bg-background/50 backdrop-blur-sm p-2 rounded-2xl inline-flex w-full sm:w-auto">
                                     <div className="flex -space-x-3">
                                         {[1, 2, 3, 4, 5].map((i) => (
                                             <img 
                                                 key={i} 
                                                 src={`https://randomuser.me/api/portraits/women/${40 + i}.jpg`} 
                                                 alt="Testimoni" 
-                                                className="w-12 h-12 rounded-full border-[3px] border-background object-cover shadow-sm" 
+                                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-background object-cover shadow-sm" 
                                             />
                                         ))}
                                     </div>
-                                    <div className="text-center sm:text-left pl-2">
-                                        <div className="flex text-amber-400 mb-1 justify-center sm:justify-start">
+                                    <div className="text-left pl-1 sm:pl-2">
+                                        <div className="flex text-amber-400 mb-0.5 sm:mb-1 justify-start">
                                             {[1, 2, 3, 4, 5].map((i) => (
-                                                <svg key={i} className="w-4 h-4 fill-current drop-shadow-sm" viewBox="0 0 24 24">
+                                                <svg key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current drop-shadow-sm" viewBox="0 0 24 24">
                                                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                 </svg>
                                             ))}
                                         </div>
-                                        <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+                                        <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">
                                             Lihat pengalaman asli peserta<br className="hidden sm:block"/> di bawah ini
                                         </p>
                                     </div>
@@ -172,39 +172,37 @@ export default function Test3Hero({ coursePrice }: Props) {
                             </div>
                             
                             {/* Right Content */}
-                            <div className="relative z-10 w-full max-w-lg mx-auto lg:max-w-none mt-8 lg:-mt-10 xl:-mt-16">
-                                {/* The Large Background Circle (Light Blue) Behind the Girl, clipped only at the bottom */}
-                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] h-[350px] sm:h-[450px] lg:h-[500px] xl:h-[580px] overflow-hidden -z-10 pointer-events-none">
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] lg:w-[850px] lg:h-[850px] xl:w-[950px] xl:h-[950px] bg-primary/10 rounded-full" />
-                                </div>
+                            <div className="relative z-10 w-full max-w-lg mx-auto lg:max-w-none mt-0 sm:mt-8 lg:-mt-10 xl:-mt-16">
+                                {/* The Large Background Curve (Light Blue) Behind the Girl, full to top & right, clipped at bottom */}
+                                <div className="absolute bottom-0 left-[-10%] sm:left-[5%] right-[-50vw] top-[-300px] lg:top-[-500px] bg-primary/10 rounded-l-full -z-10 pointer-events-none" />
                                 
                                 {/* Hero Image - Using /hero.png from public directory */}
-                                <div className="relative flex justify-center items-end h-[350px] sm:h-[450px] lg:h-[500px] xl:h-[580px]">
+                                <div className="relative flex justify-center items-end h-[220px] sm:h-[450px] lg:h-[500px] xl:h-[580px]">
                                     <img 
-                                        src="/hero.png" 
+                                        src="/hero.webp" 
                                         alt="Kak Tsania Latheefa" 
                                         className="h-full w-auto object-contain object-bottom drop-shadow-2xl" 
                                     />
                                 </div>
                                 
                                 {/* Floating Card 1: Top Right */}
-                                <div className="absolute top-8 sm:top-12 -right-2 sm:-right-8 lg:right-0 bg-background rounded-2xl p-3 sm:p-4 shadow-xl flex items-center gap-3 border border-border/50">
-                                    <div className="bg-primary/10 p-2 sm:p-2.5 rounded-xl text-primary">
-                                        <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                                <div className="absolute top-4 sm:top-12 right-0 sm:-right-8 lg:right-0 bg-background rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex items-center gap-2 sm:gap-3 border border-border/50 z-20">
+                                    <div className="bg-primary/10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-primary">
+                                        <Heart className="w-3 h-3 sm:w-5 sm:h-5 fill-current" />
                                     </div>
-                                    <p className="text-xs sm:text-sm font-semibold max-w-[120px] sm:max-w-[150px] leading-tight text-foreground">
+                                    <p className="text-[10px] sm:text-sm font-semibold max-w-[100px] sm:max-w-[150px] leading-tight text-foreground">
                                         Dibimbing sampai praktik, bukan cuma nonton
                                     </p>
                                 </div>
                                 
                                 {/* Floating Card 2: Middle Right */}
-                                <div className="absolute top-[45%] -right-4 sm:-right-12 lg:-right-16 bg-background rounded-3xl p-4 sm:p-5 shadow-xl border border-border/50 min-w-[180px] sm:min-w-[220px]">
-                                    <p className="text-[10px] sm:text-xs text-muted-foreground font-medium mb-1">Target Income</p>
-                                    <p className="text-xl sm:text-3xl font-extrabold mb-0.5 text-foreground">Rp10 Juta</p>
-                                    <p className="text-[10px] sm:text-xs text-emerald-500 font-medium mb-3">Kejar target pertamamu</p>
+                                <div className="absolute top-[40%] -right-2 sm:-right-12 lg:-right-16 bg-background rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-xl border border-border/50 min-w-[130px] sm:min-w-[220px] z-20">
+                                    <p className="text-[9px] sm:text-xs text-muted-foreground font-medium mb-0.5 sm:mb-1">Target Income</p>
+                                    <p className="text-lg sm:text-3xl font-extrabold mb-0 sm:mb-0.5 text-foreground">Rp10 Juta</p>
+                                    <p className="text-[9px] sm:text-xs text-emerald-500 font-medium mb-1.5 sm:mb-3">Kejar target pertamamu</p>
                                     
                                     {/* SVG Line Chart */}
-                                    <svg className="w-full h-12 sm:h-16" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                    <svg className="w-full h-8 sm:h-16" viewBox="0 0 100 40" preserveAspectRatio="none">
                                         <defs>
                                             <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
                                                 <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
@@ -217,19 +215,19 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     </svg>
                                 </div>
                                 
-                                {/* Floating Card 3: Bottom Right */}
-                                <div className="absolute bottom-4 -right-2 sm:-right-8 lg:-right-4 bg-background rounded-2xl p-4 sm:p-5 shadow-xl border border-border/50 max-w-[240px] sm:max-w-[260px] z-20">
-                                    <div className="flex gap-3 mb-3">
-                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover shrink-0" />
-                                        <p className="text-xs sm:text-sm text-foreground font-medium leading-snug">
+                                {/* Floating Card 3: Bottom Left */}
+                                <div className="absolute bottom-6 sm:bottom-10 -left-2 sm:-left-8 lg:-left-10 bg-background rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-xl border border-border/50 max-w-[180px] sm:max-w-[260px] z-20">
+                                    <div className="flex gap-2 sm:gap-3 mb-2 sm:mb-3">
+                                        <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover shrink-0" />
+                                        <p className="text-[10px] sm:text-sm text-foreground font-medium leading-snug">
                                             "Chat 1-on-1 kapan pun mentok, sangat membantu!"
                                         </p>
                                     </div>
-                                    <div className="flex justify-between items-center ml-14 sm:ml-15">
-                                        <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">- Member Alumni</p>
+                                    <div className="flex justify-between items-center ml-10 sm:ml-15">
+                                        <p className="text-[9px] sm:text-xs text-muted-foreground font-medium">- Member Alumni</p>
                                         <div className="flex text-amber-400">
                                             {[1, 2, 3, 4, 5].map((i) => (
-                                                <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                                                <svg key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">
                                                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                 </svg>
                                             ))}

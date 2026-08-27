@@ -16,7 +16,7 @@ const videoResults: VideoResult[] = [
     {
         id: '1',
         title: 'Cara Heroisgod Menjadi Anomali TERBERSAR Di Youtube',
-        thumbnail: '/landing/thumbnailResult/heroisgod.jpg',
+        thumbnail: '/landing/thumbnailResult/heroisgod.webp',
         url: 'https://www.youtube.com/watch?v=8OFFMcRVaT4',
         views: '2.1M',
         duration: '12:45',
@@ -26,7 +26,7 @@ const videoResults: VideoResult[] = [
     {
         id: '2',
         title: 'Cara Gen Z Kehilangan 30 Tahun Umur Mereka',
-        thumbnail: '/landing/thumbnailResult/genz.jpg',
+        thumbnail: '/landing/thumbnailResult/genz.webp',
         url: 'https://www.youtube.com/watch?v=pUxudulRizo',
         views: '1.8M',
         duration: '8:05',
@@ -36,7 +36,7 @@ const videoResults: VideoResult[] = [
     {
         id: '3',
         title: '7 Hal Yang Gw Harap Gw Tau Sebelum Jadi Youtuber Gaming',
-        thumbnail: '/landing/thumbnailResult/7hal.jpg',
+        thumbnail: '/landing/thumbnailResult/7hal.webp',
         url: 'https://www.youtube.com/watch?v=9SjnozcsnJU',
         views: '1.5M',
         duration: '18:22',
@@ -46,7 +46,7 @@ const videoResults: VideoResult[] = [
     {
         id: '4',
         title: 'Youtuber, Lu Gobl*k Kalo Masi Lakuin Ini',
-        thumbnail: '/landing/thumbnailResult/intro.jpg',
+        thumbnail: '/landing/thumbnailResult/intro.webp',
         url: 'https://www.youtube.com/watch?v=IXO_tCg1F0Q&t=327s',
         views: '2.3M',
         duration: '14:18',
@@ -56,7 +56,7 @@ const videoResults: VideoResult[] = [
     {
         id: '5',
         title: 'Kalo Lu Youtuber Gaming Yang Viewsnya Kecil, Tonton Ini',
-        thumbnail: '/landing/thumbnailResult/kaloluyutubergeming.jpg',
+        thumbnail: '/landing/thumbnailResult/kaloluyutubergeming.webp',
         url: 'https://www.youtube.com/watch?v=UhAoE4OLIV8',
         views: '1.2M',
         duration: '8:11',

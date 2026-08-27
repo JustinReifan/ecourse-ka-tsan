@@ -22,7 +22,7 @@ const bonusData: BonusData[] = [
         value: 'Rp 4.599.000',
         description:
             'Kita tatap muka virtual rutin tiap 2 minggu! Sesi bedah akun, evaluasi progress, dan tanya jawab langsung biar kamu dipastikan nggak salah arah',
-        image: '/landing3/bonus/1.jpeg',
+        image: '/landing3/bonus/1.webp',
     },
     {
         id: 2,
@@ -31,7 +31,7 @@ const bonusData: BonusData[] = [
         value: 'Rp 4.694.000',
         description:
             'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi konten dan tumbuh bareng biar semangatmu gak kendor.',
-        image: '/landing3/bonus/2.png',
+        image: '/landing3/bonus/2.webp',
     },
 ];
 
@@ -125,7 +125,7 @@ function OtherBonusCard() {
         <div className="group mx-auto flex w-full max-w-lg flex-col items-center text-center">
             <div className="border-border/50 bg-muted/5 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border">
                 <img
-                    src="/landing3/bonus/otherbonus.png" // Placeholder
+                    src="/landing3/bonus/otherbonus.webp" // Placeholder
                     alt="Other Bonus"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"

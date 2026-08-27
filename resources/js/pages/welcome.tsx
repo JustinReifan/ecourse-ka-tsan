@@ -173,7 +173,7 @@ export default function Welcome() {
 
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="overflow-hidden rounded-2xl border border-neutral-800/60 bg-black shadow-2xl">
-                                    <img src="/landing/hero/herosection.png" alt="" className="h-full w-full object-cover" />
+                                    <img src="/landing/hero/herosection.webp" alt="" className="h-full w-full object-cover" />
                                 </div>
                             </div>
 

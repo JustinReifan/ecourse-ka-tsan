@@ -16,15 +16,15 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-    { id: '1', imageUrl: '/landing/testimonials/testimoni1.png', alt: 'Testimonial 1', subtitle: 'tes' },
-    { id: '2', imageUrl: '/landing/testimonials/testimoni2.png', alt: 'Testimonial 2', subtitle: 'tes' },
-    { id: '3', imageUrl: '/landing/testimonials/testimoni3.png', alt: 'Testimonial 3', subtitle: 'tes' },
-    { id: '4', imageUrl: '/landing/testimonials/testimoni4.png', alt: 'Testimonial 4', subtitle: 'tes' },
-    { id: '5', imageUrl: '/landing/testimonials/testimoni5.png', alt: 'Testimonial 5', subtitle: 'tes' },
-    { id: '6', imageUrl: '/landing/testimonials/testimoni6.png', alt: 'Testimonial 6', subtitle: 'tes' },
-    { id: '7', imageUrl: '/landing/testimonials/testimoni7.jpg', alt: 'Testimonial 7', subtitle: 'tes' },
-    { id: '8', imageUrl: '/landing/testimonials/testimoni8.jpg', alt: 'Testimonial 8', subtitle: 'tes' },
-    { id: '9', imageUrl: '/landing/testimonials/testimoni9.jpg', alt: 'Testimonial 9', subtitle: 'tes' },
+    { id: '1', imageUrl: '/landing/testimonials/testimoni1.webp', alt: 'Testimonial 1', subtitle: 'tes' },
+    { id: '2', imageUrl: '/landing/testimonials/testimoni2.webp', alt: 'Testimonial 2', subtitle: 'tes' },
+    { id: '3', imageUrl: '/landing/testimonials/testimoni3.webp', alt: 'Testimonial 3', subtitle: 'tes' },
+    { id: '4', imageUrl: '/landing/testimonials/testimoni4.webp', alt: 'Testimonial 4', subtitle: 'tes' },
+    { id: '5', imageUrl: '/landing/testimonials/testimoni5.webp', alt: 'Testimonial 5', subtitle: 'tes' },
+    { id: '6', imageUrl: '/landing/testimonials/testimoni6.webp', alt: 'Testimonial 6', subtitle: 'tes' },
+    { id: '7', imageUrl: '/landing/testimonials/testimoni7.webp', alt: 'Testimonial 7', subtitle: 'tes' },
+    { id: '8', imageUrl: '/landing/testimonials/testimoni8.webp', alt: 'Testimonial 8', subtitle: 'tes' },
+    { id: '9', imageUrl: '/landing/testimonials/testimoni9.webp', alt: 'Testimonial 9', subtitle: 'tes' },
 ];
 
 interface TestimonialCardProps {

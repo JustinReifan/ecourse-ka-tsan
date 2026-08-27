@@ -17,12 +17,12 @@ interface Testimonial {
 
 // Ganti path ini dengan path ke gambar testimoni 9:16 Anda
 const testimonials: Testimonial[] = [
-    { id: '1', imageUrl: '/landing/testimonials2/1.jpeg', alt: 'Testimonial 1' },
-    { id: '2', imageUrl: '/landing/testimonials2/2.jpeg', alt: 'Testimonial 2' },
-    { id: '3', imageUrl: '/landing/testimonials2/3.jpeg', alt: 'Testimonial 3' },
-    { id: '4', imageUrl: '/landing/testimonials2/4.jpeg', alt: 'Testimonial 4' },
-    { id: '5', imageUrl: '/landing/testimonials2/5.jpeg', alt: 'Testimonial 5' },
-    { id: '6', imageUrl: '/landing/testimonials2/6.jpeg', alt: 'Testimonial 6' },
+    { id: '1', imageUrl: '/landing/testimonials2/1.webp', alt: 'Testimonial 1' },
+    { id: '2', imageUrl: '/landing/testimonials2/2.webp', alt: 'Testimonial 2' },
+    { id: '3', imageUrl: '/landing/testimonials2/3.webp', alt: 'Testimonial 3' },
+    { id: '4', imageUrl: '/landing/testimonials2/4.webp', alt: 'Testimonial 4' },
+    { id: '5', imageUrl: '/landing/testimonials2/5.webp', alt: 'Testimonial 5' },
+    { id: '6', imageUrl: '/landing/testimonials2/6.webp', alt: 'Testimonial 6' },
 ];
 
 // --- 2. Komponen Card untuk Carousel Item ---

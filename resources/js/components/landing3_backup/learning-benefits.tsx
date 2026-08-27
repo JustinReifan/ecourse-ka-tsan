@@ -46,7 +46,7 @@ export function LearningBenefits() {
                 <div className="relative mx-auto mb-6 w-full max-w-xl md:max-w-3xl md:max-w-lg">
                     <div className="overflow-hidden rounded-3xl">
                         <img
-                            src="/landing3/benefit.png"
+                            src="/landing3/benefit.webp"
                             alt="Detail Benefit Kurikulum"
                             // Tetap gunakan w-full agar mengisi container yang sudah dikecilkan
                             className="h-auto w-full object-cover"

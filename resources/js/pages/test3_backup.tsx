@@ -156,7 +156,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                             <div>
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="mx-auto overflow-hidden rounded-2xl bg-black shadow-2xl lg:max-w-3xl">
-                                    <img src="/landing/hero/thumb3.png" alt="" className="h-full w-full object-cover" />
+                                    <img src="/landing/hero/thumb3.webp" alt="" className="h-full w-full object-cover" />
                                 </div>
                             </div>
 

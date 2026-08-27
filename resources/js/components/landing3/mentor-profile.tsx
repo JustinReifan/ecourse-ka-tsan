@@ -135,7 +135,7 @@ export function MentorProfile() {
                                             )}
 
                                             <img
-                                                src="/landing/mentor/hero.png"
+                                                src="/landing/mentor/hero.webp"
                                                 alt="Professional Video Editor"
                                                 className={cn(
                                                     'h-full w-full object-cover transition-all duration-700',

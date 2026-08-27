@@ -97,22 +97,22 @@ const TRUST_BADGES = [
 const TESTIMONIALS = [
     {
         id: 1,
-        image: '/landing3/testimonials/3.png',
+        image: '/landing3/testimonials/3.webp',
         caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 2,
-        image: '/landing3/testimonials/1.png',
+        image: '/landing3/testimonials/1.webp',
         caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 3,
-        image: '/landing3/testimonials/2.png',
+        image: '/landing3/testimonials/2.webp',
         caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
     {
         id: 4,
-        image: '/landing3/testimonials/4.png',
+        image: '/landing3/testimonials/4.webp',
         caption: 'Dokumentasi pengalaman alumni — baca testimoni asli pada gambar.',
     },
 ];

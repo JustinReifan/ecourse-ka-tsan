@@ -44,37 +44,37 @@ const credentials: Credential[] = [
 const achievements: Achievement[] = [
     {
         id: '1',
-        image: '/landing/mentor/1.png',
+        image: '/landing/mentor/1.webp',
         title: 'Hollywood Project',
         description: 'Color grading for indie film',
     },
     {
         id: '2',
-        image: '/landing/mentor/2.png',
+        image: '/landing/mentor/2.webp',
         title: 'Netflix Series',
         description: 'Post-production supervisor',
     },
     {
         id: '3',
-        image: '/landing/mentor/3.png',
+        image: '/landing/mentor/3.webp',
         title: 'Music Video',
         description: 'Grammy nominated artist',
     },
     {
         id: '4',
-        image: '/landing/mentor/4.png',
+        image: '/landing/mentor/4.webp',
         title: 'Commercial Work',
         description: 'Fortune 500 companies',
     },
     {
         id: '5',
-        image: '/landing/mentor/5.png',
+        image: '/landing/mentor/5.webp',
         title: 'Documentary',
         description: 'Award winning documentary',
     },
     {
         id: '6',
-        image: '/landing/mentor/6.png',
+        image: '/landing/mentor/6.webp',
         title: 'Training Content',
         description: 'Educational video series',
     },
@@ -241,7 +241,7 @@ export function MentorProfile() {
                                             )}
 
                                             <img
-                                                src="/landing/mentor/hero.png"
+                                                src="/landing/mentor/hero.webp"
                                                 alt="Professional Video Editor"
                                                 className={cn(
                                                     'h-full w-full object-cover transition-all duration-700',

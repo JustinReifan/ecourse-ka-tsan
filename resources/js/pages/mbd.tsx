@@ -124,7 +124,7 @@ export default function Mbd() {
 
                                 {/* kalau gak ada vsl, thumbnail doang */}
                                 <div className="overflow-hidden rounded-2xl">
-                                    <img src="/landing/hero/thumb2.png" alt="" className="h-full w-full object-cover" />
+                                    <img src="/landing/hero/thumb2.webp" alt="" className="h-full w-full object-cover" />
                                 </div>
                             </div>
 
