@@ -201,7 +201,7 @@ export function BonusSection() {
                             <p className="from-primary via-primary/80 to-primary mt-2 block bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
                                 Module Pembelajaran
                             </p>
-                            <span className="text-muted-foreground text-sm font-medium md:text-base">
+                            <span className="text-muted-foreground text-sm font-medium">
                                 Kurikulum step-by-step yang sudah terbukti menghasilkan Rp100+ JUTA
                             </span>
                         </div>
@@ -211,7 +211,7 @@ export function BonusSection() {
                             <p className="from-primary via-primary/80 to-primary mt-2 block bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
                                 Bonus GRATIS
                             </p>
-                            <span className="text-muted-foreground text-sm font-medium md:text-base">
+                            <span className="text-muted-foreground text-sm font-medium">
                                 Dapatkan bimbingan dan tools yang dapat mempercepat proses kamu hasilin uang
                             </span>
                         </div>

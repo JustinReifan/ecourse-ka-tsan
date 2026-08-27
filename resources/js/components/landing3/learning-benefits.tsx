@@ -65,7 +65,7 @@ export function LearningBenefits() {
                         </span>
                     </h3>
 
-                    <p className="text-muted-foreground mx-auto max-w-2xl text-lg leading-relaxed md:text-xl">
+                    <p className="text-muted-foreground mx-auto max-w-2xl text-base sm:text-lg leading-relaxed">
                         Bukan cuma nonton video ,  tapi <span className="font-bold">dibimbing langsung sampai praktik dan closing</span>. Kamu akan tahu cara jualan di sosmed, punya konten yang jualan, dan mulai dapat orderan.
                     </p>
                 </div>
@@ -88,7 +88,7 @@ export function LearningBenefits() {
                                 <span className="text-primary text-lg font-bold">{index + 1}</span>
                             </div>
                             <div>
-                                <h4 className="text-foreground mb-1 font-semibold">{benefit.title}</h4>
+                                <h4 className="text-foreground mb-1 text-sm font-semibold">{benefit.title}</h4>
                                 <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
                             </div>
                         </div>

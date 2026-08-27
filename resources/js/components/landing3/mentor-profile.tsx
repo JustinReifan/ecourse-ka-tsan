@@ -191,10 +191,10 @@ export function MentorProfile() {
                                     <MessageCircle className="text-primary h-6 w-6" />
                                     Pendampingan Personal Selama 70 Hari
                                 </h4>
-                                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+                                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                                     Kak Tsania mengoreksi 10 tugas praktik dan menjadi tempat bertanya lewat chat 1-on-1 kapan pun peserta mentok.
                                 </p>
-                                <ul className="text-muted-foreground space-y-4">
+                                <ul className="text-muted-foreground text-sm space-y-4">
                                     <li className="flex gap-3">
                                         <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Grup WhatsApp maksimal 10 orang.
                                     </li>
