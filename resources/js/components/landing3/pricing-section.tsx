@@ -172,7 +172,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                             <div className="relative space-y-6 sm:space-y-8 p-5 sm:p-8 lg:p-12 mt-4 sm:mt-0">
                                 {/* Price Display */}
                                 <div className="space-y-2 sm:space-y-4 text-center">
-                                    <div className="inline-block bg-destructive/10 border border-destructive/20 text-destructive px-3 py-1 rounded-full text-[10px] sm:text-sm font-extrabold mb-1 animate-pulse">
+                                    <div className="inline-block bg-destructive/10 border border-destructive/20 text-destructive px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold mb-1 animate-pulse">
                                         DISKON SPESIAL HARI INI
                                     </div>
                                     <div className="text-muted-foreground line-through text-lg sm:text-2xl font-semibold opacity-60">
@@ -180,7 +180,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                     </div>
                                     <div className="flex items-baseline justify-center gap-1">
                                         <span className="text-primary text-2xl sm:text-4xl font-medium">Rp</span>
-                                        <span className="text-foreground text-5xl sm:text-7xl font-bold tracking-tight">{formattedPrice}</span>
+                                        <span className="text-foreground text-5xl sm:text-6xl font-bold tracking-tight">{formattedPrice}</span>
                                     </div>
                                     <p className="text-muted-foreground text-sm sm:text-lg">Harga coret khusus buat Bunda yang siap action!</p>
                                 </div>
@@ -203,21 +203,21 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                             <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
                                                 {String(timeLeft.hours).padStart(2, '0')}
                                             </div>
-                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">JAM</span>
+                                            <span className="text-xs text-muted-foreground mt-1 font-medium">JAM</span>
                                         </div>
                                         <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
                                         <div className="flex flex-col items-center">
                                             <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
                                                 {String(timeLeft.minutes).padStart(2, '0')}
                                             </div>
-                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">MENIT</span>
+                                            <span className="text-xs text-muted-foreground mt-1 font-medium">MENIT</span>
                                         </div>
                                         <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
                                         <div className="flex flex-col items-center">
                                             <div className="bg-background border border-destructive/20 text-destructive font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm animate-pulse">
                                                 {String(timeLeft.seconds).padStart(2, '0')}
                                             </div>
-                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">DETIK</span>
+                                            <span className="text-xs text-muted-foreground mt-1 font-medium">DETIK</span>
                                         </div>
                                     </div>
                                 </div>

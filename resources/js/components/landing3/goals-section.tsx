@@ -37,7 +37,7 @@ export function GoalsSection() {
         <section className="py-12 sm:py-24 bg-white overflow-hidden relative">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-5xl font-extrabold text-[#5a4d3c] mb-4 tracking-tight leading-tight">
+                    <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#5a4d3c] mb-4 tracking-tight leading-tight">
                         Bayangin, apa jadinya kalau<br className="hidden sm:block" />
                         <span className="text-[#00BF63]">semua impian ini terwujud?</span>
                     </h2>

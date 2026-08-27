@@ -143,7 +143,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     {landingBadge} — PROGRAM RAMAH PEMULA
                                 </p>
                                 
-                                <h1 className="text-foreground text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
+                                <h1 className="text-foreground text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
                                     Sementara yang Lain Udah Mulai <br className="hidden lg:block"/>
                                     Cuan dari HP-nya, Bunda Masih <br className="hidden lg:block"/>
                                     Nunggu <span className="text-primary">"Waktu yang Tepat"?</span>
@@ -186,7 +186,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                                 </svg>
                                             ))}
                                         </div>
-                                        <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">
+                                        <p className="text-xs text-muted-foreground font-medium">
                                             Lihat pengalaman asli peserta<br className="hidden sm:block"/> di bawah ini
                                         </p>
                                     </div>
@@ -212,16 +212,16 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     <div className="bg-primary/10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-primary">
                                         <Heart className="w-3 h-3 sm:w-5 sm:h-5 fill-current" />
                                     </div>
-                                    <p className="text-[10px] sm:text-sm font-semibold max-w-[100px] sm:max-w-[150px] leading-tight text-foreground">
+                                    <p className="text-xs sm:text-sm font-semibold max-w-[100px] sm:max-w-[150px] leading-tight text-foreground">
                                         Dibimbing sampai praktik, bukan cuma nonton
                                     </p>
                                 </div>
                                 
                                 {/* Floating Card 2: Middle Right */}
                                 <div className="absolute top-[40%] -right-2 sm:-right-12 lg:-right-16 bg-background rounded-2xl sm:rounded-3xl p-2.5 sm:p-5 shadow-xl border border-border/50 min-w-[130px] sm:min-w-[220px] z-20">
-                                    <p className="text-[9px] sm:text-xs text-muted-foreground font-medium mb-0.5 sm:mb-1">Target Income</p>
+                                    <p className="text-xs text-muted-foreground font-medium mb-0.5 sm:mb-1">Target Income</p>
                                     <p className="text-lg sm:text-3xl font-extrabold mb-0 sm:mb-0.5 text-foreground">Rp10 Juta</p>
-                                    <p className="text-[9px] sm:text-xs text-emerald-500 font-medium mb-1.5 sm:mb-3">Kejar target pertamamu</p>
+                                    <p className="text-xs text-emerald-500 font-medium mb-1.5 sm:mb-3">Kejar target pertamamu</p>
                                     
                                     {/* SVG Line Chart */}
                                     <svg className="w-full h-8 sm:h-16" viewBox="0 0 100 40" preserveAspectRatio="none">
@@ -241,12 +241,12 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 <div className="absolute bottom-6 sm:bottom-10 -left-2 sm:-left-8 lg:-left-10 bg-background rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-xl border border-border/50 max-w-[180px] sm:max-w-[260px] z-20">
                                     <div className="flex gap-2 sm:gap-3 mb-2 sm:mb-3">
                                         <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Testimoni" className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover shrink-0" />
-                                        <p className="text-[10px] sm:text-sm text-foreground font-medium leading-snug">
+                                        <p className="text-xs sm:text-sm text-foreground font-medium leading-snug">
                                             "Chat 1-on-1 kapan pun mentok, sangat membantu!"
                                         </p>
                                     </div>
                                     <div className="flex justify-between items-center ml-10 sm:ml-15">
-                                        <p className="text-[9px] sm:text-xs text-muted-foreground font-medium">- Member Alumni</p>
+                                        <p className="text-xs text-muted-foreground font-medium">- Member Alumni</p>
                                         <div className="flex text-amber-400">
                                             {[1, 2, 3, 4, 5].map((i) => (
                                                 <svg key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">

@@ -63,7 +63,7 @@ const timelineData = [
 function Card({ text, type }: { text: string, type: string }) {
     return (
         <div className={cn(
-            "flex items-center justify-center text-center rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 min-h-[70px] sm:min-h-[100px] text-[11px] sm:text-base font-bold whitespace-pre-line transition-transform hover:scale-105",
+            "flex items-center justify-center text-center rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 min-h-[70px] sm:min-h-[100px] text-xs sm:text-base font-bold whitespace-pre-line transition-transform hover:scale-105",
             type === "day" 
                 ? "bg-[#e2d8cd] text-[#6b6255]" 
                 : "bg-[#d1c8bb] text-[#6b6255]"
@@ -89,7 +89,7 @@ export function TimelineSection() {
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-[#d1c8bb] text-[#8c8273] text-xs sm:text-sm font-medium mb-6">
                         <span className="text-[#a89f8c]">?</span> Benefit Eksklusif
                     </div>
-                    <h2 className="text-3xl sm:text-5xl font-extrabold text-[#6b6255] mb-4 tracking-tight">
+                    <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#6b6255] mb-4 tracking-tight">
                         Rule Bimbingan WA<br />10 x 7 Hari Praktek
                     </h2>
                     <p className="text-[#8c8273] text-sm sm:text-lg">

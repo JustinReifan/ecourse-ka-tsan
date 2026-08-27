@@ -164,7 +164,7 @@ export function MentorProfile() {
                             {/* Nameplate */}
                             <div className="animate-fade-in space-y-4 text-center" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
                                 <div>
-                                    <h3 className="text-foreground mb-2 text-3xl font-bold">Tsania Latheefa</h3>
+                                    <h3 className="text-foreground mb-2 text-3xl sm:text-4xl font-bold">Tsania Latheefa</h3>
                                     <p className="text-primary text-lg font-medium">Content Creator</p>
                                     <p className="text-muted-foreground">Instagram</p>
                                 </div>
