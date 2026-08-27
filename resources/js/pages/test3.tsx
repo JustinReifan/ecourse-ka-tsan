@@ -144,17 +144,8 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 </p>
                                 
                                 <h1 className="text-foreground text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
-                                    Sementara yang Lain Udah Mulai <br className="hidden lg:block"/>
-                                    Cuan dari HP-nya, Bunda Masih <br className="hidden lg:block"/>
-                                    Nunggu <span className="text-primary">"Waktu yang Tepat"?</span>
-                                    <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-full text-amber-500 ml-2 sm:ml-3 align-middle -mt-1">
-                                        <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                                        </svg>
-                                    </span>
+                                    Dibimbing 1-on-1 untuk mulai hasilkan <br className="hidden lg:block"/>
+                                    <span className="text-primary">Rp 10 Juta Pertamamu</span> dari Sosmed
                                 </h1>
                                 
                                 <p className="text-muted-foreground text-base sm:text-lg lg:text-xl leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
