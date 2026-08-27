@@ -99,7 +99,7 @@ function BonusCard({ bonus }: { bonus: BonusData }) {
                             </h3>
                         </div>
                     </div>
-                    <p className="text-muted-foreground md:text-md text-sm leading-relaxed">{bonus.description}</p>
+                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{bonus.description}</p>
 
                     <div className="mt-3 flex flex-wrap items-center gap-3 md:mt-5">
                         {/* 1. Badge "Senilai" (Tampilan Redup/Coret) */}

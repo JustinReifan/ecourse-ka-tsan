@@ -164,7 +164,7 @@ export function MentorProfile() {
                             {/* Nameplate */}
                             <div className="animate-fade-in space-y-4 text-center" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
                                 <div>
-                                    <h3 className="text-foreground mb-2 text-3xl sm:text-5xl font-bold">Tsania Latheefa</h3>
+                                    <h3 className="text-foreground mb-2 text-3xl sm:text-4xl font-bold">Tsania Latheefa</h3>
                                     <p className="text-primary text-lg font-medium">Content Creator</p>
                                     <p className="text-muted-foreground">Instagram</p>
                                 </div>
@@ -187,11 +187,11 @@ export function MentorProfile() {
                         {/* Right Side - Info & Credentials */}
                         <div className="space-y-8 lg:space-y-10">
                             <div className="from-primary/10 border-primary/20 space-y-6 rounded-2xl border bg-gradient-to-br p-8 backdrop-blur-sm">
-                                <h4 className="text-foreground flex items-center gap-3 text-2xl font-bold">
+                                <h4 className="text-foreground flex items-center gap-3 text-xl sm:text-2xl font-bold">
                                     <MessageCircle className="text-primary h-6 w-6" />
                                     Pendampingan Personal Selama 70 Hari
                                 </h4>
-                                <p className="text-muted-foreground text-lg leading-relaxed">
+                                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
                                     Kak Tsania mengoreksi 10 tugas praktik dan menjadi tempat bertanya lewat chat 1-on-1 kapan pun peserta mentok.
                                 </p>
                                 <ul className="text-muted-foreground space-y-4">

@@ -34,10 +34,10 @@ export function PainPointSection() {
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
                 <div className="mb-4 sm:mb-6 text-center lg:mb-16">
-                    <h2 className="text-foreground mb-3 text-2xl font-bold lg:text-6xl">
-                        Kenapa Bunda/Kakak Masih <span className="text-primary text-4xl lg:text-6xl">KETINGGALAN?</span>
+                    <h2 className="text-foreground mb-3 text-2xl sm:text-3xl lg:text-4xl font-bold">
+                        Kenapa Bunda/Kakak Masih <span className="text-primary">KETINGGALAN?</span>
                     </h2>
-                    <p className="text-muted-foreground mx-auto max-w-3xl text-sm sm:text-lg md:text-xl px-2">
+                    <p className="text-muted-foreground mx-auto max-w-3xl text-sm sm:text-base lg:text-lg px-2">
                         Udah capek kan ngeliat orang lain gampang banget cuan dari HP? Sementara Bunda masih pusing muter otak mikirin cara nambah pemasukan keluarga...
                     </p>
                 </div>
@@ -93,7 +93,7 @@ export function PainPointSection() {
                             </div>
 
                             <div className="pt-6 sm:pt-8 text-center md:text-start mt-auto">
-                                <h3 className="text-foreground text-lg sm:text-xl font-medium md:text-2xl leading-snug">Kalau dibiarkan, 5 tahun lagi Bunda <br className="hidden sm:block"/> bakal tetep pusing sama masalah yang sama.</h3>
+                                <h3 className="text-foreground text-lg font-semibold leading-snug">Kalau dibiarkan, 5 tahun lagi Bunda <br className="hidden sm:block"/> bakal tetep pusing sama masalah yang sama.</h3>
                                 <p className="text-muted-foreground mt-2 text-sm sm:text-base">Makin lama ditunda, makin susah nanti ngejarnya lho, Bund.</p>
                             </div>
                         </div>
@@ -102,11 +102,11 @@ export function PainPointSection() {
 
                 {/* Unique Mechanism Bridge - MOVED OUTSIDE GRID TO FIX LAYOUT */}
                 <div className="mt-12 lg:mt-20 mx-auto max-w-4xl text-center">
-                    <h3 className="text-primary text-2xl font-bold md:text-3xl lg:text-4xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
-                    <p className="text-muted-foreground mt-3 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">Karena belajar sendirian tanpa dikoreksi = nggak tau apakah udah bener atau masih salah jalan.</p>
+                    <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
+                    <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Karena belajar sendirian tanpa dikoreksi = nggak tau apakah udah bener atau masih salah jalan.</p>
                     
                     <div className="from-primary/10 border-primary/20 mt-8 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-6 sm:p-8 lg:p-10 text-left backdrop-blur-sm shadow-md">
-                        <h4 className="text-foreground mb-5 sm:mb-6 text-lg sm:text-xl lg:text-2xl font-bold flex items-center gap-3">
+                        <h4 className="text-foreground mb-5 sm:mb-6 text-lg sm:text-xl font-bold flex items-center gap-3">
                             <span className="bg-primary/20 text-primary p-2 rounded-lg">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />

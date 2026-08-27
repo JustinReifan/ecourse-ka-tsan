@@ -123,11 +123,11 @@ export function PricingSection({ coursePrice }: PricingSectionProps) {
                         </div>
 
                         <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
+                            <h2 className="text-foreground text-4xl font-bold sm:text-5xl lg:text-6xl">
                                 <span className="text-foreground block bg-clip-text">Mulai Belajar</span>
                                 <span className="text-primary/80 bg-clip-text">Sebelum Harga Naik</span>
                             </h2>
-                            <p className="text-muted-foreground mx-auto max-w-3xl text-xl leading-relaxed">
+                            <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-lg leading-relaxed">
                                 Kamu akan dapat akses selamanya ke materi kelasnya. Cukup bayar sekali, ilmunya bisa kamu akses seumur hidup.
                             </p>
                         </div>
@@ -171,14 +171,14 @@ export function PricingSection({ coursePrice }: PricingSectionProps) {
                                 <div className="space-y-4 text-center">
                                     <div className="space-y-2">
                                         <div className="flex items-center justify-center gap-2">
-                                            <span className="text-muted-foreground text-2xl line-through">Rp 499.000</span>
+                                            <span className="text-muted-foreground text-lg sm:text-xl line-through">Rp 499.000</span>
                                             <span className="bg-destructive/20 text-destructive rounded-md px-2 py-1 text-sm font-medium">-60%</span>
                                         </div>
                                         <div className="flex items-baseline justify-center gap-1">
-                                            <span className="text-primary text-2xl font-medium">Rp</span>
-                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">{formattedPrice}</span>
+                                            <span className="text-primary text-xl sm:text-2xl font-medium">Rp</span>
+                                            <span className="text-foreground text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">{formattedPrice}</span>
                                         </div>
-                                        <p className="text-muted-foreground text-lg">Akses selamanya • Tanpa biaya bulanan</p>
+                                        <p className="text-muted-foreground text-sm sm:text-base">Akses selamanya • Tanpa biaya bulanan</p>
                                     </div>
                                 </div>
 

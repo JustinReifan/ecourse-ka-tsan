@@ -106,8 +106,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     <Link href={route('login')} className="text-foreground hover:text-primary text-sm font-medium mr-2">
                                         Login
                                     </Link>
-                                )}
-                                <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-2.5 px-6 rounded-full transition-all text-sm hidden sm:block shadow-md">
+                                )}                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-2.5 px-6 rounded-full transition-all text-sm sm:text-base hidden sm:block shadow-md">
                                     Enroll Now
                                 </button>
                             </div>
@@ -143,12 +142,12 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     <span className="text-primary">Rp 10 Juta Pertamamu</span> dari Sosmed
                                 </h1>
                                 
-                                <p className="text-muted-foreground text-base sm:text-lg lg:text-xl leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
+                                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
                                     Siap hasilkan pendapatan dari rumah? Dapatkan pendampingan intensif 1-on-1 via WhatsApp dan koreksi tugas langsung oleh mentor dalam grup kecil.
                                 </p>
                                 
                                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5 mb-3 sm:mb-12">
-                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-base sm:text-lg">
+                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-sm sm:text-base">
                                         GABUNG SEKARANG
                                     </button>
                                 </div>
@@ -175,7 +174,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                                 </svg>
                                             ))}
                                         </div>
-                                        <p className="text-xs sm:text-xs text-muted-foreground font-medium">
+                                        <p className="text-xs sm:text-sm text-muted-foreground font-medium">
                                             Lihat pengalaman asli peserta<br className="hidden sm:block"/> di bawah ini
                                         </p>
                                     </div>
@@ -204,7 +203,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     <div className="bg-primary/10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-primary shrink-0">
                                         <Heart className="w-3 h-3 sm:w-5 sm:h-5 fill-current" />
                                     </div>
-                                    <p className="text-xs sm:text-sm font-semibold max-w-[120px] sm:max-w-[150px] leading-tight text-foreground">
+                                    <p className="text-sm font-semibold max-w-[120px] sm:max-w-[150px] leading-tight text-foreground">
                                         Dibimbing sampai praktik, bukan cuma nonton
                                     </p>
                                 </div>

@@ -104,13 +104,13 @@ export default function Canva({ coursePrice }: CanvaProps) {
                             </div>
 
                             <div className="space-y-6" data-aos="fade-up">
-                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                                     Kuasai Skill Canva dari Nol Hingga Hasilkan{' '}
                                     <span className="from-primary via-primary/80 to-primary animate-gradient-x bg-gradient-to-r bg-clip-text text-transparent">
                                         Cuan 2 Digit Pertama
                                     </span>
                                 </h1>
-                                <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-xl">
+                                <p className="text-muted-foreground mx-auto max-w-4xl text-base sm:text-lg leading-relaxed">
                                     Bukan Sekedar Kumpulan Tutorial Jago Canva, ini step-by-step skill canva yang bisa menjadi bekal kamu menuju
                                     creator sukses dan bisa hasilkan cuan 2 digit pertama kamu!
                                 </p>

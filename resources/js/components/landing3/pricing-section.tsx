@@ -175,14 +175,14 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                     <div className="inline-block bg-destructive/10 border border-destructive/20 text-destructive px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold mb-1 animate-pulse">
                                         DISKON SPESIAL HARI INI
                                     </div>
-                                    <div className="text-muted-foreground line-through text-lg sm:text-2xl font-semibold opacity-60">
+                                    <div className="text-muted-foreground line-through text-base sm:text-xl font-semibold opacity-60">
                                         Rp 1.500.000
                                     </div>
                                     <div className="flex items-baseline justify-center gap-1">
-                                        <span className="text-primary text-2xl sm:text-4xl font-medium">Rp</span>
-                                        <span className="text-foreground text-5xl sm:text-6xl font-bold tracking-tight">{formattedPrice}</span>
+                                        <span className="text-primary text-xl sm:text-3xl font-medium">Rp</span>
+                                        <span className="text-foreground text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">{formattedPrice}</span>
                                     </div>
-                                    <p className="text-muted-foreground text-sm sm:text-lg">Harga coret khusus buat Bunda yang siap action!</p>
+                                    <p className="text-muted-foreground text-sm sm:text-base">Harga coret khusus buat Bunda yang siap action!</p>
                                 </div>
 
                                 {/* Benefits Grid */}
@@ -231,7 +231,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                         className={cn(
                                             'relative w-full overflow-hidden px-8 sm:px-16 lg:w-auto',
                                             'shadow-primary/40 hover:shadow-primary/60 shadow-2xl',
-                                            'animate-glow-pulse cursor-pointer text-sm sm:text-lg',
+                                            'animate-glow-pulse cursor-pointer text-sm sm:text-base',
                                         )}
                                     >
                                         Ambil Diskon Sekarang

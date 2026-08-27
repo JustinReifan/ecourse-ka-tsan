@@ -41,7 +41,7 @@ export function GoalsSection() {
                             Bayangin, apa jadinya kalau <span className="text-[#00BF63]">semua impian ini terwujud?</span>
                         </h2>
 
-                        <p className="mt-6 max-w-xl text-base leading-relaxed text-[#7a6f5d] sm:text-lg">
+                        <p className="mt-6 max-w-xl text-base leading-relaxed text-[#7a6f5d]">
                             Mulai dari yang kecil dulu. Kalau Bunda berani mulai belajar dan konsisten sekarang, ini semua bukan cuma angan-angan
                             lagi.
                         </p>
@@ -67,7 +67,7 @@ export function GoalsSection() {
                                             <Icon className="h-5 w-5 shrink-0 text-[#00a857] sm:hidden" strokeWidth={2} />
                                             <h3 className="text-xl leading-snug font-bold text-[#5a4d3c] sm:text-2xl">{goal.title}</h3>
                                         </div>
-                                        <p className="max-w-xl text-sm leading-relaxed text-[#7a6f5d] sm:text-base">{goal.description}</p>
+                                        <p className="text-sm leading-relaxed text-[#7a6f5d] sm:text-base">{goal.description}</p>
                                     </div>
                                 </div>
                             );

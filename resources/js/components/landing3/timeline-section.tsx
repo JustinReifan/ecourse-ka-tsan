@@ -143,7 +143,7 @@ export function TimelineSection() {
                     <p className="text-[#bbaea0] text-xs sm:text-sm font-medium mb-3 flex items-center justify-center gap-2">
                         <ArrowDown className="w-3 h-3" /> Klik tombol ini untuk gabung <ArrowDown className="w-3 h-3" />
                     </p>
-                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all text-base sm:text-lg">
+                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all text-sm sm:text-base">
                         Gabung Sekarang
                     </button>
                 </div>

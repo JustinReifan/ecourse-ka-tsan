@@ -105,13 +105,13 @@ export function TestimonialsSection() {
                         </div>
 
                         <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
+                            <h2 className="text-foreground text-4xl font-bold sm:text-5xl lg:text-6xl">
                                 <span className="block">Ini Kata Mereka</span>
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
                                     Yang Udah Gabung Kelas ini
                                 </span>
                             </h2>
-                            <p className="text-muted-foreground mx-auto max-w-3xl text-xl leading-relaxed">
+                            <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-lg leading-relaxed">
                                 Awalnya mereka juga ragu dan merasa gaptek, persis seperti yang kamu rasakan. Tapi karena berani mencoba, sekarang
                                 mereka sudah bisa menghasilkan meskipun dari rumah
                             </p>

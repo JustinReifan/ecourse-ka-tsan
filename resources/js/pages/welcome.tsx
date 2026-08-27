@@ -141,10 +141,10 @@ export default function Welcome() {
 
                             <div className="space-y-6" data-aos="fade-up">
                                 <h1
-                                    className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl"
+                                    className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
                                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(landingHeadline) }}
                                 ></h1>
-                                <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-xl">{landingSubheadline}</p>
+                                <p className="text-muted-foreground mx-auto max-w-4xl text-base sm:text-lg leading-relaxed">{landingSubheadline}</p>
                             </div>
 
                             {/* <div className="animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>

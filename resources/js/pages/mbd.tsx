@@ -94,13 +94,13 @@ export default function Mbd() {
                             </div>
 
                             <div className="space-y-6" data-aos="fade-up">
-                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                                     Jangan Bully Dirimu Sendiri Dengan Meragukan{' '}
                                     <span className="from-primary via-primary/80 to-primary animate-gradient-x bg-gradient-to-r bg-clip-text text-transparent">
                                         Potensimu Di Dunia Digital
                                     </span>
                                 </h1>
-                                <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-xl">
+                                <p className="text-muted-foreground mx-auto max-w-4xl text-base sm:text-lg leading-relaxed">
                                     Temukan potensi hobi dan skillmu menjadi cuan digital di kelas ini
                                 </p>
                             </div>

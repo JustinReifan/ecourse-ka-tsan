@@ -204,13 +204,13 @@ export function MentorProfile() {
                         </div>
 
                         <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
+                            <h2 className="text-foreground text-4xl font-bold sm:text-5xl lg:text-6xl">
                                 <span className="block">Mentor Tepat untuk </span>
                                 <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
                                     Langkah Awalmu
                                 </span>
                             </h2>
-                            <p className="text-muted-foreground mx-auto max-w-3xl text-xl leading-relaxed">
+                            <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-lg leading-relaxed">
                                 Gak perlu bingung karena kamu bakal dipandu sama mentor terbaik yang udah punya pengalaman jualan online 13 tahun
                             </p>
                         </div>
@@ -270,7 +270,7 @@ export function MentorProfile() {
                             {/* Nameplate */}
                             <div className="animate-fade-in space-y-4 text-center" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
                                 <div>
-                                    <h3 className="text-foreground mb-2 text-3xl font-bold">Tsania Latheefa</h3>
+                                    <h3 className="text-foreground mb-2 text-3xl sm:text-4xl font-bold">Tsania Latheefa</h3>
                                     <p className="text-primary text-lg font-medium">Content Creator</p>
                                     <p className="text-muted-foreground">Instagram</p>
                                 </div>
@@ -326,7 +326,7 @@ export function MentorProfile() {
                         {/* Right Side - Portfolio Grid */}
                         <div className="space-y-8">
                             <div className="animate-fade-in" style={{ animationDelay: '1200ms', animationFillMode: 'both' }}>
-                                <h4 className="text-foreground mb-6 flex items-center gap-2 text-xl font-bold">
+                                <h4 className="text-foreground mb-6 flex items-center gap-2 text-xl sm:text-2xl font-bold">
                                     <Play className="text-primary h-5 w-5" />
                                     Portfolio & Recent Works
                                 </h4>

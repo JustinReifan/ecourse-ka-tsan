@@ -110,10 +110,10 @@ export function ReasonJoinSection() {
                         <Sparkles className="h-4 w-4" />
                         Tempat Belajar Terbaik
                     </div>
-                    <h2 className="text-foreground mb-6 text-4xl font-bold capitalize lg:text-6xl">
+                    <h2 className="text-foreground mb-6 text-4xl font-bold capitalize sm:text-5xl lg:text-6xl">
                         Kamu ibu rumah tangga, <span className="text-primary">pengen bantu suami tapi takut karena gaptek?</span>
                     </h2>
-                    <p className="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed">
+                    <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-lg leading-relaxed">
                         Tenang. Di kelas ini kamu gak cuma belajar teknis, tapi juga dipandu lewat video step by step dari yang gak tau apa itu produk
                         digital sampe beneran ngerti dan praktek.
                     </p>

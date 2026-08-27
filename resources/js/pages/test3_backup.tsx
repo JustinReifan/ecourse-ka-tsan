@@ -133,13 +133,13 @@ export default function Test3Hero({ coursePrice }: Props) {
                             </div>
 
                             <div className="space-y-3">
-                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+                                <h1 className="text-foreground mx-auto max-w-6xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                                     Dibimbing Mendapatkan{' '}
                                     <span className="from-primary via-primary/80 to-primary animate-gradient-x bg-gradient-to-r bg-clip-text text-transparent">
                                         5 Juta Pertama Dari Sosmed
                                     </span>
                                 </h1>
-                                <p className="text-muted-foreground mx-auto max-w-4xl text-base leading-relaxed md:text-2xl">
+                                <p className="text-muted-foreground mx-auto max-w-4xl text-base sm:text-lg leading-relaxed">
                                     Contek Strategi Aku <span className="font-bold">Hasilkan Rp 150+ JUTA</span> Dari Konten & Produk Digital -
                                     Meskipun <span className="font-bold">Kamu Pemula dan Gaptek</span>
                                 </p>
