@@ -182,6 +182,31 @@ export function MentorProfile() {
                                 </div>
                             </div>
 
+                        </div>
+
+                        {/* Right Side - Info & Credentials */}
+                        <div className="space-y-8 lg:space-y-10">
+                            <div className="from-primary/10 border-primary/20 space-y-6 rounded-2xl border bg-gradient-to-br p-8 backdrop-blur-sm">
+                                <h4 className="text-foreground flex items-center gap-3 text-2xl font-bold">
+                                    <MessageCircle className="text-primary h-6 w-6" />
+                                    Pendampingan Personal Selama 70 Hari
+                                </h4>
+                                <p className="text-muted-foreground text-lg leading-relaxed">
+                                    Kak Tsania mengoreksi 10 tugas praktik dan menjadi tempat bertanya lewat chat 1-on-1 kapan pun peserta mentok.
+                                </p>
+                                <ul className="text-muted-foreground space-y-4">
+                                    <li className="flex gap-3">
+                                        <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Grup WhatsApp maksimal 10 orang.
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Koreksi tugas langsung, bukan belajar sendirian.
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Tanya-jawab lewat chat tanpa biaya tambahan.
+                                    </li>
+                                </ul>
+                            </div>
+
                             {/* Credentials */}
                             <div className="animate-fade-in space-y-4" style={{ animationDelay: '800ms', animationFillMode: 'both' }}>
                                 <h4 className="text-foreground flex items-center gap-2 text-xl font-bold">
@@ -194,48 +219,6 @@ export function MentorProfile() {
                                     ))}
                                 </div>
                             </div>
-                            {/* <div className="from-primary/10 via-primary/5 to-primary/10 border-primary/20 rounded-2xl border bg-gradient-to-r p-6 backdrop-blur-sm">
-                                <h5 className="text-foreground mb-4 font-bold">Mengapa Memilih Yuven?</h5>
-                                <div className="text-muted-foreground space-y-3 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>13+ tahun praktisi jualan online</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>Tersertifikasi BNSP Social Media Marketing</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>Secara Aktif Membuat Konten Dalam Channel “Yuven Lie"</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <CheckCircle className="text-primary h-4 w-4 shrink-0" />
-                                        <span>Pendampingan personal melalui chat</span>
-                                    </div>
-                                </div>
-                            </div> */}
-                        </div>
-
-                        <div className="from-primary/10 border-primary/20 space-y-6 rounded-2xl border bg-gradient-to-br p-8 backdrop-blur-sm">
-                            <h4 className="text-foreground flex items-center gap-3 text-2xl font-bold">
-                                <MessageCircle className="text-primary h-6 w-6" />
-                                Pendampingan Personal Selama 70 Hari
-                            </h4>
-                            <p className="text-muted-foreground text-lg leading-relaxed">
-                                Kak Tsania mengoreksi 10 tugas praktik dan menjadi tempat bertanya lewat chat 1-on-1 kapan pun peserta mentok.
-                            </p>
-                            <ul className="text-muted-foreground space-y-4">
-                                <li className="flex gap-3">
-                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Grup WhatsApp maksimal 10 orang.
-                                </li>
-                                <li className="flex gap-3">
-                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Koreksi tugas langsung, bukan belajar sendirian.
-                                </li>
-                                <li className="flex gap-3">
-                                    <CheckCircle className="text-primary mt-0.5 h-5 w-5 shrink-0" /> Tanya-jawab lewat chat tanpa biaya tambahan.
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

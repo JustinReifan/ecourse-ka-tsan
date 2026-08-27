@@ -36,10 +36,10 @@ export function PainPointSection() {
                 {/* Header Section */}
                 <div className="mb-4 sm:mb-6 text-center lg:mb-16">
                     <h2 className="text-foreground mb-3 text-2xl font-bold lg:text-6xl">
-                        Kenapa Kamu Masih <span className="text-primary text-4xl lg:text-6xl">KETINGGALAN?</span>
+                        Kenapa Bunda/Kakak Masih <span className="text-primary text-4xl lg:text-6xl">KETINGGALAN?</span>
                     </h2>
                     <p className="text-muted-foreground mx-auto max-w-3xl text-sm sm:text-lg md:text-xl px-2">
-                        Orang lain sudah mulai cuan dari HP-nya. Sementara kamu masih di titik yang sama, bingung, takut, dan belum mulai.
+                        Udah capek kan ngeliat orang lain gampang banget cuan dari HP? Sementara Bunda masih pusing muter otak mikirin cara nambah pemasukan keluarga...
                     </p>
                 </div>
 
@@ -96,14 +96,14 @@ export function PainPointSection() {
                             </div>
 
                             <div className="pt-6 sm:pt-8 text-center md:text-start">
-                                <h3 className="text-foreground text-lg sm:text-xl font-medium md:text-2xl leading-snug">Kalau dibiarkan, 5 tahun lagi kamu <br className="hidden sm:block"/> masih di titik yang sama.</h3>
-                                <p className="text-muted-foreground mt-2 text-sm sm:text-lg">Dan semakin lama menunda, semakin ketat persaingannya.</p>
+                                <h3 className="text-foreground text-lg sm:text-xl font-medium md:text-2xl leading-snug">Kalau dibiarkan, 5 tahun lagi Bunda <br className="hidden sm:block"/> bakal tetep pusing sama masalah yang sama.</h3>
+                                <p className="text-muted-foreground mt-2 text-sm sm:text-lg">Makin lama ditunda, makin susah nanti ngejarnya lho, Bund.</p>
                             </div>
                         </div>
                         {/* Unique Mechanism Bridge */}
                         <div className="pt-8 text-center md:py-8 lg:py-10">
-                            <h3 className="text-primary text-2xl font-bold md:text-3xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Membuatmu Cuan?</h3>
-                            <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Karena belajar sendiri tanpa koreksi = tidak tahu apakah sudah di jalur yang benar.</p>
+                            <h3 className="text-primary text-2xl font-bold md:text-3xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
+                            <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Karena belajar sendirian tanpa dikoreksi = nggak tau apakah udah bener atau masih salah jalan.</p>
                             
                             <div className="from-primary/10 border-primary/20 mt-6 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-5 sm:p-8 text-left backdrop-blur-sm shadow-md">
                                 <h4 className="text-foreground mb-4 sm:mb-5 text-lg sm:text-xl font-bold flex items-center gap-2">
@@ -112,7 +112,7 @@ export function PainPointSection() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                         </svg>
                                     </span>
-                                    Inilah yang bikin Gumpreneur BEDA:
+                                    Inilah yang bikin Gumpreneur BEDA banget:
                                 </h4>
                                 <ul className="text-muted-foreground space-y-3 sm:space-y-4">
                                     <li className="flex items-start gap-3 sm:gap-4">
@@ -121,7 +121,7 @@ export function PainPointSection() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang, jadi kamu benar-benar diperhatikan.</span>
+                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang aja, jadi Bunda bakal bener-bener diperhatiin.</span>
                                     </li>
                                     <li className="flex items-start gap-3 sm:gap-4">
                                         <div className="mt-0.5 bg-emerald-500/10 p-1 rounded-full flex-shrink-0">
@@ -129,7 +129,7 @@ export function PainPointSection() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi langsung mentor</strong>, bukan cuma nonton video tanpa arah.</span>
+                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi langsung sama mentor</strong>, bukan cuma nonton video terus dibiarin bingung.</span>
                                     </li>
                                     <li className="flex items-start gap-3 sm:gap-4">
                                         <div className="mt-0.5 bg-emerald-500/10 p-1 rounded-full flex-shrink-0">
@@ -137,7 +137,7 @@ export function PainPointSection() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>Bebas tanya 1-on-1 via chat</strong>, kapan pun mentok, langsung tanya.</span>
+                                        <span className="text-sm sm:text-base leading-relaxed text-foreground/90"><strong>Bebas nanya 1-on-1 via chat</strong>, kapan aja Bunda mentok, langsung tanya aja!</span>
                                     </li>
                                 </ul>
                             </div>

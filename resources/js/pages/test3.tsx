@@ -7,6 +7,8 @@ import { MentorProfile } from '@/components/landing3/mentor-profile';
 import { PainPointSection } from '@/components/landing3/pain-point-section';
 import { PricingSection } from '@/components/landing3/pricing-section';
 import { TestimonialsSection } from '@/components/landing3/testimonials-section';
+import { TimelineSection } from '@/components/landing3/timeline-section';
+import { GoalsSection } from '@/components/landing3/goals-section';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { useDwellTime } from '@/hooks/use-dwell-time';
 import { useScrollTracking } from '@/hooks/use-scroll-tracking';
@@ -15,7 +17,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { CheckCircle2, Heart, MessageCircle, Rocket, Star, Users } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface WelcomeProps {
     landingBadge: string;
@@ -44,6 +46,26 @@ export default function Test3Hero({ coursePrice }: Props) {
     useEffect(() => {
         trackVisit();
     }, [trackVisit]);
+
+    // Sticky CTA visibility: hidden while hero is visible
+    const heroRef = useRef<HTMLDivElement>(null);
+    const [showStickyCta, setShowStickyCta] = useState(false);
+
+    useEffect(() => {
+        const heroEl = heroRef.current;
+        if (!heroEl) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                // Show sticky CTA only when hero is NOT intersecting (scrolled past)
+                setShowStickyCta(!entry.isIntersecting);
+            },
+            { threshold: 0 },
+        );
+
+        observer.observe(heroEl);
+        return () => observer.disconnect();
+    }, []);
 
     // Track CTA button click
     const handleCtaClick = () => {
@@ -98,7 +120,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </header>
 
-                <section className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
+                <section ref={heroRef} className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
                     
                     {/* Decorative Shapes based on the image */}
                     {/* Top Left yellow half circle */}
@@ -123,7 +145,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 
                                 <h1 className="text-foreground text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
                                     Sementara yang Lain Udah Mulai <br className="hidden lg:block"/>
-                                    Cuan dari HP-nya, Kamu Masih <br className="hidden lg:block"/>
+                                    Cuan dari HP-nya, Bunda Masih <br className="hidden lg:block"/>
                                     Nunggu <span className="text-primary">"Waktu yang Tepat"?</span>
                                     <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-full text-amber-500 ml-2 sm:ml-3 align-middle -mt-1">
                                         <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -136,7 +158,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 </h1>
                                 
                                 <p className="text-muted-foreground text-base sm:text-lg lg:text-xl leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
-                                    70 hari dibimbing 1-on-1 via WhatsApp. <span className="text-foreground font-semibold">10 tugas dikoreksi langsung mentor</span> dalam grup kecil maksimal 10 orang.
+                                    Siap hasilkan pendapatan dari rumah? Dapatkan pendampingan intensif 1-on-1 via WhatsApp dan koreksi tugas langsung oleh mentor dalam grup kecil.
                                 </p>
                                 
                                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5 mb-3 sm:mb-12">
@@ -243,6 +265,9 @@ export default function Test3Hero({ coursePrice }: Props) {
                 {/* Problem + Agitasi */}
                 <PainPointSection />
 
+                {/* Goals */}
+                <GoalsSection />
+
                 {/* Bridge/Mekanisme + Outcome */}
                 <LearningBenefits />
 
@@ -252,6 +277,8 @@ export default function Test3Hero({ coursePrice }: Props) {
                 {/* Mentor Profile */}
                 <MentorProfile />
 
+                <TimelineSection />
+
                 {/* Bonus */}
                 <BonusSection />
 
@@ -259,7 +286,7 @@ export default function Test3Hero({ coursePrice }: Props) {
 
                 <FaqSection />
 
-                <div className="border-primary/30 bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t p-3 backdrop-blur md:hidden">
+                <div className={`border-primary/30 bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t p-3 backdrop-blur md:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${showStickyCta ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}>
                     <CtaButton2 onClick={handleCtaClick} className="w-full" aria-label="Gabung Program Gumpreneur">
                         Gabung Sekarang — Rp399.000
                     </CtaButton2>

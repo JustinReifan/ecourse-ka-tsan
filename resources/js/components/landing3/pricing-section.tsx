@@ -2,8 +2,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { useAnalytics } from '@/hooks/use-analytics';
 import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/react';
-import { Check, Rocket, Star, Users } from 'lucide-react';
-import { useState } from 'react';
+import { Check, Rocket, Star, Users, Timer } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { CtaButton2 } from './cta-button-2';
 
 const benefits = [
@@ -87,6 +87,19 @@ function BenefitItem({ benefit, index }: BenefitItemProps) {
 export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProps) {
     const [isCardHovered, setIsCardHovered] = useState(false);
     const { trackCTA } = useAnalytics();
+    const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+                if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+                if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+                return { hours: 23, minutes: 59, seconds: 59 }; // reset
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     // Campaign price is fixed by the approved Gumpreneur product brief.
     const displayPrice = 399000;
@@ -100,31 +113,31 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
     };
 
     return (
-        <section className="relative overflow-hidden py-6 lg:py-32" id="pricing-section">
+        <section className="relative overflow-hidden py-12 lg:py-32" id="pricing-section">
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="space-y-16">
+                <div className="space-y-12 sm:space-y-16">
                     {/* Section Header */}
-                    <div className="space-y-6 text-center">
+                    <div className="space-y-4 sm:space-y-6 text-center">
                         <div className="animate-fade-in">
-                            <div className="bg-primary/10 border-primary/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm">
-                                <Star className="text-primary h-4 w-4 animate-spin" style={{ animationDuration: '3s' }} />
-                                <span className="text-primary text-sm font-medium">Investasi Terbaik</span>
+                            <div className="bg-destructive/10 border-destructive/20 text-destructive inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm animate-pulse">
+                                <Star className="h-4 w-4" />
+                                <span className="text-sm font-bold">PROMO KHUSUS HARI INI</span>
                             </div>
                         </div>
 
                         <div className="animate-fade-in space-y-4" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                            <h2 className="text-foreground text-4xl font-bold md:text-5xl lg:text-6xl">
-                                <span className="text-foreground block bg-clip-text">Pendampingan 1-on-1</span>
-                                <span className="text-primary/80 bg-clip-text">Mulai dari Rp399 Ribu</span>
+                            <h2 className="text-foreground text-3xl font-bold sm:text-5xl lg:text-6xl px-2">
+                                <span className="text-foreground block bg-clip-text mb-2">Investasi Leher ke Atas,</span>
+                                <span className="text-primary bg-clip-text">Modal Sekali Buat Cuan Berkali-kali!</span>
                             </h2>
-                            <p className="text-muted-foreground mx-auto max-w-3xl text-xl leading-relaxed">
-                                Jauh lebih murah dibanding mentoring 1-on-1 pada umumnya , karena kami percaya ilmu harus terjangkau.
+                            <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-xl leading-relaxed px-4">
+                                Khusus buat Bunda/Kakak yang beneran mau mulai, mumpung lagi <strong>DISKON GEDE-GEDEAN!</strong>
                             </p>
                         </div>
                     </div>
 
                     {/* Pricing Card */}
-                    <div className="animate-fade-in mx-auto max-w-2xl" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
+                    <div className="animate-fade-in mx-auto max-w-2xl px-2 sm:px-0" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
                         <div
                             className={cn(
                                 'relative overflow-visible rounded-3xl',
@@ -141,54 +154,88 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                             <div
                                 className={cn(
                                     'from-primary/20 via-primary/10 to-primary/20 absolute inset-0 bg-gradient-to-r',
-                                    'opacity-0 transition-opacity duration-700',
+                                    'opacity-0 transition-opacity duration-700 rounded-3xl',
                                     isCardHovered && 'animate-gradient-x opacity-100',
                                 )}
                             />
 
                             {/* Limited Badge */}
-                            <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2">
-                                <div className="bg-primary text-primary-foreground shadow-primary/40 rounded-full px-2 py-2 text-sm font-bold shadow-lg sm:px-4 lg:px-6">
-                                    <div className="flex items-center gap-2">
-                                        <Users className="h-4 w-4" />
+                            <div className="absolute -top-4 left-1/2 z-10 w-full text-center -translate-x-1/2">
+                                <div className="inline-block bg-primary text-primary-foreground shadow-primary/40 rounded-full px-3 py-1.5 sm:px-6 sm:py-2 text-xs sm:text-sm font-bold shadow-lg">
+                                    <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                                        <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                                         MAKS 10 ORANG PER GRUP
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="relative space-y-8 p-8 lg:p-12">
+                            <div className="relative space-y-6 sm:space-y-8 p-5 sm:p-8 lg:p-12 mt-4 sm:mt-0">
                                 {/* Price Display */}
-                                <div className="space-y-4 text-center">
-                                    <div className="space-y-2">
-                                        <div className="flex items-baseline justify-center gap-1">
-                                            <span className="text-primary text-2xl font-medium">Rp</span>
-                                            <span className="text-foreground text-6xl font-bold tracking-tight lg:text-7xl">{formattedPrice}</span>
-                                        </div>
-                                        <p className="text-muted-foreground text-lg">Pendampingan penuh 70 hari</p>
+                                <div className="space-y-2 sm:space-y-4 text-center">
+                                    <div className="inline-block bg-destructive/10 border border-destructive/20 text-destructive px-3 py-1 rounded-full text-[10px] sm:text-sm font-extrabold mb-1 animate-pulse">
+                                        DISKON SPESIAL HARI INI
                                     </div>
+                                    <div className="text-muted-foreground line-through text-lg sm:text-2xl font-semibold opacity-60">
+                                        Rp 1.500.000
+                                    </div>
+                                    <div className="flex items-baseline justify-center gap-1">
+                                        <span className="text-primary text-2xl sm:text-4xl font-medium">Rp</span>
+                                        <span className="text-foreground text-5xl sm:text-7xl font-bold tracking-tight">{formattedPrice}</span>
+                                    </div>
+                                    <p className="text-muted-foreground text-sm sm:text-lg">Harga coret khusus buat Bunda yang siap action!</p>
                                 </div>
 
                                 {/* Benefits Grid */}
-                                <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+                                <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 pt-2 sm:pt-4">
                                     {benefits.map((benefit, index) => (
                                         <BenefitItem key={benefit.title} benefit={benefit} index={index} />
                                     ))}
                                 </div>
 
+                                {/* Countdown Timer */}
+                                <div className="bg-destructive/5 border border-destructive/10 rounded-2xl p-4 mt-6">
+                                    <div className="flex items-center justify-center gap-2 mb-3 text-destructive font-bold text-sm sm:text-base">
+                                        <Timer className="w-4 h-4 animate-pulse" />
+                                        <span>PROMO BERAKHIR DALAM:</span>
+                                    </div>
+                                    <div className="flex justify-center gap-3 sm:gap-4">
+                                        <div className="flex flex-col items-center">
+                                            <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
+                                                {String(timeLeft.hours).padStart(2, '0')}
+                                            </div>
+                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">JAM</span>
+                                        </div>
+                                        <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
+                                        <div className="flex flex-col items-center">
+                                            <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
+                                                {String(timeLeft.minutes).padStart(2, '0')}
+                                            </div>
+                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">MENIT</span>
+                                        </div>
+                                        <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
+                                        <div className="flex flex-col items-center">
+                                            <div className="bg-background border border-destructive/20 text-destructive font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm animate-pulse">
+                                                {String(timeLeft.seconds).padStart(2, '0')}
+                                            </div>
+                                            <span className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium">DETIK</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* CTA Button */}
-                                <div className="space-y-4 text-center">
+                                <div className="space-y-4 text-center pt-2">
                                     <CtaButton2
                                         onClick={handleButton}
                                         withInstruction
                                         size="lg"
                                         className={cn(
-                                            'relative w-full overflow-hidden px-16 lg:w-auto',
+                                            'relative w-full overflow-hidden px-8 sm:px-16 lg:w-auto',
                                             'shadow-primary/40 hover:shadow-primary/60 shadow-2xl',
-                                            'animate-glow-pulse cursor-pointer',
+                                            'animate-glow-pulse cursor-pointer text-sm sm:text-lg',
                                         )}
                                     >
-                                        Gabung Sekarang
-                                        <Rocket className="ms-2 inline h-5 w-5" />
+                                        Ambil Diskon Sekarang
+                                        <Rocket className="ms-2 inline h-4 w-4 sm:h-5 sm:w-5" />
                                         <div className="bg-primary absolute top-0 right-0 h-3 w-3 animate-ping rounded-full" />
                                     </CtaButton2>
                                 </div>
