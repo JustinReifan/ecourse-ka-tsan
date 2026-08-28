@@ -25,7 +25,7 @@ const goals = [
 
 export function GoalsSection() {
     return (
-        <section className="relative overflow-hidden bg-[#f7f4ed] py-14 sm:py-20 lg:py-24">
+        <section id="goals" className="relative overflow-hidden bg-[#f7f4ed] py-14 sm:py-20 lg:py-24">
             <div className="pointer-events-none absolute top-16 -left-24 h-56 w-56 rounded-full bg-[#00BF63]/10 blur-3xl" />
             <div className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
 

@@ -16,6 +16,7 @@ const FaqSection = lazy(() => import('@/components/landing3/faq-section').then(m
 import { useAnalytics } from '@/hooks/use-analytics';
 import { useDwellTime } from '@/hooks/use-dwell-time';
 import { useScrollTracking } from '@/hooks/use-scroll-tracking';
+import { useSectionTracking } from '@/hooks/use-section-tracking';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 
@@ -39,6 +40,7 @@ export default function Test3Hero({ coursePrice }: Props) {
     // Initialize tracking hooks
     useScrollTracking();
     useDwellTime();
+    useSectionTracking();
 
     // Track page visit on mount
     useEffect(() => {
@@ -106,7 +108,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                     <Link href={route('login')} className="text-foreground hover:text-primary text-sm font-medium mr-2">
                                         Login
                                     </Link>
-                                )}                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-2.5 px-6 rounded-full transition-all text-sm sm:text-base hidden sm:block shadow-md">
+                                )}                                    <button onClick={handleCtaClick} data-cta-zone="hero_section" className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-2.5 px-6 rounded-full transition-all text-sm sm:text-base hidden sm:block shadow-md">
                                     Enroll Now
                                 </button>
                             </div>
@@ -114,7 +116,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </header>
 
-                <section ref={heroRef} className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
+                <section id="hero" ref={heroRef} className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
                     
                     {/* Decorative Shapes based on the image */}
                     {/* Top Left yellow half circle */}
@@ -147,7 +149,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                                 </p>
                                 
                                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5 mb-3 sm:mb-12">
-                                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-sm sm:text-base">
+                                    <button onClick={handleCtaClick} data-cta-zone="hero_section" className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-sm sm:text-base">
                                         GABUNG SEKARANG
                                     </button>
                                 </div>
@@ -291,7 +293,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                 </Suspense>
 
                 <div className={`border-primary/30 bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t p-3 backdrop-blur md:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${showStickyCta ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}>
-                    <CtaButton2 onClick={handleCtaClick} className="w-full" aria-label="Gabung Program Gumpreneur">
+                    <CtaButton2 onClick={handleCtaClick} data-cta-zone="sticky_mobile" className="w-full" aria-label="Gabung Program Gumpreneur">
                         Gabung Sekarang — Rp399.000
                     </CtaButton2>
                 </div>

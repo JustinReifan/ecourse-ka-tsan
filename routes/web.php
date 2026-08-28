@@ -76,14 +76,18 @@ Route::get('/payment/status', function (\Illuminate\Http\Request $request) {
 // Public polling endpoint — digunakan halaman /payment/status untuk cek status order
 Route::get('/api/payment/check/{orderId}', function (string $orderId) {
     $order = \App\Models\Order::where('order_id', $orderId)
-        ->select('order_id', 'status', 'type')
+        ->select('order_id', 'status', 'type', 'amount')
         ->first();
 
     if (!$order) {
         return response()->json(['status' => 'not_found'], 404);
     }
 
-    return response()->json(['status' => $order->status]);
+    return response()->json([
+        'status' => $order->status,
+        'amount' => (float) $order->amount,
+        'type' => $order->type,
+    ]);
 })->name('payment.check');
 
 // Auto-login route — dipanggil setelah user klik "Lanjutkan ke Member Area" di status page.

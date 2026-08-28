@@ -86,11 +86,11 @@ class MetaConversionService
         $userData = $this->buildUserDataFromParams($email, $phone, $clientIp, $clientUserAgent, $fbp, $fbc);
 
         $content = (new Content)
-            ->setProductId('panduan-23-langkah')
+            ->setProductId((string) config('services.meta.content_id', 'gumpreneur'))
             ->setQuantity(1);
 
         $customData = (new CustomData)
-            ->setContentName('Affiliate Jago Jualan Masterclass')
+            ->setContentName((string) config('services.meta.content_name', 'Gumpreneur'))
             ->setContentType('product')
             ->setValue($amount)
             ->setCurrency('IDR')
@@ -110,6 +110,44 @@ class MetaConversionService
             'amount' => $amount,
             'email' => $email ? substr($email, 0, 3) . '***' : null,
         ]);
+
+        $this->sendEvents([$event]);
+    }
+
+    public function sendInitiateCheckout(
+        string $eventId,
+        float $amount,
+        ?string $email = null,
+        ?string $phone = null,
+        ?string $clientIp = null,
+        ?string $clientUserAgent = null,
+        ?string $sourceUrl = null,
+        ?string $fbp = null,
+        ?string $fbc = null,
+    ): void {
+        if (! $this->isConfigured()) {
+            return;
+        }
+
+        $content = (new Content)
+            ->setProductId((string) config('services.meta.content_id', 'gumpreneur'))
+            ->setQuantity(1);
+
+        $event = (new Event)
+            ->setEventName('InitiateCheckout')
+            ->setEventTime(time())
+            ->setEventId($eventId)
+            ->setEventSourceUrl($sourceUrl ?? url('/register'))
+            ->setActionSource(ActionSource::WEBSITE)
+            ->setUserData($this->buildUserDataFromParams($email, $phone, $clientIp, $clientUserAgent, $fbp, $fbc))
+            ->setCustomData(
+                (new CustomData)
+                    ->setContentName((string) config('services.meta.content_name', 'Gumpreneur'))
+                    ->setContentType('product')
+                    ->setValue($amount)
+                    ->setCurrency('IDR')
+                    ->setContents([$content])
+            );
 
         $this->sendEvents([$event]);
     }
@@ -135,11 +173,11 @@ class MetaConversionService
         $userData = $this->buildUserDataFromParams($email, $phone, $clientIp, $clientUserAgent, $fbp, $fbc);
 
         $content = (new Content)
-            ->setProductId('panduan-23-langkah')
+            ->setProductId((string) config('services.meta.content_id', 'gumpreneur'))
             ->setQuantity(1);
 
         $customData = (new CustomData)
-            ->setContentName('Affiliate Jago Jualan Masterclass')
+            ->setContentName((string) config('services.meta.content_name', 'Gumpreneur'))
             ->setContentType('product')
             ->setValue($amount)
             ->setCurrency('IDR')

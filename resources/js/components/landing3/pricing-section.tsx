@@ -226,6 +226,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                 <div className="space-y-4 text-center pt-2">
                                     <CtaButton2
                                         onClick={handleButton}
+                                        data-cta-zone="pricing_submit"
                                         withInstruction
                                         size="lg"
                                         className={cn(

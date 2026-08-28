@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AdminLayout from '@/layouts/admin-layout';
-import { CtaData, DeviceData, HeatmapData, ReaderData } from '@/types/analytics';
+import { CtaData, DeviceData, HeatmapData, ReaderData, SectionHeatmapData } from '@/types/analytics';
 import axios from 'axios';
 
 import { DateRangePicker } from '@/components/date-range-picker';
@@ -92,6 +92,7 @@ interface Props {
     cta: CtaData[];
     readers: ReaderData[];
     heatmap: HeatmapData[];
+    sectionHeatmap: SectionHeatmapData[];
     availableSources: string[];
     filters: Filters;
 }
@@ -121,7 +122,7 @@ const formatDuration = (seconds: number) => {
 const transformFunnelData = (funnel: FunnelItem[], selectedSources: string[]) => {
     if (funnel.length === 0 || selectedSources.length === 0) return [];
 
-    const stages = ['Visits', 'Engaged', 'Intent', 'Leads', 'Sales'];
+    const stages = ['Visits', 'Engaged', 'Intent', 'Form Start', 'Leads', 'Sales'];
 
     return stages.map((stage) => {
         const dataPoint: Record<string, string | number> = { name: stage };
@@ -142,7 +143,7 @@ const CHART_COLORS = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)', 'var
 
 // ==================== MAIN COMPONENT ====================
 
-export default function LabsIndex({ matrix, funnel, quality, devices, cta, readers, heatmap, availableSources, filters }: Props) {
+export default function LabsIndex({ matrix, funnel, quality, devices, cta, readers, heatmap, sectionHeatmap, availableSources, filters }: Props) {
     // State
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [sortColumn, setSortColumn] = useState<keyof MatrixItem>('rpv');
@@ -739,7 +740,7 @@ export default function LabsIndex({ matrix, funnel, quality, devices, cta, reade
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {['Visits', 'Engaged', 'Intent', 'Leads', 'Sales'].map((stage) => (
+                                                {['Visits', 'Engaged', 'Intent', 'Form Start', 'Leads', 'Sales'].map((stage) => (
                                                     <tr key={stage} className="border-border border-b">
                                                         <td className="text-foreground p-3 font-medium">{stage}</td>
                                                         {selectedFunnelSources.map((source) => {
@@ -773,7 +774,7 @@ export default function LabsIndex({ matrix, funnel, quality, devices, cta, reade
 
                         {/* ==================== SECTION E: AUDIENCE SEGMENTATION ==================== */}
                         {((readers && readers.length > 0) || (heatmap && heatmap.length > 0)) && (
-                            <AudienceSegmentation readers={readers || []} heatmap={heatmap || []} />
+                            <AudienceSegmentation readers={readers || []} heatmap={heatmap || []} sectionHeatmap={sectionHeatmap || []} />
                         )}
 
                         {/* ==================== SECTION F: QUALITY ANALYSIS ==================== */}

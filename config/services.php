@@ -39,6 +39,9 @@ return [
         'pixel_id' => env('META_PIXEL_ID'),
         'access_token' => env('META_ACCESS_TOKEN'),
         'test_event_code' => env('META_TEST_EVENT_CODE'),
+        'course_price' => env('VITE_COURSE_PRICE', 399000),
+        'content_id' => env('META_CONTENT_ID', 'gumpreneur'),
+        'content_name' => env('META_CONTENT_NAME', 'Gumpreneur'),
     ],
 
 ];

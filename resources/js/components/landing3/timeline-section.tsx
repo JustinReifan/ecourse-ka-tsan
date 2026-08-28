@@ -82,7 +82,7 @@ export function TimelineSection() {
     };
 
     return (
-        <section className="py-12 sm:py-24 bg-[#f9f7f4] overflow-hidden">
+        <section id="timeline" className="py-12 sm:py-24 bg-[#f9f7f4] overflow-hidden">
             <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-12 sm:mb-16">
@@ -143,7 +143,7 @@ export function TimelineSection() {
                     <p className="text-[#bbaea0] text-xs sm:text-sm font-medium mb-3 flex items-center justify-center gap-2">
                         <ArrowDown className="w-3 h-3" /> Klik tombol ini untuk gabung <ArrowDown className="w-3 h-3" />
                     </p>
-                    <button onClick={handleCtaClick} className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all text-sm sm:text-base">
+                <button onClick={handleCtaClick} data-cta-zone="timeline_section" className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-8 sm:px-12 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all text-sm sm:text-base">
                         Gabung Sekarang
                     </button>
                 </div>

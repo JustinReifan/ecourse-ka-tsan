@@ -14,9 +14,9 @@ const PERSONA_COLORS: Record<string, string> = {
 
 const DEPTH_COLORS = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)', 'var(--chart-4)'];
 
-type TabType = 'personas' | 'heatmap';
+type TabType = 'personas' | 'heatmap' | 'sections';
 
-export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationProps) {
+export function AudienceSegmentation({ readers, heatmap, sectionHeatmap }: AudienceSegmentationProps) {
     const [activeTab, setActiveTab] = useState<TabType>('personas');
 
     // Transform readers data for stacked bar chart
@@ -51,7 +51,7 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
     const personaNames = readers[0]?.personas.map((p) => p.name) ?? [];
     const landingSources = heatmap.map((h) => h.landing_source);
 
-    const hasData = readers.length > 0 || heatmap.length > 0;
+    const hasData = readers.length > 0 || heatmap.length > 0 || sectionHeatmap.length > 0;
 
     if (!hasData) {
         return (
@@ -95,6 +95,15 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                         >
                             <Eye className="h-4 w-4" />
                             Scroll Heatmap
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('sections')}
+                            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition ${
+                                activeTab === 'sections' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                            }`}
+                        >
+                            <Eye className="h-4 w-4" />
+                            Section Heatmap
                         </button>
                     </div>
                 </CardHeader>
@@ -294,12 +303,40 @@ export function AudienceSegmentation({ readers, heatmap }: AudienceSegmentationP
                         </div>
                     )}
 
+                    {activeTab === 'sections' && sectionHeatmap.length > 0 && (
+                        <div className="space-y-4">
+                            <div>
+                                <CardTitle className="text-base">Section Reach</CardTitle>
+                                <CardDescription>Unique sessions that viewed at least 25% of each section</CardDescription>
+                            </div>
+                            {sectionHeatmap.map((source) => (
+                                <div key={source.landing_source} className="space-y-3 rounded-lg border p-4">
+                                    <div className="font-mono text-sm font-medium">{source.landing_source}</div>
+                                    {source.sections.map((section) => (
+                                        <div key={section.section_id} className="space-y-1">
+                                            <div className="flex justify-between text-sm">
+                                                <span>{section.label}</span>
+                                                <span className="text-muted-foreground">{section.sessions} ({section.percentage.toFixed(1)}%)</span>
+                                            </div>
+                                            <div className="bg-muted h-2 overflow-hidden rounded-full">
+                                                <div className="bg-primary h-full" style={{ width: `${Math.min(section.percentage, 100)}%` }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
                     {activeTab === 'personas' && readers.length === 0 && (
                         <p className="text-muted-foreground py-8 text-center">No persona data available</p>
                     )}
 
                     {activeTab === 'heatmap' && heatmap.length === 0 && (
                         <p className="text-muted-foreground py-8 text-center">No heatmap data available</p>
+                    )}
+                    {activeTab === 'sections' && sectionHeatmap.length === 0 && (
+                        <p className="text-muted-foreground py-8 text-center">No section heatmap data available</p>
                     )}
                 </CardContent>
             </Card>

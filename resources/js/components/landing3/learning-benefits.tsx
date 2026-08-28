@@ -46,7 +46,7 @@ export function LearningBenefits() {
     };
 
     return (
-        <section className="relative py-6 lg:py-32">
+        <section id="benefits" className="relative py-6 lg:py-32">
             {/* Background Effect */}
             <div className="via-primary/5 pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />
 
@@ -97,7 +97,7 @@ export function LearningBenefits() {
 
                 {/* 3. CTA SECTION */}
                 <div className="flex justify-center md:mt-16">
-                    <CtaButton2 size="lg" withInstruction onClick={handleCtaClick}>
+                    <CtaButton2 size="lg" withInstruction onClick={handleCtaClick} data-cta-zone="benefits_section">
                         Gabung Sekarang
                     </CtaButton2>
                 </div>

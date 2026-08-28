@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AbTestingService
 {
+    private const FORM_START_EVENT_TYPES = ['form_start', 'initiate_checkout'];
+
+    private const FUNNEL_ACTION_EVENT_TYPES = ['cta_click', 'form_start', 'initiate_checkout', 'conversion', 'payment'];
     /**
      * Get Performance Matrix - The Leaderboard
      * Groups data by landing_source and calculates core metrics
@@ -29,7 +32,7 @@ class AbTestingService
 
             // Get unique sessions for this landing source
             $visitSessions = $this->getSessionsByEventAndSource('visit', $landingSource, $startDate, $endDate, $sourceFilter);
-            $engagementSessions = $this->getSessionsByEventAndSource('engagement', $landingSource, $startDate, $endDate, $sourceFilter);
+            $engagementSessions = $this->getEngagedSessions($landingSource, $startDate, $endDate, $sourceFilter);
             $conversionSessions = $this->getSessionsByEventAndSource('conversion', $landingSource, $startDate, $endDate, $sourceFilter);
             $paymentSessions = $this->getSessionsByEventAndSource('payment', $landingSource, $startDate, $endDate, $sourceFilter);
             $ctaClickSessions = $this->getSessionsByEventAndSource('cta_click', $landingSource, $startDate, $endDate, $sourceFilter);
@@ -43,7 +46,7 @@ class AbTestingService
             // Calculate revenue from payment events
             $revenue = $this->getRevenueBySource($landingSource, $startDate, $endDate, $sourceFilter);
 
-            // Bounce Rate: Sessions with visit but NO engagement
+            // Engaged = dwell >= 15s OR scroll >= 25% OR funnel action.
             $bounced = $visitSessions->diff($engagementSessions)->count();
             $bounceRate = $this->safeDivide($bounced, $visits) * 100;
 
@@ -107,11 +110,15 @@ class AbTestingService
             $intentSessions = $this->getSessionsByEventAndSource('cta_click', $landingSource, $startDate, $endDate, $sourceFilter);
             $intent = $intentSessions->count();
 
-            // 4. Leads: Sessions with conversion
+            // 4. Form Start: first interaction with checkout form
+            $formStartSessions = $this->getSessionsByEventTypesAndSource(self::FORM_START_EVENT_TYPES, $landingSource, $startDate, $endDate, $sourceFilter);
+            $formStarts = $formStartSessions->count();
+
+            // 5. Leads: Sessions with conversion
             $leadSessions = $this->getSessionsByEventAndSource('conversion', $landingSource, $startDate, $endDate, $sourceFilter);
             $leads = $leadSessions->count();
 
-            // 5. Sales: Sessions with payment
+            // 6. Sales: Sessions with payment
             $salesSessions = $this->getSessionsByEventAndSource('payment', $landingSource, $startDate, $endDate, $sourceFilter);
             $sales = $salesSessions->count();
 
@@ -121,6 +128,7 @@ class AbTestingService
                     ['stage' => 'Visits', 'count' => $visits, 'percentage' => 100],
                     ['stage' => 'Engaged', 'count' => $engaged, 'percentage' => round($this->safeDivide($engaged, $visits) * 100, 1)],
                     ['stage' => 'Intent', 'count' => $intent, 'percentage' => round($this->safeDivide($intent, $visits) * 100, 1)],
+                    ['stage' => 'Form Start', 'count' => $formStarts, 'percentage' => round($this->safeDivide($formStarts, $visits) * 100, 1)],
                     ['stage' => 'Leads', 'count' => $leads, 'percentage' => round($this->safeDivide($leads, $visits) * 100, 1)],
                     ['stage' => 'Sales', 'count' => $sales, 'percentage' => round($this->safeDivide($sales, $visits) * 100, 1)],
                 ],
@@ -273,8 +281,9 @@ class AbTestingService
             foreach ($allSessions as $sessionId) {
                 $scrollDepth = $scrollDepths->get($sessionId, 0);
                 $dwellTime = $dwellTimes->get($sessionId, 0);
+                $hasFunnelAction = $this->sessionHasFunnelAction($sessionId, $startDate, $endDate);
 
-                if ($scrollDepth < 25 && $dwellTime < 15) {
+                if ($scrollDepth < 25 && $dwellTime < 15 && ! $hasFunnelAction) {
                     $personas['bouncers']++;
                 } elseif ($dwellTime > 120) {
                     $personas['deep_readers']++;
@@ -370,6 +379,48 @@ class AbTestingService
         }
 
         return $heatmap;
+    }
+
+    public function getSectionHeatmap(Carbon $startDate, Carbon $endDate, ?string $sourceFilter = null): Collection
+    {
+        $labels = [
+            'hero' => 'Hero', 'problem' => 'Problem', 'goals' => 'Goals',
+            'benefits' => 'Benefits', 'testimonials' => 'Testimonials',
+            'mentor' => 'Mentor', 'timeline' => 'Timeline', 'bonus' => 'Bonus',
+            'pricing-section' => 'Pricing', 'faq' => 'FAQ',
+        ];
+
+        $query = UserAnalytic::where('event_type', 'section_view')
+            ->whereBetween('created_at', [$startDate, $endDate]);
+
+        if ($sourceFilter && $sourceFilter !== 'all') {
+            $query->where('referral_source', $sourceFilter);
+        }
+
+        return $query->get()
+            ->groupBy(fn (UserAnalytic $event) => $event->event_data['landing_source'] ?? 'unknown')
+            ->reject(fn (Collection $events, string $source) => $source === 'unknown')
+            ->map(function (Collection $events, string $source) use ($labels) {
+                $sessionIds = $events->pluck('session_id')->unique();
+                $totalVisits = UserAnalytic::where('event_type', 'visit')
+                    ->whereIn('session_id', $sessionIds)->distinct()->count('session_id');
+
+                $sections = $events
+                    ->groupBy(fn (UserAnalytic $event) => $event->event_data['section_id'] ?? 'unknown')
+                    ->reject(fn (Collection $sectionEvents, string $sectionId) => $sectionId === 'unknown')
+                    ->map(function (Collection $sectionEvents, string $sectionId) use ($labels, $totalVisits) {
+                        $sessions = $sectionEvents->pluck('session_id')->unique()->count();
+
+                        return [
+                            'section_id' => $sectionId,
+                            'label' => $labels[$sectionId] ?? ucfirst(str_replace(['-', '_'], ' ', $sectionId)),
+                            'sessions' => $sessions,
+                            'percentage' => round($this->safeDivide($sessions, $totalVisits) * 100, 1),
+                        ];
+                    })->values();
+
+                return ['landing_source' => $source, 'total_visits' => $totalVisits, 'sections' => $sections];
+            })->values();
     }
 
     /**
@@ -528,16 +579,35 @@ class AbTestingService
         return false;
     }
 
-    /**
-     * Get engaged sessions (dwell time > 15s)
-     */
+    /** Engaged = dwell >= 15s OR scroll >= 25% OR funnel action. */
     private function getEngagedSessions(string $landingSource, Carbon $startDate, Carbon $endDate, ?string $sourceFilter = null): Collection
     {
-        $query = UserAnalytic::where('event_type', 'engagement')
-            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) > 10000");
-        $query = $this->applyFilters($query, $landingSource, $startDate, $endDate, $sourceFilter);
+        $dwell = UserAnalytic::where('event_type', 'engagement')
+            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) >= 15000");
+        $scroll = UserAnalytic::where('event_type', 'scroll')
+            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.depth') AS UNSIGNED) >= 25");
+        $actions = UserAnalytic::whereIn('event_type', self::FUNNEL_ACTION_EVENT_TYPES);
 
-        return $query->distinct()->pluck('session_id');
+        return $this->applyFilters($dwell, $landingSource, $startDate, $endDate, $sourceFilter)->pluck('session_id')
+            ->merge($this->applyFilters($scroll, $landingSource, $startDate, $endDate, $sourceFilter)->pluck('session_id'))
+            ->merge($this->applyFilters($actions, $landingSource, $startDate, $endDate, $sourceFilter)->pluck('session_id'))
+            ->unique()->values();
+    }
+
+    private function getSessionsByEventTypesAndSource(array $eventTypes, string $landingSource, Carbon $startDate, Carbon $endDate, ?string $sourceFilter = null): Collection
+    {
+        $query = UserAnalytic::whereIn('event_type', $eventTypes);
+
+        return $this->applyFilters($query, $landingSource, $startDate, $endDate, $sourceFilter)
+            ->distinct()->pluck('session_id');
+    }
+
+    private function sessionHasFunnelAction(string $sessionId, Carbon $startDate, Carbon $endDate): bool
+    {
+        return UserAnalytic::where('session_id', $sessionId)
+            ->whereIn('event_type', self::FUNNEL_ACTION_EVENT_TYPES)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->exists();
     }
 
     /**

@@ -77,6 +77,7 @@ class RegisteredUserController extends Controller
             'voucher_code' => 'nullable|string|max:50',
             'discount_amount' => 'nullable|numeric|min:0',
             'landing_source' => 'nullable|string|max:255',
+            'meta_event_id' => 'nullable|string|max:255',
         ]);
 
         $gatewayDriver = $request->input('gateway');
@@ -146,6 +147,7 @@ class RegisteredUserController extends Controller
                 'product_id' => $product ? $product->id : null,
                 'session_id' => request()->session()->getId(),
                 'landing_source' => $request->landing_source,
+                'meta_event_id' => $request->meta_event_id,
                 '_fbp' => $request->cookie('_fbp'),
                 '_fbc' => $request->cookie('_fbc'),
             ],
@@ -189,14 +191,12 @@ class RegisteredUserController extends Controller
                 Log::error('Analytics Conversion Tracking Failed: ' . $e->getMessage());
             }
 
-            // 7. Kirim AddToCart event ke Meta CAPI (hanya untuk produk standard/default)
-            if ($registrationType === 'standard') {
+            // 7. Deduplicate browser InitiateCheckout with Meta CAPI.
+            if ($registrationType === 'standard' && $request->filled('meta_event_id')) {
                 try {
                     $metaService = app(MetaConversionService::class);
-                    // Event ID deterministik: retry aman, Meta auto-dedup
-                    $eventId = 'addtocart-' . $order->order_id;
-                    $metaService->sendAddToCartServer(
-                        eventId: $eventId,
+                    $metaService->sendInitiateCheckout(
+                        eventId: $request->string('meta_event_id')->toString(),
                         amount: (float) $orderAmount,
                         email: $validated['email'],
                         phone: $validated['phone'],
@@ -207,7 +207,7 @@ class RegisteredUserController extends Controller
                         fbc: $request->cookie('_fbc'),
                     );
                 } catch (\Exception $e) {
-                    Log::error('[Meta CAPI] AddToCart failed on createPaymentRequest: ' . $e->getMessage());
+                    Log::error('[Meta CAPI] InitiateCheckout failed on createPaymentRequest: ' . $e->getMessage());
                 }
             }
 
@@ -237,6 +237,7 @@ class RegisteredUserController extends Controller
                 'registration_type' => 'nullable|string|in:standard,lead_magnet,jago_canva',
                 'voucher_code' => 'nullable|string|max:50',
                 'landing_source' => 'nullable|string|max:255',
+                'meta_event_id' => 'nullable|string|max:255',
             ]);
 
             $registrationType = $this->normalizeRegistrationType($request->input('registration_type', 'standard'));
@@ -290,6 +291,7 @@ class RegisteredUserController extends Controller
                     'product_id' => $product ? $product->id : null,
                     'session_id' => request()->session()->getId(),
                     'landing_source' => $request->landing_source,
+                    'meta_event_id' => $request->meta_event_id,
                     '_fbp' => $request->cookie('_fbp'),
                     '_fbc' => $request->cookie('_fbc'),
                 ],
@@ -318,14 +320,11 @@ class RegisteredUserController extends Controller
                 Log::error('Analytics Conversion Tracking Failed on force register: ' . $e->getMessage());
             }
 
-            // Kirim AddToCart event ke Meta CAPI (hanya untuk produk standard/default)
-            if ($registrationType === 'standard') {
+            if ($registrationType === 'standard' && $request->filled('meta_event_id')) {
                 try {
                     $metaService = app(MetaConversionService::class);
-                    // Event ID deterministik: retry aman, Meta auto-dedup
-                    $eventId = 'addtocart-' . $order->order_id;
-                    $metaService->sendAddToCartServer(
-                        eventId: $eventId,
+                    $metaService->sendInitiateCheckout(
+                        eventId: $request->string('meta_event_id')->toString(),
                         amount: (float) 0, // free registration
                         email: $validated['email'],
                         phone: $validated['phone'],
@@ -336,7 +335,7 @@ class RegisteredUserController extends Controller
                         fbc: $request->cookie('_fbc'),
                     );
                 } catch (\Exception $e) {
-                    Log::error('[Meta CAPI] AddToCart failed on forceRegister: ' . $e->getMessage());
+                    Log::error('[Meta CAPI] InitiateCheckout failed on forceRegister: ' . $e->getMessage());
                 }
             }
 

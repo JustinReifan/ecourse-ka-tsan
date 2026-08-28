@@ -53,6 +53,7 @@ export function IndividualBonusSection({ bonus, index }: IndividualBonusSectionP
 
     return (
         <section
+            id={`bonus-${bonus.id}`}
             ref={sectionRef}
             className={`relative overflow-hidden py-20 transition-all duration-1000 lg:py-32 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
@@ -159,7 +160,7 @@ export function IndividualBonusSection({ bonus, index }: IndividualBonusSectionP
 
                         {/* CTA Button */}
                         <div className="pt-6">
-                            <button onClick={handleCtaClick}>
+                <button onClick={handleCtaClick} data-cta-zone={`individual_bonus_${bonus.id}`}>
                                 <CtaButton variant="primary" size="lg" className="group transform transition-all duration-300 hover:scale-105">
                                     <span className="relative z-10">Gabung Sekarang</span>
 

@@ -47,7 +47,7 @@ class LabsController extends Controller
 
         // Generate cache key including source filter
         $sourceKey = $sourceFilter ?? 'all';
-        $cacheKey = "ab_testing_{$startDate->format('Y-m-d')}_{$endDate->format('Y-m-d')}_{$sourceKey}";
+        $cacheKey = "ab_testing_v2_{$startDate->format('Y-m-d')}_{$endDate->format('Y-m-d')}_{$sourceKey}";
         $cacheDuration = 15 * 60; // 15 minutes in seconds
 
         // Fetch data with caching
@@ -60,6 +60,7 @@ class LabsController extends Controller
                 'cta' => $this->abTestingService->getCtaPerformance($startDate, $endDate, $sourceFilter),
                 'readers' => $this->abTestingService->getReaderSegmentation($startDate, $endDate, $sourceFilter),
                 'heatmap' => $this->abTestingService->getScrollHeatmap($startDate, $endDate, $sourceFilter),
+                'section_heatmap' => $this->abTestingService->getSectionHeatmap($startDate, $endDate, $sourceFilter),
             ];
         });
 
@@ -76,6 +77,7 @@ class LabsController extends Controller
                 'cta' => $data['cta'],
                 'readers' => $data['readers'],
                 'heatmap' => $data['heatmap'],
+                'section_heatmap' => $data['section_heatmap'],
                 'available_sources' => $availableSources,
                 'meta' => [
                     'start_date' => $startDate->toIso8601String(),
@@ -96,6 +98,7 @@ class LabsController extends Controller
             'cta' => $data['cta'],
             'readers' => $data['readers'],
             'heatmap' => $data['heatmap'],
+            'sectionHeatmap' => $data['section_heatmap'],
             'availableSources' => $availableSources,
             'filters' => [
                 'start_date' => $startDate->format('Y-m-d'),
@@ -124,7 +127,7 @@ class LabsController extends Controller
         }
 
         $sourceKey = $sourceFilter ?? 'all';
-        $cacheKey = "ab_testing_{$startDate->format('Y-m-d')}_{$endDate->format('Y-m-d')}_{$sourceKey}";
+        $cacheKey = "ab_testing_v2_{$startDate->format('Y-m-d')}_{$endDate->format('Y-m-d')}_{$sourceKey}";
 
         Cache::forget($cacheKey);
 

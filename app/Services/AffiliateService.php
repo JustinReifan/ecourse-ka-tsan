@@ -106,7 +106,7 @@ class AffiliateService
     /**
      * Get last valid click for session within attribution window
      */
-    public function getLastValidClickForSession(Request $request, int $windowDays = null): ?AffiliateClick
+    public function getLastValidClickForSession(Request $request, ?int $windowDays = null): ?AffiliateClick
     {
         $windowDays = $windowDays ?? config('affiliate.attribution_window_days', 30);
         $cookieId = $request->cookie(config('affiliate.cookie_name'));
@@ -243,10 +243,9 @@ class AffiliateService
                 ]),
             ]);
 
-            // auto approve
-            $this->approveCommission($conversion->id);
-
-            // Update affiliate pending balance
+            // Record the commission as pending before approval moves it to the
+            // available balance. Approving first would create a negative pending
+            // balance and then leave an approved commission pending again.
             $affiliate->increment('pending_balance', $commissionAmount);
             $affiliate->refresh();
 
@@ -263,6 +262,10 @@ class AffiliateService
 
             // Mark click as converted
             $click->markConverted();
+
+            // Current business rule: commissions are approved immediately.
+            $this->approveCommission($conversion->id);
+            $conversion->refresh();
 
             // Check and award milestone bonuses
             $this->checkAndAwardMilestones($affiliate);

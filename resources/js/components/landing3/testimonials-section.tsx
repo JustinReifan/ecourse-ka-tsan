@@ -102,7 +102,7 @@ export function TestimonialsSection() {
     };
 
     return (
-        <section className="relative py-6 lg:py-32">
+        <section id="testimonials" className="relative py-6 lg:py-32">
             <div className="via-primary/5 absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />
 
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -185,6 +185,7 @@ export function TestimonialsSection() {
                 <div className="text-center">
                     <CtaButton2
                         onClick={handleCtaClick}
+                        data-cta-zone="testimonial_section"
                         size="lg"
                         withInstruction
                         className="group transform text-center transition-all duration-300 hover:scale-105"

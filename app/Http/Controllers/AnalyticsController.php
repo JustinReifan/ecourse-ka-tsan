@@ -34,16 +34,28 @@ class AnalyticsController extends Controller
 
     public function track(Request $request, MetaConversionService $metaService)
     {
-        // Debug request
-        Log::info('Analytics Request:', $request->all());
+        $validated = $request->validate([
+            'event_type' => 'required|in:visit,scroll,engagement,cta_click,form_start,conversion,payment,section_view',
+            'event_data' => 'nullable|array',
+            'event_data.event_id' => 'nullable|string|max:255',
+            'event_data.landing_source' => 'nullable|string|max:255',
+            'event_data.section_id' => 'nullable|string|max:100',
+            'event_data.location' => 'nullable|string|max:100',
+            'referral_source' => 'nullable|string|max:2048',
+            'utm_source' => 'nullable|string|max:255',
+            'utm_medium' => 'nullable|string|max:255',
+            'utm_campaign' => 'nullable|string|max:255',
+            'utm_content' => 'nullable|string|max:255',
+            'utm_term' => 'nullable|string|max:255',
+        ]);
 
         $sessionId = $request->session()->getId();
         $ipHash = hash('sha256', $request->ip() . config('app.key'));
 
         UserAnalytic::create([
             'session_id' => $sessionId,
-            'event_type' => $request->input('event_type'),
-            'event_data' => $request->input('event_data') ?? [],
+            'event_type' => $validated['event_type'],
+            'event_data' => $validated['event_data'] ?? [],
             'referral_source' => $request->input('referral_source'),
             'utm_source' => $request->input('utm_source'),
             'utm_medium' => $request->input('utm_medium'),
@@ -57,12 +69,22 @@ class AnalyticsController extends Controller
         ]);
 
         // Send server-side events to Meta Conversions API
-        $eventId = $request->input('event_data.event_id');
-        $eventType = $request->input('event_type');
+        $eventId = data_get($validated, 'event_data.event_id');
+        $eventType = $validated['event_type'];
 
         if ($eventId) {
             if ($eventType === 'visit') {
                 $metaService->sendPageView($request, $eventId);
+            } elseif ($eventType === 'form_start') {
+                $metaService->sendAddToCartServer(
+                    eventId: $eventId,
+                    amount: (float) config('services.meta.course_price', 399000),
+                    clientIp: $request->ip(),
+                    clientUserAgent: $request->userAgent(),
+                    sourceUrl: $request->header('Referer'),
+                    fbp: data_get($validated, 'event_data._fbp') ?? $request->cookie('_fbp'),
+                    fbc: data_get($validated, 'event_data._fbc') ?? $request->cookie('_fbc'),
+                );
             }
         }
 

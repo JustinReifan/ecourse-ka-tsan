@@ -128,7 +128,7 @@ export function FaqSection() {
     };
 
     return (
-        <section className="border-border/50 relative border-none py-8 lg:py-32">
+        <section id="faq" className="border-border/50 relative border-none py-8 lg:py-32">
             {/* Background Effects */}
             <div className="absolute inset-0">
                 <div className="via-primary/5 absolute inset-0 bg-gradient-to-b from-transparent to-transparent" />
@@ -173,6 +173,7 @@ export function FaqSection() {
                                 </div>
                                 <button
                                     onClick={handleCtaClick}
+                                    data-cta-zone="faq_section"
                                     className="bg-primary/10 hover:bg-primary/20 text-primary border-primary/30 hover:border-primary/50 w-full rounded-xl border px-4 py-3 font-medium transition-all duration-300"
                                 >
                                     Gabung Sekarang

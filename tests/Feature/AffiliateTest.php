@@ -6,7 +6,6 @@ use App\Models\AffiliateClick;
 use App\Models\AffiliateConversion;
 use App\Models\Order;
 use App\Services\AffiliateService;
-use Illuminate\Support\Facades\Cookie;
 
 test('affiliate click is captured and cookie is set', function () {
     $affiliate = Affiliate::factory()->create([
@@ -29,6 +28,7 @@ test('conversion is awarded to last valid click', function () {
         'user_id' => $buyer->id,
         'amount' => 1000000,
         'status' => 'completed',
+        'meta' => ['affiliate_click_id' => null],
     ]);
 
     // Create a click
@@ -37,11 +37,7 @@ test('conversion is awarded to last valid click', function () {
         'cookie_id' => 'test-cookie-123',
         'created_at' => now()->subDays(5),
     ]);
-
-    // Mock cookie
-    Cookie::shouldReceive('get')
-        ->with(config('affiliate.cookie_name'))
-        ->andReturn('test-cookie-123');
+    $order->update(['meta' => ['affiliate_click_id' => $click->id]]);
 
     $service = app(AffiliateService::class);
     $conversion = $service->awardConversion($order, $buyer, 1000000);
@@ -49,11 +45,12 @@ test('conversion is awarded to last valid click', function () {
     expect($conversion)->not->toBeNull()
         ->and($conversion->affiliate_id)->toBe($affiliate->id)
         ->and($conversion->order_id)->toBe('ORDER123')
-        ->and($conversion->commission_amount)->toBe(100000.0) // 10% of 1M
-        ->and($conversion->status)->toBe('pending');
+        ->and((float) $conversion->commission_amount)->toBe(100000.0) // 10% of 1M
+        ->and($conversion->status)->toBe('approved');
 
     $affiliate->refresh();
-    expect($affiliate->pending_balance)->toBe(100000.0);
+    expect((float) $affiliate->pending_balance)->toBe(0.0)
+        ->and((float) $affiliate->balance)->toBe(100000.0);
 });
 
 test('self-referral is blocked', function () {
@@ -67,16 +64,14 @@ test('self-referral is blocked', function () {
         'order_id' => 'ORDER124',
         'user_id' => $user->id,
         'amount' => 1000000,
+        'meta' => ['affiliate_click_id' => null],
     ]);
 
     $click = AffiliateClick::factory()->create([
         'affiliate_id' => $affiliate->id,
         'cookie_id' => 'test-cookie-124',
     ]);
-
-    Cookie::shouldReceive('get')
-        ->with(config('affiliate.cookie_name'))
-        ->andReturn('test-cookie-124');
+    $order->update(['meta' => ['affiliate_click_id' => $click->id]]);
 
     $service = app(AffiliateService::class);
     $conversion = $service->awardConversion($order, $user, 1000000);
@@ -92,16 +87,14 @@ test('duplicate conversion is prevented', function () {
         'order_id' => 'ORDER125',
         'user_id' => $buyer->id,
         'amount' => 1000000,
+        'meta' => ['affiliate_click_id' => null],
     ]);
 
     $click = AffiliateClick::factory()->create([
         'affiliate_id' => $affiliate->id,
         'cookie_id' => 'test-cookie-125',
     ]);
-
-    Cookie::shouldReceive('get')
-        ->with(config('affiliate.cookie_name'))
-        ->andReturn('test-cookie-125');
+    $order->update(['meta' => ['affiliate_click_id' => $click->id]]);
 
     $service = app(AffiliateService::class);
     
@@ -136,8 +129,8 @@ test('commission is approved and moved to available balance', function () {
     $affiliate->refresh();
     $conversion->refresh();
 
-    expect($affiliate->pending_balance)->toBe(0.0)
-        ->and($affiliate->balance)->toBe(100000.0)
+    expect((float) $affiliate->pending_balance)->toBe(0.0)
+        ->and((float) $affiliate->balance)->toBe(100000.0)
         ->and($conversion->status)->toBe('approved');
 });
 
@@ -176,9 +169,9 @@ test('valid payout request is created', function () {
     ]);
 
     expect($payout)->not->toBeNull()
-        ->and($payout->amount)->toBe(200000.0)
+        ->and((float) $payout->amount)->toBe(200000.0)
         ->and($payout->status)->toBe('requested');
 
     $affiliate->refresh();
-    expect($affiliate->balance)->toBe(300000.0);
+    expect((float) $affiliate->balance)->toBe(300000.0);
 });

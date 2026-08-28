@@ -86,7 +86,7 @@
                 s.parentNode.insertBefore(t, s)
             }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1991594924771887');
+            fbq('init', @json(config('services.meta.pixel_id')));
 
             window.__META_PAGE_VIEW_EVENT_ID = crypto.randomUUID ? crypto.randomUUID() :
                 Date.now() + '-' + Math.random().toString(36).substring(2, 11);
@@ -96,7 +96,7 @@
         });
     </script>
     <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1401992591015898&ev=PageView&noscript=1" /></noscript>
+        src="https://www.facebook.com/tr?id={{ urlencode((string) config('services.meta.pixel_id')) }}&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
 </head>
 

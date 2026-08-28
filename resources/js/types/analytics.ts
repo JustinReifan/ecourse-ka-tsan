@@ -44,6 +44,17 @@ export interface HeatmapData {
     depth_analysis: DepthAnalysis[];
 }
 
+export interface SectionHeatmapData {
+    landing_source: string;
+    total_visits: number;
+    sections: Array<{
+        section_id: string;
+        label: string;
+        sessions: number;
+        percentage: number;
+    }>;
+}
+
 // Props interfaces for components
 export interface DeviceComparisonProps {
     data: DeviceData[];
@@ -56,6 +67,7 @@ export interface CtaAnalysisProps {
 export interface AudienceSegmentationProps {
     readers: ReaderData[];
     heatmap: HeatmapData[];
+    sectionHeatmap: SectionHeatmapData[];
 }
 
 // Filter interfaces

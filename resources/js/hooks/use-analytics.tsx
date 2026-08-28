@@ -21,7 +21,7 @@ function getCookieValue(name: string): string | null {
 }
 
 interface AnalyticsEvent {
-    event_type: 'visit' | 'scroll' | 'engagement' | 'conversion' | 'payment' | 'cta_click';
+    event_type: 'visit' | 'scroll' | 'engagement' | 'cta_click' | 'form_start' | 'conversion' | 'payment' | 'section_view';
     event_data?: Record<string, any>;
     referral_source?: string;
     utm_source?: string;
@@ -172,7 +172,7 @@ export function useAnalytics() {
     );
 
     const trackCTA = useCallback(
-        (location: string, text: string, destination?: string, metaEvent?: string, eventId?: string) => {
+        (location: string, text: string, destination?: string) => {
             track({
                 event_type: 'cta_click',
                 event_data: {
@@ -181,9 +181,51 @@ export function useAnalytics() {
                     destination: destination || 'unknown',
                     page: window.location.pathname,
                     timestamp: new Date().toISOString(),
-                    meta_event: metaEvent,
+                },
+            });
+        },
+        [track],
+    );
+
+    const trackFormStart = useCallback(
+        (location: string) => {
+            const eventId = generateEventId();
+            window.fbq?.(
+                'track',
+                'AddToCart',
+                {
+                    content_name: 'Gumpreneur',
+                    content_type: 'product',
+                    content_ids: ['gumpreneur'],
+                    value: Number(coursePrice || 399000),
+                    currency: 'IDR',
+                },
+                { eventID: eventId },
+            );
+
+            track({
+                event_type: 'form_start',
+                event_data: {
+                    location,
                     event_id: eventId,
-                    ...(metaEvent ? { _fbp: getCookieValue('_fbp'), _fbc: getCookieValue('_fbc') } : {}),
+                    page: window.location.pathname,
+                    timestamp: new Date().toISOString(),
+                    _fbp: getCookieValue('_fbp'),
+                    _fbc: getCookieValue('_fbc'),
+                },
+            });
+        },
+        [coursePrice, track],
+    );
+
+    const trackSectionView = useCallback(
+        (sectionId: string) => {
+            track({
+                event_type: 'section_view',
+                event_data: {
+                    section_id: sectionId,
+                    page: window.location.pathname,
+                    timestamp: new Date().toISOString(),
                 },
             });
         },
@@ -198,5 +240,7 @@ export function useAnalytics() {
         trackConversion,
         trackPayment,
         trackCTA,
+        trackFormStart,
+        trackSectionView,
     };
 }

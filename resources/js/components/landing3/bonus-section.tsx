@@ -171,7 +171,7 @@ export function BonusSection() {
     };
 
     return (
-        <section className="relative overflow-hidden py-6 lg:py-32">
+        <section id="bonus" className="relative overflow-hidden py-6 lg:py-32">
             {/* Background Effects */}
             <div className="from-background via-background to-primary/5 absolute inset-0 bg-gradient-to-br" />
             <div className="bg-primary/10 absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl" />
@@ -243,7 +243,7 @@ export function BonusSection() {
                             </p>
 
                             <div className="pt-4">
-                                <button onClick={handleCtaClick}>
+                            <button onClick={handleCtaClick} data-cta-zone="bonus_section">
                                     <CtaButton2 size="lg" className="group" withInstruction instructionText="Klik tombol ini untuk ambil bonus">
                                         <Sparkles className="me-3 inline-block h-3 w-3 group-hover:animate-spin" />
                                         <span>Ambil Bonus Sekarang</span>

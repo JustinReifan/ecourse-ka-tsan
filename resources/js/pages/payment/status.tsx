@@ -19,6 +19,7 @@ export default function PaymentStatusPage({ orderId }: StatusPageProps) {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const purchaseTrackedRef = useRef(false);
 
     const stopPolling = () => {
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -38,6 +39,21 @@ export default function PaymentStatusPage({ orderId }: StatusPageProps) {
             if (orderStatus === 'completed') {
                 stopPolling();
                 setStatus('success');
+                if (!purchaseTrackedRef.current) {
+                    purchaseTrackedRef.current = true;
+                    window.fbq?.(
+                        'track',
+                        'Purchase',
+                        {
+                            content_name: 'Gumpreneur',
+                            content_type: 'product',
+                            content_ids: ['gumpreneur'],
+                            value: Number(res.data.amount || 0),
+                            currency: 'IDR',
+                        },
+                        { eventID: `purchase-${orderId}` },
+                    );
+                }
             } else if (orderStatus === 'failed') {
                 stopPolling();
                 setStatus('failed');

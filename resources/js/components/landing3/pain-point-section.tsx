@@ -30,7 +30,7 @@ export function PainPointSection() {
     };
 
     return (
-        <section className="border-border/20 relative overflow-hidden border-t pt-6 pb-10 sm:py-10 lg:py-32">
+        <section id="problem" className="border-border/20 relative overflow-hidden border-t pt-6 pb-10 sm:py-10 lg:py-32">
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
                 <div className="mb-4 sm:mb-6 text-center lg:mb-16">
@@ -145,7 +145,7 @@ export function PainPointSection() {
 
                 {/* CTA Button */}
                 <div className="text-center mt-8 lg:mt-10">
-                    <CtaButton2 onClick={handleCtaClick} size="lg" withInstruction>
+                    <CtaButton2 onClick={handleCtaClick} data-cta-zone="pain_point_section" size="lg" withInstruction>
                         Gabung Sekarang
                     </CtaButton2>
                 </div>

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { VoucherInput } from '@/components/voucher-input';
-import { getLandingSource } from '@/hooks/use-analytics';
+import { generateEventId, getLandingSource, useAnalytics } from '@/hooks/use-analytics';
 import { Head, useForm } from '@inertiajs/react';
 import axios from 'axios';
 import {
@@ -29,7 +29,7 @@ import {
     Users,
     Zap,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 // ─────────────────────────────────────────────
 // Types
@@ -227,6 +227,15 @@ export default function Register({
         email: '',
         password: '',
     });
+    const { trackFormStart } = useAnalytics();
+    const checkoutEventId = useRef(generateEventId());
+    const hasTrackedFormStart = useRef(false);
+
+    const handleFirstInput = (value: string) => {
+        if (hasTrackedFormStart.current || value.trim() === '') return;
+        hasTrackedFormStart.current = true;
+        trackFormStart('registration_form');
+    };
 
     const formatRupiah = (n: number) => new Intl.NumberFormat('id-ID').format(n);
 
@@ -264,7 +273,23 @@ export default function Register({
             registration_type: registrationType,
             payment_amount: isLeadMagnet ? customAmount : null,
             landing_source: getLandingSource(),
+            meta_event_id: checkoutEventId.current,
         };
+
+        if (registrationType === 'standard') {
+            window.fbq?.(
+                'track',
+                'InitiateCheckout',
+                {
+                    content_name: 'Gumpreneur',
+                    content_type: 'product',
+                    content_ids: ['gumpreneur'],
+                    value: priceToCharge,
+                    currency: 'IDR',
+                },
+                { eventID: checkoutEventId.current },
+            );
+        }
 
         // ── Kasus harga 0 (voucher 100%) ──
         if (priceToCharge === 0) {
@@ -272,23 +297,6 @@ export default function Register({
             try {
                 const res = await axios.post(route('register.force'), payload);
                 if (res.data.success) {
-                    // Fire Meta Pixel AddToCart (browser-side) for dedup with CAPI
-                    if (window.fbq && registrationType === 'standard') {
-                        const orderId = res.data.order_id || '';
-                        const eventId = orderId ? `addtocart-${orderId}` : undefined;
-                        window.fbq(
-                            'track',
-                            'AddToCart',
-                            {
-                                content_name: productType,
-                                content_type: 'product',
-                                content_ids: ['affiliate-jago-jualan-masterclass'],
-                                value: 0,
-                                currency: 'IDR',
-                            },
-                            eventId ? { eventID: eventId } : {},
-                        );
-                    }
                     window.location.href = route('member.index');
                 } else {
                     showToast(res.data.message || 'Gagal memproses akun.', true);
@@ -305,23 +313,6 @@ export default function Register({
             const res = await axios.post(route('register.create-payment'), payload);
 
             if (res.data.paymentUrl) {
-                // Fire Meta Pixel AddToCart (browser-side) for dedup with CAPI
-                if (window.fbq && registrationType === 'standard') {
-                    const orderId = res.data.orderId || '';
-                    const eventId = orderId ? `addtocart-${orderId}` : undefined;
-                    window.fbq(
-                        'track',
-                        'AddToCart',
-                        {
-                            content_name: productType,
-                            content_type: 'product',
-                            content_ids: ['affiliate-jago-jualan-masterclass'],
-                            value: priceToCharge,
-                            currency: 'IDR',
-                        },
-                        eventId ? { eventID: eventId } : {},
-                    );
-                }
                 // Redirect langsung — tidak ada popup, tidak ada delay
                 window.location.href = res.data.paymentUrl;
             } else {
@@ -437,7 +428,7 @@ export default function Register({
                                     <p className="text-muted-foreground mt-0.5 text-sm">Isi data di bawah untuk mulai belajar</p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-5 p-6">
+                                <form onSubmit={handleSubmit} data-lp-form className="space-y-5 p-6">
                                     {/* Name */}
                                     <div className="space-y-2">
                                         <Label htmlFor="name" className="text-sm font-medium">
@@ -451,6 +442,7 @@ export default function Register({
                                             placeholder="Contoh: Sari Putri"
                                             value={data.name}
                                             onChange={(e) => setData('name', e.target.value)}
+                                            onBlur={(e) => handleFirstInput(e.target.value)}
                                             disabled={processing}
                                             className="bg-background/50"
                                         />
