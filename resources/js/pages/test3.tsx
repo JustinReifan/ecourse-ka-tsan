@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 // Lazy load ALL below-the-fold sections to reduce initial bundle size
 const PainPointSection = lazy(() => import('@/components/landing3/pain-point-section').then(m => ({ default: m.PainPointSection })));
 const GoalsSection = lazy(() => import('@/components/landing3/goals-section').then(m => ({ default: m.GoalsSection })));
+const VideoCourseFailureSection = lazy(() => import('@/components/landing3/pain-point-section').then(m => ({ default: m.VideoCourseFailureSection })));
 const LearningBenefits = lazy(() => import('@/components/landing3/learning-benefits').then(m => ({ default: m.LearningBenefits })));
 const TestimonialsSection = lazy(() => import('@/components/landing3/testimonials-section').then(m => ({ default: m.TestimonialsSection })));
 const MentorProfile = lazy(() => import('@/components/landing3/mentor-profile').then(m => ({ default: m.MentorProfile })));
@@ -83,9 +84,9 @@ export default function Test3Hero({ coursePrice }: Props) {
 
             <div className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
                 {/* Navigation */}
-                <header className="border-border/50 bg-background/80 relative z-50 border-none backdrop-blur-md">
+                <header className="border-border/50 bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <nav className="flex h-20 items-center justify-between">
+                        <nav className="flex h-16 items-center justify-between sm:h-20">
                             <div className="flex items-center gap-3 z-50">
                                 <AppLogo />
                             </div>
@@ -116,7 +117,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </header>
 
-                <section id="hero" ref={heroRef} className="relative overflow-hidden pt-6 pb-0 sm:pt-10 sm:pb-20 lg:pt-16 lg:pb-32 bg-background">
+                <section id="hero" ref={heroRef} className="relative overflow-hidden bg-background pt-2 pb-0 sm:pt-10 sm:pb-20 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-center lg:py-6">
                     
                     {/* Decorative Shapes based on the image */}
                     {/* Top Left yellow half circle */}
@@ -130,31 +131,31 @@ export default function Test3Hero({ coursePrice }: Props) {
                     {/* Bottom Right yellow half circle */}
                     <div className="absolute bottom-[30%] right-[8%] w-10 h-10 bg-amber-400 rounded-bl-full rounded-br-full -rotate-12 hidden lg:block" />
 
-                    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-0 sm:gap-12 lg:gap-8 items-center">
                             
                             {/* Left Content */}
                             <div className="z-10 max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
-                                <p className="text-primary font-bold text-sm sm:text-base mb-2 sm:mb-4 tracking-wide uppercase">
+                                <p className="text-primary mb-1 text-xs font-bold tracking-wide uppercase sm:mb-4 sm:text-base">
                                     {landingBadge} — PROGRAM RAMAH PEMULA
                                 </p>
                                 
-                                <h1 className="text-foreground text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.2] tracking-tight mb-2 sm:mb-6">
-                                    Dibimbing 1-on-1 untuk mulai hasilkan <br className="hidden lg:block"/>
-                                    <span className="text-primary">Rp 10 Juta Pertamamu</span> dari Sosmed
+                                <h1 className="text-foreground mb-2 text-[1.75rem] leading-[1.12] font-extrabold tracking-tight sm:mb-6 sm:text-5xl sm:leading-[1.2] lg:text-6xl">
+                                    Dibimbing 1-on-1 untuk Hasilkan <br className="hidden lg:block"/>
+                                    <em className="text-primary">Rp10 Juta Pertamamu</em> dari Sosmed
                                 </h1>
                                 
-                                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-4 sm:mb-10 max-w-xl mx-auto lg:mx-0">
-                                    Siap hasilkan pendapatan dari rumah? Dapatkan pendampingan intensif 1-on-1 via WhatsApp dan koreksi tugas langsung oleh mentor dalam grup kecil.
+                                <p className="text-muted-foreground mx-auto mb-3 max-w-xl text-sm leading-snug sm:mb-10 sm:text-lg sm:leading-relaxed lg:mx-0">
+                                    <em className="text-foreground font-semibold">Kamu gaptek?</em> Tenang, kamu dibimbing 1-on-1 via WhatsApp dan tugasmu dikoreksi langsung oleh mentor.
                                 </p>
                                 
-                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5 mb-3 sm:mb-12">
+                                <div className="mb-1 flex flex-col items-center justify-center gap-3 sm:mb-12 sm:flex-row sm:gap-5 lg:justify-start">
                                     <button onClick={handleCtaClick} data-cta-zone="hero_section" className="bg-[#00BF63] hover:bg-[#00a857] text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-full shadow-lg shadow-[#00BF63]/20 transition-all w-full sm:w-auto text-sm sm:text-base">
                                         GABUNG SEKARANG
                                     </button>
                                 </div>
                                 
-                                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 bg-background/50 backdrop-blur-sm p-3 sm:p-2 rounded-2xl w-fit mx-auto lg:mx-0">
+                                <div className="mx-auto hidden w-fit flex-col items-center justify-center gap-3 rounded-2xl bg-background/50 p-3 backdrop-blur-sm sm:flex sm:flex-row sm:gap-4 sm:p-2 lg:mx-0 lg:justify-start">
                                     <div className="flex -space-x-3 shrink-0">
                                         {[1, 2, 3, 4, 5].map((i) => (
                                             <img 
@@ -184,12 +185,12 @@ export default function Test3Hero({ coursePrice }: Props) {
                             </div>
                             
                             {/* Right Content */}
-                            <div className="relative z-10 w-full max-w-lg mx-auto lg:max-w-none mt-4 sm:mt-8 lg:-mt-10 xl:-mt-16">
+                            <div className="relative z-10 mx-auto mt-0 w-full max-w-lg sm:mt-8 lg:mt-0 lg:max-w-none">
                                 {/* The Large Background Curve (Light Blue) Behind the Girl, full to top & right, clipped at bottom */}
                                 <div className="absolute bottom-0 left-[-10%] sm:left-[5%] right-[-50vw] top-[-300px] lg:top-[-500px] bg-primary/10 rounded-l-full -z-10 pointer-events-none" />
                                 
                                 {/* Hero Image - Using /hero.png from public directory */}
-                                <div className="relative flex justify-center items-end h-[340px] sm:h-[450px] lg:h-[500px] xl:h-[580px]">
+                                <div className="relative flex h-[300px] items-end justify-center sm:h-[450px] lg:h-[calc(100svh-9rem)] lg:max-h-[580px]">
                                     <img 
                                         src="/hero.webp" 
                                         alt="Kak Tsania Latheefa" 
@@ -262,6 +263,10 @@ export default function Test3Hero({ coursePrice }: Props) {
 
                 <Suspense fallback={null}>
                     <GoalsSection />
+                </Suspense>
+
+                <Suspense fallback={null}>
+                    <VideoCourseFailureSection />
                 </Suspense>
 
                 <Suspense fallback={null}>

@@ -10,24 +10,13 @@ interface BenefitCardProps {
 }
 
 export function PainPointSection() {
-    const { trackCTA } = useAnalytics();
-
     const painPoints = [
-        'Sudah pernah coba jualan (termasuk stok produk fisik) tapi perputarannya tidak stabil ,  modal keluar, hasil tidak jelas.',
+        'Sudah coba jualan, tapi penjualan tidak stabil dan hasilnya belum jelas.',
         'Punya cicilan/utang yang jadi beban pikiran sehari-hari.',
-        'Gaptek dan merasa dunia digital/sosmed itu rumit ,  takut tidak akan sanggup mengikuti.',
+        'Merasa gaptek dan takut tidak sanggup mengikuti dunia digital.',
         'Takut uang yang dikeluarkan untuk belajar tidak balik modal.',
-        'Kalau belajar sendiri lewat video course biasa, gampang berhenti di tengah jalan karena tidak ada yang mengoreksi progres.',
+        'Belajar sendiri mudah terhenti karena tidak ada yang mengoreksi progres.',
     ];
-
-    const handleCtaClick = () => {
-        trackCTA('pain_point_section', 'Gabung Sekarang', '#pricing-section');
-        // scroll to pricing section
-        const pricingSection = document.getElementById('pricing-section');
-        if (pricingSection) {
-            pricingSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
 
     return (
         <section id="problem" className="border-border/20 relative overflow-hidden border-t pt-6 pb-10 sm:py-10 lg:py-32">
@@ -45,7 +34,7 @@ export function PainPointSection() {
                 {/* Main Content Grid */}
                 <div className="grid grid-cols-1 items-stretch gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-12 max-w-7xl mx-auto">
                     {/* Visual Section */}
-                    <div className="lg:col-span-5 flex flex-col">
+                    <div className="hidden lg:col-span-5 lg:flex lg:flex-col">
                         <div className="h-full border-border/20 shadow-primary/5 relative overflow-hidden rounded-2xl sm:rounded-3xl border shadow-xl sm:shadow-2xl min-h-[300px]">
                             {/* Main image */}
                             <img
@@ -100,10 +89,28 @@ export function PainPointSection() {
                     </div>
                 </div>
 
-                {/* Unique Mechanism Bridge - MOVED OUTSIDE GRID TO FIX LAYOUT */}
-                <div className="mt-12 lg:mt-20 mx-auto max-w-4xl text-center">
+            </div>
+        </section>
+    );
+}
+
+export function VideoCourseFailureSection() {
+    const { trackCTA } = useAnalytics();
+
+    const handleCtaClick = () => {
+        trackCTA('pain_point_section', 'Gabung Sekarang', '#pricing-section');
+        const pricingSection = document.getElementById('pricing-section');
+        if (pricingSection) {
+            pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    return (
+        <section className="border-border/20 border-t py-12 sm:py-16 lg:py-24">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-4xl text-center">
                     <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
-                    <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Karena belajar sendirian tanpa dikoreksi = nggak tau apakah udah bener atau masih salah jalan.</p>
+                    <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Belajar tanpa koreksi bikin kamu nggak tahu sudah benar atau masih salah arah.</p>
                     
                     <div className="from-primary/10 border-primary/20 mt-8 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-6 sm:p-8 lg:p-10 text-left backdrop-blur-sm shadow-md">
                         <h4 className="text-foreground mb-5 sm:mb-6 text-lg sm:text-xl font-bold flex items-center gap-3">
@@ -121,7 +128,7 @@ export function PainPointSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang aja, jadi Bunda bakal bener-bener diperhatiin.</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang agar Bunda benar-benar diperhatikan.</span>
                             </li>
                             <li className="flex items-start gap-3 sm:gap-4">
                                 <div className="mt-0.5 bg-emerald-500/10 p-1.5 rounded-full flex-shrink-0">
@@ -129,7 +136,7 @@ export function PainPointSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi langsung sama mentor</strong>, bukan cuma nonton video terus dibiarin bingung.</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi mentor</strong>, jadi Bunda tidak dibiarkan bingung.</span>
                             </li>
                             <li className="flex items-start gap-3 sm:gap-4">
                                 <div className="mt-0.5 bg-emerald-500/10 p-1.5 rounded-full flex-shrink-0">
@@ -137,7 +144,7 @@ export function PainPointSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Bebas nanya 1-on-1 via chat</strong>, kapan aja Bunda mentok, langsung tanya aja!</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Bebas tanya 1-on-1 via chat</strong> kapan pun Bunda merasa mentok.</span>
                             </li>
                         </ul>
                     </div>

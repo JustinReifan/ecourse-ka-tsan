@@ -4,22 +4,22 @@ const goals = [
     {
         icon: CreditCard,
         title: 'Bebas dari Jeratan Cicilan',
-        description: 'Bisa pelan-pelan ngelunasin hutang bulanan tanpa harus stres mikirin dari mana duitnya.',
+        description: 'Pelan-pelan lunasi cicilan bulanan tanpa terus stres memikirkan uang.',
     },
     {
         icon: Plane,
         title: 'Impian Umroh Sekeluarga',
-        description: 'Sedikit demi sedikit tabungan kumpul buat berangkatin orang tua dan keluarga ke tanah suci.',
+        description: 'Kumpulkan tabungan untuk berangkat umroh bersama orang tua dan keluarga.',
     },
     {
         icon: Heart,
         title: 'Bantu Keuangan Suami',
-        description: 'Bisa ikut andil menuhin kebutuhan rumah tangga tanpa ninggalin kewajiban ngurus anak.',
+        description: 'Ikut memenuhi kebutuhan rumah tangga tanpa meninggalkan anak.',
     },
     {
         icon: Sparkles,
         title: 'Mandiri Secara Finansial',
-        description: 'Bisa beli barang idaman atau skin care pake uang hasil keringat sendiri, tanpa harus minta.',
+        description: 'Beli kebutuhan dan barang idaman dengan penghasilan sendiri.',
     },
 ];
 
@@ -37,13 +37,12 @@ export function GoalsSection() {
                             <span className="text-xs font-bold tracking-[0.22em] text-[#00a857] uppercase">Masa depan Bunda</span>
                         </div>
 
-                        <h2 className="text-3xl leading-tight font-extrabold tracking-tight text-[#5a4d3c] sm:text-5xl lg:text-6xl">
-                            Bayangin, apa jadinya kalau <span className="text-[#00BF63]">semua impian ini terwujud?</span>
+                        <h2 className="text-3xl leading-tight font-extrabold tracking-tight text-[#6c2c2d] sm:text-5xl lg:text-6xl">
+                            Bayangin, apa jadinya kalau <span className="text-[#af2d22]">semua impian ini terwujud?</span>
                         </h2>
 
                         <p className="mt-6 max-w-xl text-base leading-relaxed text-[#7a6f5d]">
-                            Mulai dari yang kecil dulu. Kalau Bunda berani mulai belajar dan konsisten sekarang, ini semua bukan cuma angan-angan
-                            lagi.
+                            Mulai dari langkah kecil. Dengan belajar dan konsisten, semua ini bukan lagi sekadar angan-angan.
                         </p>
                     </div>
 
@@ -65,7 +64,7 @@ export function GoalsSection() {
                                     <div>
                                         <div className="mb-2 flex items-center gap-3 sm:block">
                                             <Icon className="h-5 w-5 shrink-0 text-[#00a857] sm:hidden" strokeWidth={2} />
-                                            <h3 className="text-xl leading-snug font-bold text-[#5a4d3c] sm:text-2xl">{goal.title}</h3>
+                                            <h3 className="text-xl leading-snug font-bold text-[#6c2c2d] sm:text-2xl">{goal.title}</h3>
                                         </div>
                                         <p className="text-sm leading-relaxed text-[#7a6f5d] sm:text-base">{goal.description}</p>
                                     </div>

@@ -14,7 +14,7 @@ const credentials: Credential[] = [
     {
         id: '1',
         title: '13+ Tahun Praktisi Jualan Online',
-        description: 'Berpengalaman membangun brand @latheefa_id dengan konsistensi penjualan yang terbukti.',
+        description: 'Berpengalaman membangun @latheefa_id dengan penjualan yang konsisten.',
         icon: <Award className="h-5 w-5" />,
         verified: true,
     },
@@ -28,7 +28,7 @@ const credentials: Credential[] = [
     {
         id: '4',
         title: 'Impactful Content Creator',
-        description: 'Strategi konten yang tervalidasi dengan 7.3 Juta+ tayangan dan komunitas loyal 48 Ribu+ pengikut di Instagram.',
+        description: 'Mencapai 7,3 juta+ tayangan dan membangun 48 ribu+ pengikut Instagram.',
         icon: <TrendingUp className="h-5 w-5" />,
         verified: true,
     },

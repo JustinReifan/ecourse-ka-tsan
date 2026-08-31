@@ -24,11 +24,11 @@ const benefits = [
         description: 'Bebas tanya kapan pun mentok, tanpa biaya tambahan.',
     },
     {
-        title: 'Materi Lengkap: Riset Niche, Lynk.id, Konten, IG, TikTok & WA Marketing',
+        title: 'Materi Jualan Sosmed Lengkap',
         description: 'Semua yang dibutuhkan untuk mulai cuan dari sosmed.',
     },
     {
-        title: 'Sertifikat Digital + Ebook "Ubah Hobi Jadi Cuan"',
+        title: 'Sertifikat Digital + Ebook Bonus',
         description: 'Bonus untuk peserta yang menyelesaikan program sampai akhir.',
     },
 ];

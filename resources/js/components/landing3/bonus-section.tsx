@@ -19,8 +19,7 @@ const bonusData: BonusData[] = [
         badge: 'Bonus #01',
         title: 'Fasilitas Mentorship Live 2 minggu 1x',
         value: 'Rp 4.599.000',
-        description:
-            'Kita tatap muka virtual rutin tiap 2 minggu! Sesi bedah akun, evaluasi progress, dan tanya jawab langsung biar kamu dipastikan nggak salah arah',
+        description: 'Tatap muka virtual tiap 2 minggu untuk bedah akun, evaluasi progres, dan tanya jawab langsung.',
         image: '/landing3/bonus/1.webp',
     },
     {
@@ -28,8 +27,7 @@ const bonusData: BonusData[] = [
         badge: 'Bonus #02',
         title: 'Grup Bimbingan Latihan Bahan Konten Reels',
         value: 'Rp 4.694.000',
-        description:
-            'Lingkungan itu pengaruh banget. Gabung bareng temen-temen seperjuangan, kita saling support, koreksi konten dan tumbuh bareng biar semangatmu gak kendor.',
+        description: 'Belajar bareng teman seperjuangan untuk saling dukung, koreksi konten, dan tumbuh bersama.',
         image: '/landing3/bonus/2.webp',
     },
 ];

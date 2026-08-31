@@ -5,23 +5,23 @@ import { Sparkles } from 'lucide-react';
 const benefits = [
     {
         title: 'Grup WhatsApp Kecil (Maks 10 Orang)',
-        description: 'Bukan grup ratusan orang yang bikin pertanyaan tenggelam. Di sini kamu diperhatikan.',
+        description: 'Grup kecil agar pertanyaanmu tidak tenggelam dan tetap diperhatikan.',
     },
     {
         title: 'Pendampingan 70 Hari Penuh',
-        description: 'Bukan sekadar akses video course. Kamu dibimbing selama 70 hari sampai benar-benar bisa praktik.',
+        description: 'Dibimbing selama 70 hari sampai kamu benar-benar bisa praktik.',
     },
     {
         title: '10 Tugas Praktek Dikoreksi Mentor',
-        description: 'Setiap tugas dikoreksi langsung oleh Kak Tsania ,  jadi kamu tahu apakah sudah di jalur yang benar.',
+        description: 'Setiap tugas dikoreksi agar kamu tahu sudah berada di jalur yang benar.',
     },
     {
         title: 'Bebas Tanya 1-on-1 Via Chat',
         description: 'Kapan pun mentok, langsung tanya. Tanpa biaya tambahan, tanpa jadwal terbatas.',
     },
     {
-        title: 'Materi Lengkap: Riset Niche, Lynk.id, Konten, IG, TikTok & WA Marketing',
-        description: 'Semua yang dibutuhkan untuk mulai cuan dari sosmed ,  dari nol sampai bisa.',
+        title: 'Materi Jualan Sosmed Lengkap',
+        description: 'Pelajari niche, Lynk.id, konten, Instagram, TikTok, dan WhatsApp.',
     },
     {
         title: 'Sertifikat Digital Gratis',
@@ -66,7 +66,7 @@ export function LearningBenefits() {
                     </h3>
 
                     <p className="text-muted-foreground mx-auto max-w-2xl text-base sm:text-lg leading-relaxed">
-                        Bukan cuma nonton video ,  tapi <span className="font-bold">dibimbing langsung sampai praktik dan closing</span>. Kamu akan tahu cara jualan di sosmed, punya konten yang jualan, dan mulai dapat orderan.
+                    Bukan cuma nonton. Kamu <span className="font-bold">dibimbing sampai praktik dan closing</span>, dari membuat konten hingga mendapat orderan.
                     </p>
                 </div>
 

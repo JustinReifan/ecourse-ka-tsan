@@ -12,6 +12,7 @@ interface TestimonialGrid {
     id: string;
     imageUrl: string;
     alt: string;
+    subtitle?: string;
 }
 
 const testimonialsGrid: TestimonialGrid[] = [
@@ -19,21 +20,25 @@ const testimonialsGrid: TestimonialGrid[] = [
         id: '1',
         imageUrl: '/landing3/testimonials/1.webp',
         alt: 'Testimonial 1',
+        subtitle: 'Seorang Bapak-Bapak Coba Praktek Ilmu Disini Bisa Dapet Penghasilan tambahan Rp 5 JUTA'
     },
     {
         id: '2',
         imageUrl: '/landing3/testimonials/2.webp',
         alt: 'Testimonial 2',
+        subtitle: 'Awalnya Ibu Rumah Tangga Biasa Praktekin Ilmu Disini Langsung Pecah Telor dan Dapetin Rp 2 JUTA'
     },
     {
         id: '3',
         imageUrl: '/landing3/testimonials/3.webp',
         alt: 'Testimonial 3',
+        subtitle: 'Bapak Ini awalnya bingung mau Jualan apa, akhirnya Praktek Ilmu di Gumpreneur Bisa Hasilin Rp 80 JUTA'
     },
     {
         id: '4',
         imageUrl: '/landing3/testimonials/4.webp',
         alt: 'Testimonial 4',
+        subtitle: 'Ibu Ini Awalnya Gaptek Banget, Sekarang Bisa Dapat Target Income Pertamanya Dari Sosmed'
     },
 ];
 
@@ -140,8 +145,8 @@ export function TestimonialsSection() {
                                         />
                                     </div>
 
-                                    <p className="text-muted-foreground px-2 text-center text-sm">
-                                        Dokumentasi testimoni alumni — baca pengalaman asli pada gambar.
+                                    <p className="text-muted-foreground px-2 text-center text-base leading-snug font-medium lg:text-lg">
+                                        "{testimonial.subtitle || 'Tulis highlight testimoni di sini...'}"
                                     </p>
                                 </div>
                             ))}

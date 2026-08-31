@@ -63,9 +63,9 @@ const timelineData = [
 function Card({ text, type }: { text: string, type: string }) {
     return (
         <div className={cn(
-            "flex items-center justify-center text-center rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-4 min-h-[70px] sm:min-h-[100px] text-xs sm:text-base font-bold whitespace-pre-line transition-transform hover:scale-105",
-            type === "day" 
-                ? "bg-[#e2d8cd] text-[#6b6255]" 
+            "flex items-center justify-center text-center rounded-xl sm:rounded-2xl shadow-sm p-2 sm:p-4 min-h-[70px] sm:min-h-[100px] text-base sm:text-[22px] font-black whitespace-pre-line transition-transform hover:scale-105 leading-[1.15] tracking-tight sm:-tracking-[0.5px]",
+            type === "day"
+                ? "bg-[#e2d8cd] text-[#6b6255]"
                 : "bg-[#d1c8bb] text-[#6b6255]"
         )}>
             {text}
