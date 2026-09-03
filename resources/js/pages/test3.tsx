@@ -6,7 +6,6 @@ import { lazy, Suspense } from 'react';
 const PainPointSection = lazy(() => import('@/components/landing3/pain-point-section').then(m => ({ default: m.PainPointSection })));
 const GoalsSection = lazy(() => import('@/components/landing3/goals-section').then(m => ({ default: m.GoalsSection })));
 const VideoCourseFailureSection = lazy(() => import('@/components/landing3/pain-point-section').then(m => ({ default: m.VideoCourseFailureSection })));
-const LearningBenefits = lazy(() => import('@/components/landing3/learning-benefits').then(m => ({ default: m.LearningBenefits })));
 const TestimonialsSection = lazy(() => import('@/components/landing3/testimonials-section').then(m => ({ default: m.TestimonialsSection })));
 const MentorProfile = lazy(() => import('@/components/landing3/mentor-profile').then(m => ({ default: m.MentorProfile })));
 const TimelineSection = lazy(() => import('@/components/landing3/timeline-section').then(m => ({ default: m.TimelineSection })));
@@ -117,7 +116,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </header>
 
-                <section id="hero" ref={heroRef} className="relative overflow-hidden bg-background pt-2 pb-0 sm:pt-10 sm:pb-20 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-center lg:py-6">
+                <section id="hero" ref={heroRef} className="relative overflow-hidden bg-background pt-8 pb-0 sm:pt-10 sm:pb-20 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-center lg:py-6">
                     
                     {/* Decorative Shapes based on the image */}
                     {/* Top Left yellow half circle */}
@@ -270,19 +269,15 @@ export default function Test3Hero({ coursePrice }: Props) {
                 </Suspense>
 
                 <Suspense fallback={null}>
-                    <LearningBenefits />
-                </Suspense>
-
-                <Suspense fallback={null}>
                     <TestimonialsSection />
                 </Suspense>
 
                 <Suspense fallback={null}>
-                    <MentorProfile />
+                    <TimelineSection />
                 </Suspense>
 
                 <Suspense fallback={null}>
-                    <TimelineSection />
+                    <MentorProfile />
                 </Suspense>
 
                 <Suspense fallback={null}>

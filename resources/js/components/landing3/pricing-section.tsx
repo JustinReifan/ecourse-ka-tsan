@@ -133,6 +133,36 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                             <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-xl leading-relaxed px-4">
                                 Khusus buat Bunda/Kakak yang beneran mau mulai, mumpung lagi <strong>DISKON GEDE-GEDEAN!</strong>
                             </p>
+
+                            {/* Countdown Timer */}
+                            <div className="bg-destructive/5 border border-destructive/10 mx-auto max-w-2xl rounded-2xl p-4">
+                                <div className="flex items-center justify-center gap-2 mb-3 text-destructive font-bold text-sm sm:text-base">
+                                    <Timer className="w-4 h-4 animate-pulse" />
+                                    <span>PROMO BERAKHIR DALAM:</span>
+                                </div>
+                                <div className="flex justify-center gap-3 sm:gap-4">
+                                    <div className="flex flex-col items-center">
+                                        <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
+                                            {String(timeLeft.hours).padStart(2, '0')}
+                                        </div>
+                                        <span className="text-xs text-muted-foreground mt-1 font-medium">JAM</span>
+                                    </div>
+                                    <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
+                                    <div className="flex flex-col items-center">
+                                        <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
+                                            {String(timeLeft.minutes).padStart(2, '0')}
+                                        </div>
+                                        <span className="text-xs text-muted-foreground mt-1 font-medium">MENIT</span>
+                                    </div>
+                                    <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
+                                    <div className="flex flex-col items-center">
+                                        <div className="bg-background border border-destructive/20 text-destructive font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm animate-pulse">
+                                            {String(timeLeft.seconds).padStart(2, '0')}
+                                        </div>
+                                        <span className="text-xs text-muted-foreground mt-1 font-medium">DETIK</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -190,36 +220,6 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                     {benefits.map((benefit, index) => (
                                         <BenefitItem key={benefit.title} benefit={benefit} index={index} />
                                     ))}
-                                </div>
-
-                                {/* Countdown Timer */}
-                                <div className="bg-destructive/5 border border-destructive/10 rounded-2xl p-4 mt-6">
-                                    <div className="flex items-center justify-center gap-2 mb-3 text-destructive font-bold text-sm sm:text-base">
-                                        <Timer className="w-4 h-4 animate-pulse" />
-                                        <span>PROMO BERAKHIR DALAM:</span>
-                                    </div>
-                                    <div className="flex justify-center gap-3 sm:gap-4">
-                                        <div className="flex flex-col items-center">
-                                            <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
-                                                {String(timeLeft.hours).padStart(2, '0')}
-                                            </div>
-                                            <span className="text-xs text-muted-foreground mt-1 font-medium">JAM</span>
-                                        </div>
-                                        <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
-                                        <div className="flex flex-col items-center">
-                                            <div className="bg-background border border-destructive/20 text-foreground font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm">
-                                                {String(timeLeft.minutes).padStart(2, '0')}
-                                            </div>
-                                            <span className="text-xs text-muted-foreground mt-1 font-medium">MENIT</span>
-                                        </div>
-                                        <div className="text-destructive font-bold text-xl sm:text-2xl mt-2">:</div>
-                                        <div className="flex flex-col items-center">
-                                            <div className="bg-background border border-destructive/20 text-destructive font-mono font-bold text-xl sm:text-2xl rounded-lg w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-sm animate-pulse">
-                                                {String(timeLeft.seconds).padStart(2, '0')}
-                                            </div>
-                                            <span className="text-xs text-muted-foreground mt-1 font-medium">DETIK</span>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 {/* CTA Button */}

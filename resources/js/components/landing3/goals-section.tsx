@@ -26,19 +26,19 @@ const goals = [
 export function GoalsSection() {
     return (
         <section id="goals" className="relative overflow-hidden bg-[#f7f4ed] py-14 sm:py-20 lg:py-24">
-            <div className="pointer-events-none absolute top-16 -left-24 h-56 w-56 rounded-full bg-[#00BF63]/10 blur-3xl" />
+            <div className="pointer-events-none absolute top-16 -left-24 h-56 w-56 rounded-full bg-[#af2d22]/10 blur-3xl" />
             <div className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-amber-300/20 blur-3xl" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+                <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
                     <div className="lg:sticky lg:top-28 lg:self-start">
                         <div className="mb-5 flex items-center gap-3">
-                            <span className="h-px w-10 bg-[#00BF63]" />
-                            <span className="text-xs font-bold tracking-[0.22em] text-[#00a857] uppercase">Masa depan Bunda</span>
+                            <span className="h-px w-10 bg-[#af2d22]" />
+                            <span className="text-xs font-bold tracking-[0.22em] text-[#af2d22] uppercase">Masa depan Bunda</span>
                         </div>
 
-                        <h2 className="text-3xl leading-tight font-extrabold tracking-tight text-[#6c2c2d] sm:text-5xl lg:text-6xl">
-                            Bayangin, apa jadinya kalau <span className="text-[#af2d22]">semua impian ini terwujud?</span>
+                        <h2 className="max-w-xl text-3xl leading-tight font-extrabold tracking-tight text-[#6c2c2d] sm:text-5xl lg:text-6xl">
+                            Bayangin, Ini yang Terjadi <span className="text-[#af2d22]">Kalau Kamu Mulai Dari Sekarang</span>
                         </h2>
 
                         <p className="mt-6 max-w-xl text-base leading-relaxed text-[#7a6f5d]">
@@ -57,13 +57,13 @@ export function GoalsSection() {
                                 >
                                     <span className="pt-1 text-sm font-bold text-[#a69c8d] tabular-nums sm:text-base">0{index + 1}</span>
 
-                                    <div className="hidden h-12 w-12 items-center justify-center rounded-full bg-[#00BF63]/10 text-[#00a857] transition-colors duration-300 group-hover:bg-[#00BF63] group-hover:text-white sm:flex">
+                                    <div className="hidden h-12 w-12 items-center justify-center rounded-full bg-[#af2d22]/10 text-[#af2d22] transition-colors duration-300 group-hover:bg-[#af2d22] group-hover:text-white sm:flex">
                                         <Icon className="h-5 w-5" strokeWidth={2} />
                                     </div>
 
                                     <div>
                                         <div className="mb-2 flex items-center gap-3 sm:block">
-                                            <Icon className="h-5 w-5 shrink-0 text-[#00a857] sm:hidden" strokeWidth={2} />
+                                            <Icon className="h-5 w-5 shrink-0 text-[#af2d22] sm:hidden" strokeWidth={2} />
                                             <h3 className="text-xl leading-snug font-bold text-[#6c2c2d] sm:text-2xl">{goal.title}</h3>
                                         </div>
                                         <p className="text-sm leading-relaxed text-[#7a6f5d] sm:text-base">{goal.description}</p>

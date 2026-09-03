@@ -24,7 +24,7 @@ export function PainPointSection() {
                 {/* Header Section */}
                 <div className="mb-4 sm:mb-6 text-center lg:mb-16">
                     <h2 className="text-foreground mb-3 text-2xl sm:text-3xl lg:text-4xl font-bold">
-                        Kenapa Bunda/Kakak Masih <span className="text-primary">KETINGGALAN?</span>
+                        Kenapa Kamu Masih <span className="text-primary">KETINGGALAN?</span>
                     </h2>
                     <p className="text-muted-foreground mx-auto max-w-3xl text-sm sm:text-base lg:text-lg px-2">
                         Udah capek kan ngeliat orang lain gampang banget cuan dari HP? Sementara Bunda masih pusing muter otak mikirin cara nambah pemasukan keluarga...
@@ -109,9 +109,46 @@ export function VideoCourseFailureSection() {
         <section className="border-border/20 border-t py-12 sm:py-16 lg:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-4xl text-center">
-                    <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Video Course Biasa <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
+                    <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Belajar Di Tempat Lain <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
                     <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Belajar tanpa koreksi bikin kamu nggak tahu sudah benar atau masih salah arah.</p>
-                    
+
+                    <div className="from-destructive/10 border-destructive/20 mt-8 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-6 sm:p-8 lg:p-10 text-left backdrop-blur-sm shadow-md">
+                        <h4 className="text-foreground mb-5 sm:mb-6 text-lg sm:text-xl font-bold flex items-center gap-3">
+                            <span className="bg-destructive/15 text-destructive p-2 rounded-lg">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </span>
+                            Kalau belajar di kursus lain:
+                        </h4>
+                        <ul className="text-muted-foreground space-y-4 sm:space-y-5">
+                            <li className="flex items-start gap-3 sm:gap-4">
+                                <div className="mt-0.5 bg-destructive/10 p-1.5 rounded-full flex-shrink-0">
+                                    <svg className="w-5 h-5 text-destructive" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </div>
+                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Cuma dikasih video rekaman</strong>, lalu harus belajar dan memahami semuanya sendiri.</span>
+                            </li>
+                            <li className="flex items-start gap-3 sm:gap-4">
+                                <div className="mt-0.5 bg-destructive/10 p-1.5 rounded-full flex-shrink-0">
+                                    <svg className="w-5 h-5 text-destructive" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </div>
+                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup terlalu ramai</strong>, pertanyaan mudah tenggelam dan Bunda kurang diperhatikan.</span>
+                            </li>
+                            <li className="flex items-start gap-3 sm:gap-4">
+                                <div className="mt-0.5 bg-destructive/10 p-1.5 rounded-full flex-shrink-0">
+                                    <svg className="w-5 h-5 text-destructive" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </div>
+                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Tugas tidak dikoreksi mentor</strong>, jadi Bunda nggak tahu bagian mana yang perlu diperbaiki.</span>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div className="from-primary/10 border-primary/20 mt-8 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-6 sm:p-8 lg:p-10 text-left backdrop-blur-sm shadow-md">
                         <h4 className="text-foreground mb-5 sm:mb-6 text-lg sm:text-xl font-bold flex items-center gap-3">
                             <span className="bg-primary/20 text-primary p-2 rounded-lg">
