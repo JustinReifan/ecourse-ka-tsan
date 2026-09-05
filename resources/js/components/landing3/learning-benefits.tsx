@@ -88,7 +88,7 @@ export function LearningBenefits() {
                                 <span className="text-primary text-lg font-bold">{index + 1}</span>
                             </div>
                             <div>
-                                <h4 className="text-foreground mb-1 text-sm font-semibold">{benefit.title}</h4>
+                                <h3 className="text-foreground mb-1 text-sm font-semibold">{benefit.title}</h3>
                                 <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
                             </div>
                         </div>

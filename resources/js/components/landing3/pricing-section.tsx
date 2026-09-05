@@ -70,9 +70,9 @@ function BenefitItem({ benefit, index }: BenefitItemProps) {
                         <Check className={cn('text-primary h-3 w-3 transition-all duration-300', isHovered && 'scale-110')} />
                     </div>
                     <div className="flex-1 space-y-1">
-                        <h4 className="text-foreground group-hover:text-primary leading-tight font-medium transition-colors duration-300">
+                        <h3 className="text-foreground group-hover:text-primary leading-tight font-medium transition-colors duration-300">
                             {benefit.title}
-                        </h4>
+                        </h3>
                         <p className="text-muted-foreground text-sm">{benefit.description}</p>
                     </div>
                 </div>

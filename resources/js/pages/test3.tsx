@@ -1,5 +1,6 @@
 import AppLogo from '@/components/app-logo';
 import { CtaButton2 } from '@/components/landing3/cta-button-2';
+import { LazySection } from '@/components/landing3/lazy-section';
 import { lazy, Suspense } from 'react';
 
 // Lazy load ALL below-the-fold sections to reduce initial bundle size
@@ -81,7 +82,7 @@ export default function Test3Hero({ coursePrice }: Props) {
         <>
             <Head title="Landing" />
 
-            <div className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
+            <main className="from-background via-background to-secondary/10 min-h-screen bg-gradient-to-br">
                 {/* Navigation */}
                 <header className="border-border/50 bg-background/90 sticky top-0 z-50 border-b backdrop-blur-md">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -255,42 +256,66 @@ export default function Test3Hero({ coursePrice }: Props) {
                     </div>
                 </section>
 
-                {/* Below-the-fold sections - all lazy loaded */}
-                <Suspense fallback={null}>
-                    <PainPointSection />
-                </Suspense>
+                {/* Below-the-fold sections - lazy loaded AND only mounted when scrolled near,
+                    so the initial render stays small (big win for TBT / TTI / style & layout cost).
+                    placeholderHeight mirrors each section's real rendered height so mounting
+                    swaps placeholder -> content without moving layout (no CLS).
+                    NOTE: LazySection must wrap Suspense (not the other way around), otherwise
+                    React hides the placeholder div while the lazy chunk loads (display:none)
+                    and the reserved height collapses. */}
+                <LazySection placeholderHeight={{ mobile: 811, lg: 1013 }}>
+                    <Suspense fallback={null}>
+                        <PainPointSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <GoalsSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 956, lg: 857 }}>
+                    <Suspense fallback={null}>
+                        <GoalsSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <VideoCourseFailureSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 1079, lg: 1087 }}>
+                    <Suspense fallback={null}>
+                        <VideoCourseFailureSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <TestimonialsSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 2447, lg: 2126 }}>
+                    <Suspense fallback={null}>
+                        <TestimonialsSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <TimelineSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 1270, lg: 1909 }}>
+                    <Suspense fallback={null}>
+                        <TimelineSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <MentorProfile />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 1788, lg: 1345 }}>
+                    <Suspense fallback={null}>
+                        <MentorProfile />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <BonusSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 2553, lg: 2504 }}>
+                    <Suspense fallback={null}>
+                        <BonusSection />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <PricingSection coursePrice={coursePrice} />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 1531, lg: 1634 }}>
+                    <Suspense fallback={null}>
+                        <PricingSection coursePrice={coursePrice} />
+                    </Suspense>
+                </LazySection>
 
-                <Suspense fallback={null}>
-                    <FaqSection />
-                </Suspense>
+                <LazySection placeholderHeight={{ mobile: 1491, lg: 1220 }}>
+                    <Suspense fallback={null}>
+                        <FaqSection />
+                    </Suspense>
+                </LazySection>
 
                 <div className={`border-primary/30 bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t p-3 backdrop-blur md:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${showStickyCta ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}>
                     <CtaButton2 onClick={handleCtaClick} data-cta-zone="sticky_mobile" className="w-full" aria-label="Gabung Program Gumpreneur">
@@ -313,7 +338,7 @@ export default function Test3Hero({ coursePrice }: Props) {
                         </div>
                     </div>
                 </footer>
-            </div>
+            </main>
         </>
     );
 }

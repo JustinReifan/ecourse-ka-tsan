@@ -31,8 +31,13 @@
 
     {{-- Font loading: non-blocking with font-display:swap --}}
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap"></noscript>
+    {{-- Preload the actual woff2 files so fonts arrive before first text paint -- eliminates font-swap layout shift (CLS) --}}
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.bunny.net/instrument-sans/files/instrument-sans-latin-400-normal.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.bunny.net/instrument-sans/files/instrument-sans-latin-500-normal.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.bunny.net/instrument-sans/files/instrument-sans-latin-600-normal.woff2">
+    {{-- font-display:optional -> no font-swap after paint, so no layout shift (CLS) from web fonts --}}
+    <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=optional"></noscript>
 
     {{-- Inline critical above-the-fold CSS to eliminate render-blocking --}}
     <style>
@@ -65,38 +70,42 @@
     @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
     @inertiaHead
 
-    <!-- Meta Pixel Code (deferred to avoid render blocking) -->
-    <script>
-        window.addEventListener('load', function() {
-            ! function(f, b, e, v, n, t, s) {
-                if (f.fbq) return;
-                n = f.fbq = function() {
-                    n.callMethod ?
-                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if (!f._fbq) f._fbq = n;
-                n.push = n;
-                n.loaded = !0;
-                n.version = '2.0';
-                n.queue = [];
-                t = b.createElement(e);
-                t.async = !0;
-                t.src = v;
-                s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', @json(config('services.meta.pixel_id')));
+    {{-- Meta Pixel Code (deferred to avoid render blocking).
+         Only loaded in production: on staging/preview it sets third-party cookies and
+         drags down Lighthouse Best Practices scores + skews analytics data. --}}
+    @if (app()->environment('production'))
+        <script>
+            window.addEventListener('load', function() {
+                ! function(f, b, e, v, n, t, s) {
+                    if (f.fbq) return;
+                    n = f.fbq = function() {
+                        n.callMethod ?
+                            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    };
+                    if (!f._fbq) f._fbq = n;
+                    n.push = n;
+                    n.loaded = !0;
+                    n.version = '2.0';
+                    n.queue = [];
+                    t = b.createElement(e);
+                    t.async = !0;
+                    t.src = v;
+                    s = b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t, s)
+                }(window, document, 'script',
+                    'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', @json(config('services.meta.pixel_id')));
 
-            window.__META_PAGE_VIEW_EVENT_ID = crypto.randomUUID ? crypto.randomUUID() :
-                Date.now() + '-' + Math.random().toString(36).substring(2, 11);
-            fbq('track', 'PageView', {}, {
-                eventID: window.__META_PAGE_VIEW_EVENT_ID
+                window.__META_PAGE_VIEW_EVENT_ID = crypto.randomUUID ? crypto.randomUUID() :
+                    Date.now() + '-' + Math.random().toString(36).substring(2, 11);
+                fbq('track', 'PageView', {}, {
+                    eventID: window.__META_PAGE_VIEW_EVENT_ID
+                });
             });
-        });
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id={{ urlencode((string) config('services.meta.pixel_id')) }}&ev=PageView&noscript=1" /></noscript>
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id={{ urlencode((string) config('services.meta.pixel_id')) }}&ev=PageView&noscript=1" /></noscript>
+    @endif
     <!-- End Meta Pixel Code -->
 </head>
 
