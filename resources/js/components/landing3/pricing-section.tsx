@@ -131,7 +131,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                 <span className="text-primary bg-clip-text">Modal Sekali Buat Cuan Berkali-kali!</span>
                             </h2>
                             <p className="text-muted-foreground mx-auto max-w-3xl text-base sm:text-xl leading-relaxed px-4">
-                                Khusus buat Bunda/Kakak yang beneran mau mulai, mumpung lagi <strong>DISKON GEDE-GEDEAN!</strong>
+                                Khusus buat kamu/Kakak yang beneran mau mulai, mumpung lagi <strong>DISKON GEDE-GEDEAN!</strong>
                             </p>
 
                             {/* Countdown Timer */}
@@ -212,7 +212,7 @@ export function PricingSection({ coursePrice: _coursePrice }: PricingSectionProp
                                         <span className="text-primary text-xl sm:text-3xl font-medium">Rp</span>
                                         <span className="text-foreground text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">{formattedPrice}</span>
                                     </div>
-                                    <p className="text-muted-foreground text-sm sm:text-base">Harga coret khusus buat Bunda yang siap action!</p>
+                                    <p className="text-muted-foreground text-sm sm:text-base">Harga coret khusus buat kamu yang siap action!</p>
                                 </div>
 
                                 {/* Benefits Grid */}

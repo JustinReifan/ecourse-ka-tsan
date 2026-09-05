@@ -13,7 +13,7 @@ const goals = [
     },
     {
         icon: Heart,
-        title: 'Bantu Keuangan Suami',
+        title: 'Bantu Keuangan Keluarga',
         description: 'Ikut memenuhi kebutuhan rumah tangga tanpa meninggalkan anak.',
     },
     {
@@ -34,7 +34,7 @@ export function GoalsSection() {
                     <div className="lg:sticky lg:top-28 lg:self-start">
                         <div className="mb-5 flex items-center gap-3">
                             <span className="h-px w-10 bg-[#af2d22]" />
-                            <span className="text-xs font-bold tracking-[0.22em] text-[#af2d22] uppercase">Masa depan Bunda</span>
+                            <span className="text-xs font-bold tracking-[0.22em] text-[#af2d22] uppercase">Masa depan Kamu</span>
                         </div>
 
                         <h2 className="max-w-xl text-3xl leading-tight font-extrabold tracking-tight text-[#6c2c2d] sm:text-5xl lg:text-6xl">

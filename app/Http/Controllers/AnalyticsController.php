@@ -36,11 +36,11 @@ class AnalyticsController extends Controller
     {
         $validated = $request->validate([
             'event_type' => 'required|in:visit,scroll,engagement,cta_click,form_start,conversion,payment,section_view',
+            // Simpan SEMUA isi event_data (flexible payload). Jangan tambahkan aturan
+            // bertingkat (mis. 'event_data.duration') — validated() hanya akan
+            // mengembalikan key yang terdaftar, sehingga duration/depth/status/amount
+            // dkk. dari frontend akan terbuang dan merusak analytics/labs.
             'event_data' => 'nullable|array',
-            'event_data.event_id' => 'nullable|string|max:255',
-            'event_data.landing_source' => 'nullable|string|max:255',
-            'event_data.section_id' => 'nullable|string|max:100',
-            'event_data.location' => 'nullable|string|max:100',
             'referral_source' => 'nullable|string|max:2048',
             'utm_source' => 'nullable|string|max:255',
             'utm_medium' => 'nullable|string|max:255',
@@ -104,7 +104,9 @@ class AnalyticsController extends Controller
 
         $engagementRate = UserAnalytic::where('event_type', 'engagement')
             ->where('created_at', '>=', $startDate)
-            ->where('event_data->type', 'dwell_time')
+            // Hook use-dwell-time.tsx mengirim event 'dwell_ping' berisi durasi (ms)
+            // per ping; sesi dihitung engaged jika ada ping >= 15 detik (sama dgn AbTestingService).
+            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) >= 15000")
             ->count(DB::raw('DISTINCT session_id'));
 
         $registrations = UserAnalytic::where('event_type', 'conversion')
@@ -171,7 +173,8 @@ class AnalyticsController extends Controller
 
         $engaged = UserAnalytic::where('event_type', 'engagement')
             ->where('created_at', '>=', $startDate)
-            ->where('event_data->type', 'dwell_time')
+            // Sama seperti di atas: engaged = durasi dwell >= 15 detik (format dwell_ping).
+            ->whereRaw("CAST(JSON_EXTRACT(event_data, '$.duration') AS UNSIGNED) >= 15000")
             ->count(DB::raw('DISTINCT session_id'));
 
         $registrations = UserAnalytic::where('event_type', 'conversion')

@@ -27,7 +27,7 @@ export function PainPointSection() {
                         Kenapa Kamu Masih <span className="text-primary">KETINGGALAN?</span>
                     </h2>
                     <p className="text-muted-foreground mx-auto max-w-3xl text-sm sm:text-base lg:text-lg px-2">
-                        Udah capek kan ngeliat orang lain gampang banget cuan dari HP? Sementara Bunda masih pusing muter otak mikirin cara nambah pemasukan keluarga...
+                        Udah capek kan ngeliat orang lain gampang banget cuan dari HP? Sementara kamu masih pusing muter otak mikirin cara nambah pemasukan keluarga...
                     </p>
                 </div>
 
@@ -82,8 +82,8 @@ export function PainPointSection() {
                             </div>
 
                             <div className="pt-6 sm:pt-8 text-center md:text-start mt-auto">
-                                <h3 className="text-foreground text-lg font-semibold leading-snug">Kalau dibiarkan, 5 tahun lagi Bunda <br className="hidden sm:block"/> bakal tetep pusing sama masalah yang sama.</h3>
-                                <p className="text-muted-foreground mt-2 text-sm sm:text-base">Makin lama ditunda, makin susah nanti ngejarnya lho, Bund.</p>
+                                <h3 className="text-foreground text-lg font-semibold leading-snug">Kalau dibiarkan, 5 tahun lagi kamu <br className="hidden sm:block"/> bakal tetep pusing sama masalah yang sama.</h3>
+                                <p className="text-muted-foreground mt-2 text-sm sm:text-base">Makin lama ditunda, makin susah nanti ngejarnya lho, kamu.</p>
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ export function VideoCourseFailureSection() {
         <section className="border-border/20 border-t py-12 sm:py-16 lg:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-4xl text-center">
-                    <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Belajar Di Tempat Lain <br className="hidden sm:block"/> Gagal Bikin Bunda Cuan?</h3>
+                    <h3 className="text-primary text-2xl sm:text-3xl font-bold lg:text-4xl leading-tight">Kenapa Belajar Di Tempat Lain <br className="hidden sm:block"/> Gagal Bikin Kamu Cuan?</h3>
                     <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl mx-auto">Belajar tanpa koreksi bikin kamu nggak tahu sudah benar atau masih salah arah.</p>
 
                     <div className="from-destructive/10 border-destructive/20 mt-8 rounded-2xl sm:rounded-3xl border bg-gradient-to-r p-6 sm:p-8 lg:p-10 text-left backdrop-blur-sm shadow-md">
@@ -136,7 +136,7 @@ export function VideoCourseFailureSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </div>
-                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup terlalu ramai</strong>, pertanyaan mudah tenggelam dan Bunda kurang diperhatikan.</span>
+                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup terlalu ramai</strong>, pertanyaan mudah tenggelam dan kamu kurang diperhatikan.</span>
                             </li>
                             <li className="flex items-start gap-3 sm:gap-4">
                                 <div className="mt-0.5 bg-destructive/10 p-1.5 rounded-full flex-shrink-0">
@@ -144,7 +144,7 @@ export function VideoCourseFailureSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </div>
-                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Tugas tidak dikoreksi mentor</strong>, jadi Bunda nggak tahu bagian mana yang perlu diperbaiki.</span>
+                                <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Tugas tidak dikoreksi mentor</strong>, jadi kamu nggak tahu bagian mana yang perlu diperbaiki.</span>
                             </li>
                         </ul>
                     </div>
@@ -165,7 +165,7 @@ export function VideoCourseFailureSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang agar Bunda benar-benar diperhatikan.</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Grup WA kecil</strong>, maksimal 10 orang agar kamu benar-benar diperhatikan.</span>
                             </li>
                             <li className="flex items-start gap-3 sm:gap-4">
                                 <div className="mt-0.5 bg-emerald-500/10 p-1.5 rounded-full flex-shrink-0">
@@ -173,7 +173,7 @@ export function VideoCourseFailureSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi mentor</strong>, jadi Bunda tidak dibiarkan bingung.</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>10 tugas dikoreksi mentor</strong>, jadi kamu tidak dibiarkan bingung.</span>
                             </li>
                             <li className="flex items-start gap-3 sm:gap-4">
                                 <div className="mt-0.5 bg-emerald-500/10 p-1.5 rounded-full flex-shrink-0">
@@ -181,7 +181,7 @@ export function VideoCourseFailureSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Bebas tanya 1-on-1 via chat</strong> kapan pun Bunda merasa mentok.</span>
+                                    <span className="text-base sm:text-lg leading-relaxed text-foreground/90"><strong>Bebas tanya 1-on-1 via chat</strong> kapan pun kamu merasa mentok.</span>
                             </li>
                         </ul>
                     </div>
