@@ -48,7 +48,17 @@ jobs:
         run: |
           mkdir -p "$HOME/.ssh"
           chmod 700 "$HOME/.ssh"
-          ssh-keyscan -T 15 -H "${{ env.SERVER_IP }}" >> "$HOME/.ssh/known_hosts"
+          for attempt in {1..5}; do
+            if ssh-keyscan -T 15 -H "${{ env.SERVER_IP }}" > "$HOME/.ssh/known_hosts.tmp"; then
+              cat "$HOME/.ssh/known_hosts.tmp" >> "$HOME/.ssh/known_hosts"
+              break
+            fi
+            if [ "$attempt" -eq 5 ]; then
+              exit 1
+            fi
+            sleep 15
+          done
+          rm -f "$HOME/.ssh/known_hosts.tmp"
           chmod 600 "$HOME/.ssh/known_hosts"
 
       - name: Sync Core Laravel to Server
