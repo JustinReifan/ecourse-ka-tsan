@@ -1,4 +1,4 @@
-name: Deploy Staging (Laravel & Public)
+name: Deploy Production (Laravel & Public)
 
 on:
   push:
@@ -13,8 +13,8 @@ jobs:
     env:
       SERVER_IP: '72.61.210.213'
       SERVER_USER: 'root'
-      TARGET_DIR_LARAVEL: '/home/staging.gumpreneur.id/laravel'
-      TARGET_DIR_PUBLIC: '/home/staging.gumpreneur.id/public_html'
+      TARGET_DIR_LARAVEL: '/home/gumpreneur.id/laravel'
+      TARGET_DIR_PUBLIC: '/home/gumpreneur.id/public_html'
 
     steps:
       - name: Checkout Code
@@ -90,8 +90,8 @@ jobs:
             cd ${{ env.TARGET_DIR_PUBLIC }}
             ln -sfn ../laravel/storage/app/public storage
 
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_LARAVEL }}
-            chown -R stagi4312:stagi4312 ${{ env.TARGET_DIR_PUBLIC }}
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_LARAVEL }}
+            chown -R gumpr6869:gumpr6869 ${{ env.TARGET_DIR_PUBLIC }}
             chmod -R 775 ${{ env.TARGET_DIR_LARAVEL }}/storage
             chmod -R 775 ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache
 
